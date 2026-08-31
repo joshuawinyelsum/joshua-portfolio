@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useScrollSpy } from '../hooks/useScrollSpy';
 import { MobileMenu } from './MobileMenu';
 
@@ -7,68 +7,106 @@ const navItems = [
   { label: 'Work', id: 'work' },
   { label: 'Research', id: 'research' },
   { label: 'Building', id: 'building' },
-  { label: 'About', id: 'about' },
   { label: 'Experience', id: 'experience' },
+  { label: 'CV', id: 'cv' },
 ];
 
-const sectionIds = [...navItems.map((item) => item.id), 'contact'];
+const sectionIds = ['work', 'research', 'building', 'experience', 'contact'];
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
-  const isHome = location.pathname === '/';
-  const activeId = useScrollSpy(isHome ? sectionIds : [], 120);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    handleScroll();
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    document.body.style.overflow = mobileMenuOpen ? 'hidden' : '';
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [mobileMenuOpen]);
+  const [activeId, setActiveId] = useState<string>('');
 
-  const handleNavClick = (id: string) => {
-    setMobileMenuOpen(false);
-    if (!isHome) {
-      window.location.href = `/#${id}`;
+  useEffect(() => {
+    if (location.pathname !== '/') {
+      setActiveId('');
       return;
     }
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveId(entry.target.id);
+          }
+        });
+      },
+      { rootMargin: '-20% 0px -79% 0px' }
+    );
+
+    sectionIds.forEach((id) => {
+      const element = document.getElementById(id);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, [location]);
+
+  const handleNavClick = (id: string) => {
+    if (id === 'cv') {
+      navigate('/cv');
+      setMobileMenuOpen(false);
+      return;
+    }
+
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+      return;
+    }
+    
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      setMobileMenuOpen(false);
     }
   };
+
+  if (location.pathname !== '/') {
+    return null;
+  }
 
   return (
     <header>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
-          scrolled
-            ? 'bg-[#D9DDE2]/85 backdrop-blur-md shadow-[0_1px_0_rgba(0,0,0,0.06)]'
-            : 'bg-transparent'
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          scrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-3' : 'bg-transparent py-5'
         }`}
       >
-        <div
-          className={`flex items-center justify-between section-padding transition-all duration-500 ease-out ${
-            scrolled ? 'h-14' : 'h-16'
-          }`}
-        >
-          {/* Logo */}
-          <Link
-            to="/"
-            className={`font-bold text-gray-900 tracking-tight hover:text-gray-700 transition-all duration-300 ${
-              scrolled ? 'text-[13px]' : 'text-sm'
-            }`}
+        <div className="max-w-6xl mx-auto px-6 md:px-12 flex items-center justify-between">
+          <button
+            onClick={() => {
+              if (location.pathname === '/') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              } else {
+                navigate('/');
+                setTimeout(() => window.scrollTo({ top: 0, behavior: 'instant' }), 50);
+                setTimeout(() => window.scrollTo({ top: 0, behavior: 'smooth' }), 100);
+              }
+            }}
+            className="text-lg font-bold tracking-tight text-gray-900 group"
           >
             Joshua Winyelsum
-          </Link>
+            <span className="inline-block w-1.5 h-1.5 bg-blue-600 rounded-full ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
+          </button>
 
           {/* Desktop nav */}
           <div className="hidden md:flex items-center gap-1">
@@ -83,16 +121,8 @@ export function Navbar() {
                 }`}
               >
                 {item.label}
-                <span
-                  className={`absolute bottom-0 left-3 right-3 h-px bg-gray-900 transition-all duration-300 ease-out ${
-                    activeId === item.id
-                      ? 'opacity-100 scale-x-100'
-                      : 'opacity-0 scale-x-0'
-                  }`}
-                />
               </button>
             ))}
-            <span className="w-px h-4 bg-gray-300 mx-2" />
             <button
               onClick={() => handleNavClick('contact')}
               className="group inline-flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-medium tracking-wider uppercase text-gray-900 hover:text-blue-600 transition-colors duration-200"
@@ -110,17 +140,19 @@ export function Navbar() {
             </button>
           </div>
 
-          {/* Mobile menu button */}
-          <button
-            className="md:hidden p-2.5 -mr-2 text-gray-900 rounded-lg hover:bg-gray-900/5 transition-colors"
-            onClick={() => setMobileMenuOpen(true)}
-            aria-label="Open menu"
-            aria-expanded={mobileMenuOpen}
-          >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" />
-            </svg>
-          </button>
+          {/* Mobile menu controls */}
+          <div className="flex md:hidden items-center gap-2">
+            <button
+              className="p-2 -mr-2 text-gray-900 rounded-lg hover:bg-gray-900/5 transition-colors"
+              onClick={() => setMobileMenuOpen(true)}
+              aria-label="Open menu"
+              aria-expanded={mobileMenuOpen}
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" />
+              </svg>
+            </button>
+          </div>
         </div>
       </nav>
 
