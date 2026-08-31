@@ -18,8 +18,8 @@ export function useScrollProgress(offset = 0) {
           const elementTop = rect.top - offset;
           const elementHeight = rect.height;
 
-          // 0 when element top enters viewport, 1 when element bottom leaves viewport
-          const rawProgress = (windowHeight - elementTop) / (windowHeight + elementHeight);
+          // 0 when element top hits top of viewport, 1 when element bottom leaves viewport
+          const rawProgress = elementTop <= 0 ? -elementTop / elementHeight : 0;
           setProgress(Math.max(0, Math.min(1, rawProgress)));
           ticking = false;
         });
