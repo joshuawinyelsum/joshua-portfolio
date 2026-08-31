@@ -15,18 +15,20 @@ import { Footer } from '../sections/Footer';
 export function Home() {
   return (
     <>
-      <Hero />
-      <Story />
-      <SelectedWork />
-      <About />
-      <EngineeringStack />
-      <Research />
-      <Experience />
-      <CurrentlyBuilding />
-      <Philosophy />
-      <Education />
-      <CareerDirection />
-      <Contact />
+      <main>
+        <Hero />
+        <Story />
+        <SelectedWork />
+        <About />
+        <EngineeringStack />
+        <Research />
+        <Experience />
+        <CurrentlyBuilding />
+        <Philosophy />
+        <Education />
+        <CareerDirection />
+        <Contact />
+      </main>
       <Footer />
     </>
   );

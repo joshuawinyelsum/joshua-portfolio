@@ -122,195 +122,199 @@ export function CaseStudy() {
   return (
     <>
       <main className="pt-28 pb-20">
-        {/* Header */}
-        <section className="section-padding mb-16">
-          <Link
-            to="/"
-            className="group inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 transition-colors mb-10"
-          >
-            <svg
-              className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-0.5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
+        <article>
+          {/* Header */}
+          <section className="section-padding mb-16">
+            <Link
+              to="/"
+              className="group inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 transition-colors mb-10"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
-            </svg>
-            Back to home
-          </Link>
+              <svg
+                aria-hidden="true"
+                className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-0.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+              </svg>
+              Back to home
+            </Link>
 
-          <ScrollReveal>
-            <span className="text-[10px] font-bold tracking-[0.25em] uppercase text-gray-400 block mb-4">
-              {project.category}
-            </span>
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 tracking-tighter mb-3">
-              {project.title}
-            </h1>
-            <p className="text-lg md:text-xl font-medium text-gray-500">
-              {project.subtitle}
-            </p>
-          </ScrollReveal>
-        </section>
-
-        {/* Technologies */}
-        <section className="section-padding mb-20">
-          <ScrollReveal>
-            <div className="flex flex-wrap gap-2">
-              {project.technologies.map((tech) => (
-                <span
-                  key={tech}
-                  className="px-3 py-1.5 text-[11px] font-semibold tracking-wide text-gray-600 bg-white border border-gray-200 rounded"
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
-          </ScrollReveal>
-        </section>
-
-        {/* Overview */}
-        <section className="section-padding mb-20 max-w-3xl">
-          <ScrollReveal>
-            <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
-              {nextSection()} — Overview
-            </h2>
-            <p className="text-lg text-gray-700 leading-relaxed">{project.description}</p>
-          </ScrollReveal>
-        </section>
-
-        {/* Problem */}
-        {project.problem && (
-          <section className="section-padding mb-20 max-w-3xl">
             <ScrollReveal>
-              <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
-                {nextSection()} — Problem
-              </h2>
-              <p className="text-[15px] text-gray-600 leading-[1.75]">{project.problem}</p>
-            </ScrollReveal>
-          </section>
-        )}
-
-        {/* System */}
-        {project.system && (
-          <section className="section-padding mb-20 max-w-3xl">
-            <ScrollReveal>
-              <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
-                {nextSection()} — System
-              </h2>
-              <p className="text-[15px] text-gray-600 leading-[1.75]">{project.system}</p>
-            </ScrollReveal>
-          </section>
-        )}
-
-        {/* Architecture (CFSS only) */}
-        {isCFSS && (
-          <section className="section-padding mb-20 max-w-3xl">
-            <ScrollReveal>
-              <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
-                {nextSection()} — Architecture
-              </h2>
-              <p className="text-sm text-gray-500 mb-4">
-                Data flows from the field through offline storage, synchronization, and into the
-                backend.
+              <span className="text-[10px] font-bold tracking-[0.25em] uppercase text-gray-400 block mb-4">
+                {project.category}
+              </span>
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 tracking-tighter mb-3">
+                {project.title}
+              </h1>
+              <p className="text-lg md:text-xl font-medium text-gray-500">
+                {project.subtitle}
               </p>
             </ScrollReveal>
-            <ArchitectureDiagram />
           </section>
-        )}
 
-        {/* Capabilities */}
-        {project.capabilities && (
-          <section className="section-padding mb-20 max-w-3xl">
+          {/* Technologies */}
+          <section className="section-padding mb-20">
             <ScrollReveal>
-              <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
-                {nextSection()} — Key Capabilities
-              </h2>
-              <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {project.capabilities.map((cap) => (
-                  <li key={cap} className="flex items-start gap-2.5 text-[15px] text-gray-600">
-                    <span className="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 shrink-0" />
-                    {cap}
-                  </li>
+              <div className="flex flex-wrap gap-2">
+                {project.technologies.map((tech) => (
+                  <span
+                    key={tech}
+                    className="px-3 py-1.5 text-[11px] font-semibold tracking-wide text-gray-600 bg-white border border-gray-200 rounded"
+                  >
+                    {tech}
+                  </span>
                 ))}
-              </ul>
-            </ScrollReveal>
-          </section>
-        )}
-
-        {/* My Contribution (CFSS only) */}
-        {isCFSS && (
-          <section className="section-padding mb-20 max-w-3xl">
-            <ScrollReveal>
-              <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
-                {nextSection()} — My Contribution
-              </h2>
-              <ul className="space-y-3">
-                {cfssContribution.map((item) => (
-                  <li key={item} className="flex items-start gap-2.5 text-[15px] text-gray-600">
-                    <span className="w-1.5 h-1.5 rounded-full bg-gray-900 mt-2 shrink-0" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </ScrollReveal>
-          </section>
-        )}
-
-        {/* Scale statement */}
-        {project.scaleStatement && (
-          <section className="section-padding mb-20 max-w-3xl">
-            <ScrollReveal>
-              <div className="border-l-2 border-gray-900 pl-6 py-2">
-                <p className="text-lg font-semibold text-gray-800 italic leading-relaxed">
-                  {project.scaleStatement}
-                </p>
               </div>
             </ScrollReveal>
           </section>
-        )}
 
-        {/* Lessons Learned (CFSS only) */}
-        {isCFSS && (
+          {/* Overview */}
           <section className="section-padding mb-20 max-w-3xl">
             <ScrollReveal>
               <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
-                {nextSection()} — Lessons Learned
+                {nextSection()} — Overview
               </h2>
-              <ul className="space-y-4">
-                {cfssLessons.map((lesson, i) => (
-                  <ScrollReveal key={i} delay={i * 80}>
-                    <li className="flex items-start gap-3 text-[15px] text-gray-600 leading-[1.75]">
-                      <span className="text-[10px] font-bold text-gray-400 mt-1 tabular-nums shrink-0">
-                        {String(i + 1).padStart(2, '0')}
-                      </span>
-                      {lesson}
-                    </li>
-                  </ScrollReveal>
-                ))}
-              </ul>
+              <p className="text-lg text-gray-700 leading-relaxed">{project.description}</p>
             </ScrollReveal>
           </section>
-        )}
 
-        {/* Back link */}
-        <section className="section-padding mb-16">
-          <Link
-            to="/"
-            className="group inline-flex items-center gap-2 text-sm font-semibold text-gray-900 hover:text-blue-600 transition-colors"
-          >
-            <svg
-              className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-0.5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
+          {/* Problem */}
+          {project.problem && (
+            <section className="section-padding mb-20 max-w-3xl">
+              <ScrollReveal>
+                <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
+                  {nextSection()} — Problem
+                </h2>
+                <p className="text-[15px] text-gray-600 leading-[1.75]">{project.problem}</p>
+              </ScrollReveal>
+            </section>
+          )}
+
+          {/* System */}
+          {project.system && (
+            <section className="section-padding mb-20 max-w-3xl">
+              <ScrollReveal>
+                <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
+                  {nextSection()} — System
+                </h2>
+                <p className="text-[15px] text-gray-600 leading-[1.75]">{project.system}</p>
+              </ScrollReveal>
+            </section>
+          )}
+
+          {/* Architecture (CFSS only) */}
+          {isCFSS && (
+            <section className="section-padding mb-20 max-w-3xl">
+              <ScrollReveal>
+                <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
+                  {nextSection()} — Architecture
+                </h2>
+                <p className="text-sm text-gray-500 mb-4">
+                  Data flows from the field through offline storage, synchronization, and into the
+                  backend.
+                </p>
+              </ScrollReveal>
+              <ArchitectureDiagram />
+            </section>
+          )}
+
+          {/* Capabilities */}
+          {project.capabilities && (
+            <section className="section-padding mb-20 max-w-3xl">
+              <ScrollReveal>
+                <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
+                  {nextSection()} — Key Capabilities
+                </h2>
+                <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {project.capabilities.map((cap) => (
+                    <li key={cap} className="flex items-start gap-2.5 text-[15px] text-gray-600">
+                      <span className="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 shrink-0" />
+                      {cap}
+                    </li>
+                  ))}
+                </ul>
+              </ScrollReveal>
+            </section>
+          )}
+
+          {/* My Contribution (CFSS only) */}
+          {isCFSS && (
+            <section className="section-padding mb-20 max-w-3xl">
+              <ScrollReveal>
+                <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
+                  {nextSection()} — My Contribution
+                </h2>
+                <ul className="space-y-3">
+                  {cfssContribution.map((item) => (
+                    <li key={item} className="flex items-start gap-2.5 text-[15px] text-gray-600">
+                      <span className="w-1.5 h-1.5 rounded-full bg-gray-900 mt-2 shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </ScrollReveal>
+            </section>
+          )}
+
+          {/* Scale statement */}
+          {project.scaleStatement && (
+            <section className="section-padding mb-20 max-w-3xl">
+              <ScrollReveal>
+                <div className="border-l-2 border-gray-900 pl-6 py-2">
+                  <p className="text-lg font-semibold text-gray-800 italic leading-relaxed">
+                    {project.scaleStatement}
+                  </p>
+                </div>
+              </ScrollReveal>
+            </section>
+          )}
+
+          {/* Lessons Learned (CFSS only) */}
+          {isCFSS && (
+            <section className="section-padding mb-20 max-w-3xl">
+              <ScrollReveal>
+                <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
+                  {nextSection()} — Lessons Learned
+                </h2>
+                <ul className="space-y-4">
+                  {cfssLessons.map((lesson, i) => (
+                    <ScrollReveal key={i} delay={i * 80}>
+                      <li className="flex items-start gap-3 text-[15px] text-gray-600 leading-[1.75]">
+                        <span className="text-[10px] font-bold text-gray-400 mt-1 tabular-nums shrink-0">
+                          {String(i + 1).padStart(2, '0')}
+                        </span>
+                        {lesson}
+                      </li>
+                    </ScrollReveal>
+                  ))}
+                </ul>
+              </ScrollReveal>
+            </section>
+          )}
+
+          {/* Back link */}
+          <section className="section-padding mb-16">
+            <Link
+              to="/"
+              className="group inline-flex items-center gap-2 text-sm font-semibold text-gray-900 hover:text-blue-600 transition-colors"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
-            </svg>
-            Back to all work
-          </Link>
-        </section>
+              <svg
+                aria-hidden="true"
+                className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-0.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+              </svg>
+              Back to all work
+            </Link>
+          </section>
+        </article>
       </main>
       <Footer />
     </>

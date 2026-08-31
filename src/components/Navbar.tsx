@@ -47,7 +47,7 @@ export function Navbar() {
   };
 
   return (
-    <>
+    <header>
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
           scrolled
@@ -115,6 +115,7 @@ export function Navbar() {
             className="md:hidden p-2.5 -mr-2 text-gray-900 rounded-lg hover:bg-gray-900/5 transition-colors"
             onClick={() => setMobileMenuOpen(true)}
             aria-label="Open menu"
+            aria-expanded={mobileMenuOpen}
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" />
@@ -129,6 +130,6 @@ export function Navbar() {
         navItems={navItems}
         onNavClick={handleNavClick}
       />
-    </>
+    </header>
   );
 }

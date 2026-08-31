@@ -1,0 +1,18 @@
+# 1. Initialize a new Git repository
+git init
+
+# 2. Add all your files
+git add .
+
+# 3. Save (commit) the files
+git commit -m "Initial portfolio commit"
+
+# 4. Rename the main branch
+git branch -M main
+
+# 5. Connect your local code to your new GitHub repository
+# ---> BE SURE TO CHANGE YOUR_GITHUB_USERNAME BELOW! <---
+git remote add origin https://github.com/YOUR_GITHUB_USERNAME/joshua-portfolio.git
+
+# 6. Push the code to GitHub
+git push -u origin main

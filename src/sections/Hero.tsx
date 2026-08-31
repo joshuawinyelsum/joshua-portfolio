@@ -175,6 +175,7 @@ export function Hero() {
           >
             View Selected Work
             <svg
+              aria-hidden="true"
               className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5"
               fill="none"
               viewBox="0 0 24 24"
@@ -190,6 +191,7 @@ export function Hero() {
           >
             About Joshua
             <svg
+              aria-hidden="true"
               className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5"
               fill="none"
               viewBox="0 0 24 24"
@@ -213,6 +215,7 @@ export function Hero() {
         >
           <span>Scroll to explore</span>
           <svg
+            aria-hidden="true"
             className="w-3.5 h-3.5 animate-[bounce_2s_ease-in-out_infinite]"
             fill="none"
             viewBox="0 0 24 24"
