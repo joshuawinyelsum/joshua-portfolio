@@ -14,6 +14,8 @@ export interface Project {
   ctaLink: string;
   status?: 'shipped' | 'building' | 'research';
   featured: boolean;
+  liveUrl?: string;
+  isPrivateRepo?: boolean;
 }
 
 export interface Skill {

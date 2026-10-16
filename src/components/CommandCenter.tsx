@@ -36,7 +36,7 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
   const previousFocus = useRef<HTMLElement | null>(null);
 
   const availableCommands = [
-    'projects', 'research', 'experience', 'skills', 'cv', 'github', 
+    'projects', 'cpw', 'research', 'experience', 'skills', 'cv', 'github', 
     'contact', 'about', 'clear', 'exit', 'help', 'whoami', 'stack'
   ];
 
@@ -96,6 +96,7 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
         pushOutput(
           <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-gray-300 w-full max-w-sm mt-2 mb-4">
             <span className="text-blue-400">projects</span><span>Explore projects</span>
+            <span className="text-blue-400">cpw</span><span>Coach Prosper’s World</span>
             <span className="text-blue-400">research</span><span>Explore research</span>
             <span className="text-blue-400">experience</span><span>View experience</span>
             <span className="text-blue-400">skills</span><span>View technical skills</span>
@@ -109,6 +110,12 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
             <span className="text-blue-400">exit</span><span>Close console</span>
           </div>
         );
+        break;
+      case 'cpw':
+      case 'coach':
+      case 'coachprospersworld':
+        pushOutput(<span className="text-green-400">Navigating to Coach Prosper’s World case study...</span>);
+        setTimeout(() => navigateTo('/case-study/coach-prospers-world'), 300);
         break;
       case 'projects':
         pushOutput(<span className="text-green-400">Navigating to Projects...</span>);
