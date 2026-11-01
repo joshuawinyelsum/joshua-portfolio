@@ -1,4 +1,4 @@
-import { BuildingProject } from '../types';
+import { BuildingProject, ProjectStatus } from '../types';
 import { ScrollReveal } from './ScrollReveal';
 
 interface BuildingCardProps {
@@ -6,15 +6,16 @@ interface BuildingCardProps {
   index: number;
 }
 
-const statusStyles: Record<string, string> = {
-  BUILDING: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-  'RESEARCH / BUILDING': 'bg-violet-50 text-violet-700 border-violet-200',
-  RESEARCH: 'bg-blue-50 text-blue-700 border-blue-200',
-  EXPLORING: 'bg-amber-50 text-amber-700 border-amber-200',
+const statusStyles: Record<ProjectStatus, string> = {
+  LIVE: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+  BUILT: 'bg-blue-50 text-blue-700 border-blue-200',
+  'IN PROGRESS': 'bg-amber-50 text-amber-700 border-amber-200',
+  RESEARCH: 'bg-purple-50 text-purple-700 border-purple-200',
+  PLANNED: 'bg-gray-100 text-gray-600 border-gray-200',
 };
 
 export function BuildingCard({ project, index }: BuildingCardProps) {
-  const statusClass = statusStyles[project.status] || statusStyles.BUILDING;
+  const statusClass = statusStyles[project.status] || statusStyles['IN PROGRESS'];
 
   return (
     <ScrollReveal delay={index * 70}>

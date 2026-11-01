@@ -4,12 +4,12 @@ import { useInView } from '../hooks/useInView';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 
 const stages = [
-  'Software Engineering',
-  'Backend & Systems',
-  'Data Systems',
-  'Machine Learning',
-  'Computer Vision',
-  'Intelligent Systems',
+  'Software Engineering Foundations',
+  'Backend & Application Architecture',
+  'Database Systems & Relational Modeling',
+  'Offline-First & Resilient Systems',
+  'Data Pipelines & Validation Infrastructure',
+  'Applied AI & Machine Learning Systems',
 ];
 
 export function CareerDirection() {
@@ -19,7 +19,7 @@ export function CareerDirection() {
   return (
     <section className="py-24 md:py-32 section-padding">
       <div className="max-w-3xl">
-        <SectionHeader title="Where I'm Going" />
+        <SectionHeader title="Technical Progression" />
 
         <div ref={ref} className="mb-12">
           {stages.map((stage, i) => {
@@ -81,8 +81,7 @@ export function CareerDirection() {
 
         <ScrollReveal delay={300}>
           <p className="text-[15px] text-gray-600 leading-[1.75] max-w-xl">
-            Building toward the intersection of high-performance software, data, machine learning,
-            and intelligent systems.
+            Progressing systematically from robust backend architectures and relational data modeling toward resilient distributed systems, data pipelines, and applied AI.
           </p>
         </ScrollReveal>
       </div>

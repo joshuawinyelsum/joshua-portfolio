@@ -39,17 +39,17 @@ export function CV() {
                 JOSHUA WINYELSUM
               </h1>
               <h2 className="text-sm md:text-base font-semibold tracking-wide text-gray-600 mb-8">
-                Systems Engineer <span className="text-gray-300 mx-1">/</span> ML & Data Systems Researcher
+                Software & Systems Engineer <span className="text-gray-300 mx-1">/</span> Computer Science Student
               </h2>
               <div className="text-sm md:text-[15px] text-gray-800 leading-[1.8] max-w-2xl font-medium">
-                <p>Building software, data pipelines, and intelligent systems.</p>
+                <p>Architecting reliable backend systems, relational databases, offline-first applications, and data pipelines.</p>
                 <div className="flex flex-wrap items-center gap-x-6 gap-y-2 mt-6 text-[12px] font-mono tracking-wide text-gray-500">
                   <span className="flex items-center gap-1.5">
                     <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
-                    Based in Ghana
+                    Tamale / Bawku, Ghana
                   </span>
                   <span className="flex items-center gap-1.5">
                     <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -57,7 +57,7 @@ export function CV() {
                       <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
                       <path strokeLinecap="round" strokeLinejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
                     </svg>
-                    Computer Science Student
+                    BSc Computer Science @ UDS
                   </span>
                   <a href="mailto:joshuawinyelsum@gmail.com" className="flex items-center gap-1.5 text-gray-900 hover:text-blue-600 transition-colors">
                     <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -108,7 +108,7 @@ export function CV() {
             <ScrollReveal>
               <div className="flex items-baseline gap-4 mb-10 border-b border-gray-200/60 pb-3">
                 <span className="text-[11px] font-mono tracking-widest text-gray-400">02 /</span>
-                <h3 className="text-xs font-bold tracking-[0.2em] uppercase text-gray-900">Engineering</h3>
+                <h3 className="text-xs font-bold tracking-[0.2em] uppercase text-gray-900">Engineering Stack</h3>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
                 {skillCategories.map(category => {
@@ -142,32 +142,37 @@ export function CV() {
               <div className="space-y-16">
                 {projects.filter(p => p.featured).map(project => (
                   <div key={project.id} className="relative group">
-                    <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-blue-600 block mb-3">
-                      {project.category}
-                    </span>
-                    <h4 className="text-lg font-bold text-gray-900 mb-2">{project.title}</h4>
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="text-[10px] font-mono tracking-[0.2em] uppercase text-blue-600">
+                        {project.category}
+                      </span>
+                      <span className="text-gray-300">·</span>
+                      <span className="text-[10px] font-bold tracking-widest uppercase px-2 py-0.5 rounded border border-gray-200 text-gray-600 bg-gray-50">
+                        {project.status}
+                      </span>
+                    </div>
+                    <h4 className="text-lg font-bold text-gray-900 mb-1">{project.title}</h4>
+                    <p className="text-xs font-medium uppercase tracking-wider text-gray-500 mb-3">{project.subtitle}</p>
                     <p className="text-[15px] text-gray-600 leading-relaxed max-w-[650px] mb-5 font-medium">
                       {project.description}
                     </p>
                     
                     <div className="flex items-center gap-4 mt-2">
-                      {project.ctaLink.startsWith('/') ? (
-                        <Link 
-                          to={project.ctaLink}
-                          className="inline-flex items-center gap-2 text-[11px] font-bold tracking-widest uppercase text-gray-900 hover:text-blue-600 transition-colors"
-                        >
-                          {project.cta} 
-                          <span className="text-gray-400 group-hover:translate-x-0.5 transition-transform">→</span>
-                        </Link>
-                      ) : (
+                      <Link
+                        to={project.ctaLink}
+                        className="inline-flex items-center gap-2 text-[11px] font-bold tracking-widest uppercase text-gray-900 hover:text-blue-600 transition-colors"
+                      >
+                        {project.cta}
+                        <span className="text-gray-400 group-hover:translate-x-0.5 transition-transform">→</span>
+                      </Link>
+                      {project.liveUrl && (
                         <a 
-                          href={project.ctaLink}
+                          href={project.liveUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 text-[11px] font-bold tracking-widest uppercase text-gray-900 hover:text-blue-600 transition-colors"
+                          className="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-widest uppercase text-emerald-600 hover:underline"
                         >
-                          {project.cta}
-                          <span className="text-gray-400 group-hover:translate-x-0.5 transition-transform">↗</span>
+                          Visit Live ↗
                         </a>
                       )}
                     </div>
@@ -182,7 +187,7 @@ export function CV() {
             <ScrollReveal>
               <div className="flex items-baseline gap-4 mb-10 border-b border-gray-200/60 pb-3">
                 <span className="text-[11px] font-mono tracking-widest text-gray-400">04 /</span>
-                <h3 className="text-xs font-bold tracking-[0.2em] uppercase text-gray-900">Research</h3>
+                <h3 className="text-xs font-bold tracking-[0.2em] uppercase text-gray-900">Research Areas</h3>
               </div>
               <div className="space-y-12">
                 {researchAreas.map((area, i) => (
@@ -191,7 +196,6 @@ export function CV() {
                     <p className="text-[14.5px] text-gray-600 leading-relaxed max-w-[650px] font-medium mb-3">
                       {area.description}
                     </p>
-                    {/* Placeholder for future research details link */}
                     <div className="text-[11px] font-bold tracking-widest uppercase text-gray-400">
                       Ongoing Investigation
                     </div>

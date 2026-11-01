@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { SectionHeader } from '../components/SectionHeader';
 import { ScrollReveal } from '../components/ScrollReveal';
 import { researchAreas, researchSources } from '../data/research';
@@ -15,17 +16,25 @@ export function Research() {
         {/* Featured research */}
         <ScrollReveal>
           <div className="mb-20">
-            <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-gray-600 mb-4">
+            <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-gray-500 mb-4">
               Featured Research
             </p>
             <h3 className="text-2xl md:text-3xl font-bold text-white tracking-tight mb-4">
               Ghana Agricultural-Chemical Data Landscape
             </h3>
-            <p className="text-[15px] text-gray-400 leading-[1.75] max-w-2xl">
-              A research investigation into Ghana's agricultural-chemical data ecosystem, focusing on
-              how information is distributed, represented, validated, and connected across different
-              sources.
+            <p className="text-[15px] text-gray-400 leading-[1.75] max-w-2xl mb-6">
+              An evidence-backed investigation into Ghana's agricultural-chemical data ecosystem, focusing on
+              how information is distributed, represented, validated, and connected across regulatory and academic sources.
             </p>
+            <Link
+              to="/case-study/agrichem"
+              className="inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-white hover:text-blue-400 transition-colors"
+            >
+              Explore Research Case Study
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
           </div>
         </ScrollReveal>
 

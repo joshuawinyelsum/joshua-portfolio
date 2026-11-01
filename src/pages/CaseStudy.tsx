@@ -1,55 +1,88 @@
 import { useParams, Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { projects } from '../data/projects';
+import { ProjectStatus } from '../types';
 import { ScrollReveal } from '../components/ScrollReveal';
 import { useInView } from '../hooks/useInView';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 import { Footer } from '../sections/Footer';
 
-// CFSS Architecture data
+// ==========================================
+// Architecture Data Definitions
+// ==========================================
+
 const cfssArchitecture = [
-  { layer: 'Student / Field Worker', desc: 'User in the field collecting data', icon: '👤' },
-  { layer: 'React Frontend', desc: 'Progressive web interface with forms & GPS', icon: '⚛' },
-  { layer: 'IndexedDB / Offline Storage', desc: 'Local data persistence for offline-first', icon: '💾' },
-  { layer: 'Synchronization Layer', desc: 'Handles data sync when connectivity returns', icon: '🔄' },
-  { layer: 'FastAPI Backend', desc: 'API server handling auth, validation, and data', icon: '⚡' },
-  { layer: 'Database', desc: 'Persistent storage for all survey data', icon: '🗄' },
+  { layer: 'Student & Coordinator Portals', desc: 'Progressive web interface with Leaflet GIS mapping & GPS capture', icon: '👤' },
+  { layer: 'IndexedDB / Dexie Storage', desc: 'Local draft persistence and offline synchronization queue', icon: '💾' },
+  { layer: 'Bi-Directional Sync Layer', desc: 'Resolves survey conflict states when connectivity returns', icon: '🔄' },
+  { layer: 'FastAPI Backend Engine', desc: 'Python 3.12 API with role-based auth, rate-limiting & PDF generation', icon: '⚡' },
+  { layer: 'PostgreSQL Database', desc: 'Relational storage for survey schemas, respondents, and spatial geometries', icon: '🗄' },
+  { layer: 'Celery / Redis Worker Layer', desc: 'Background tasks for heavy batch exports and notification outboxes', icon: '⚙' },
 ];
 
-const cfssContribution = [
-  'Designed the offline-first data collection architecture',
-  'Built the synchronization layer between IndexedDB and the backend',
-  'Implemented GPS/location tracking and boundary calculations',
-  'Created the student and admin workflow interfaces',
-  'Developed duplicate-location detection logic',
-];
-
-const cfssLessons = [
-  'Offline-first architecture requires careful consideration of data conflicts and sync ordering.',
-  'GPS accuracy varies dramatically by device and environment — defensive engineering is essential.',
-  'Systems designed for thousands of users require different thinking than single-user tools.',
-  'Field conditions expose assumptions that lab environments never reveal.',
-];
-
-// Coach Prosper's World Architecture data
 const cpwArchitecture = [
-  { layer: 'Next.js 16 App Router', desc: 'Full-stack SSR/SSG client and server route endpoints', icon: '▲' },
-  { layer: 'NextAuth Security Layer', desc: 'Role-based access control, session validation & audit logs', icon: '🛡' },
+  { layer: 'Next.js App Router', desc: 'Full-stack SSR/SSG client and server route endpoints', icon: '▲' },
+  { layer: 'NextAuth Security Layer', desc: 'Role-based access control, session validation & audit logging', icon: '🛡' },
   { layer: 'Prisma ORM & PostgreSQL', desc: 'Relational data modeling across 12 operational domains', icon: '🗄' },
   { layer: 'Dual-Tier Vercel Blob Storage', desc: 'Private store for applicant photos & public CMS media', icon: '☁' },
   { layer: 'Paystack Payment Gateway', desc: 'Donation initialization & HMAC-SHA512 webhook verification', icon: '💳' },
   { layer: 'Arkesel SMS Gateway', desc: 'Automated application SMS notifications & administrative broadcast', icon: '📱' },
 ];
 
-const cpwContribution = [
-  'Served as Software & Technology Lead, directing technical architecture and production readiness',
-  'Engineered Next.js 16 full-stack architecture with TypeScript, Tailwind CSS v4, and PostgreSQL',
-  'Designed a dual-tier Vercel Blob storage pipeline to strictly isolate confidential applicant records',
-  'Implemented Paystack donation integration with cryptographic webhook signature verification',
-  'Engineered Arkesel SMS messaging infrastructure for automated application alerts and admin messaging',
-  'Built custom NextAuth authentication with role-based access control and admin security middleware',
-  'Structured entity SEO with Schema.org JSON-LD (Organization/WebSite), dynamic sitemaps, and robots directives',
-  'Developed automated integration and security test suites covering admin routes and webhook integrity',
+const masteryArchitecture = [
+  { layer: 'Next.js 15 & React 19 Frontend', desc: 'Interactive active-recall review session engine with keyboard shortcuts', icon: '▲' },
+  { layer: 'Knowledge Dependency Graph', desc: 'React Flow visualization with DAG cycle detection via Depth-First Search', icon: '🕸' },
+  { layer: 'SM-2 Scheduling Engine', desc: 'Deterministic spaced repetition calculator with bounded ease factors', icon: '⏱' },
+  { layer: 'Diagnostic Failure Service', desc: 'Identifies prerequisite bottlenecks when recall attempts fail', icon: '🔍' },
+  { layer: 'Prisma ORM & PostgreSQL', desc: 'Transactional schedule updates and append-only review history', icon: '🗄' },
+  { layer: 'Vitest Automated Suite', desc: 'Unit tests validating scheduling intervals, ease factor limits & graph DAGs', icon: '🧪' },
+];
+
+const agrichemArchitecture = [
+  { layer: 'Immutable Source Archive', desc: '7 regulatory and academic PDF sources locked with SHA-256 checksums', icon: '📄' },
+  { layer: 'Coordinate Table Parser & OCR', desc: 'Custom table extraction with Tesseract OCR fallback for scanned pages', icon: '📐' },
+  { layer: 'Verbatim Evidence Register', desc: '346 verbatim quotes machine-verified against source coordinates and pages', icon: '📋' },
+  { layer: 'Canonicalization Engine', desc: 'Normalizes fragmented schemas into 708 standardized long-format records', icon: '🔄' },
+  { layer: 'Automated Validation Suite', desc: 'Pytest suite verifying schema constraints, limits, and scientific consistency', icon: '🧪' },
+];
+
+// ==========================================
+// Decisions & Contributions Data
+// ==========================================
+
+const cfssDecisions = [
+  {
+    title: 'Offline-First Local Queueing via Dexie',
+    detail: 'Field workers frequently operate in remote communities without cellular data. All draft surveys, respondent records, and GPS breadcrumbs persist in IndexedDB first, automatically queuing for background sync once the device reconnects.',
+  },
+  {
+    title: 'Defensive GPS Accuracy & Boundary Validation',
+    detail: 'Mobile GPS hardware exhibits significant signal variance in field environments. Implemented boundary and accuracy thresholds to filter anomalous readings before computing survey area polygons or traveling distances.',
+  },
+  {
+    title: 'Strict Role-Specific Workflow Isolation',
+    detail: 'Enforced role isolation across Students, Field Coordinators, and Administrators. Students can only access assigned surveys and communities, coordinators review and approve field submissions, and administrators manage global rosters and configurations.',
+  },
+  {
+    title: 'Connection Budgeting on Managed PostgreSQL',
+    detail: 'Engineered backend connection budgeting with connection pool constraints to ensure the FastAPI application gracefully throttles requests under connection exhaustion without crashing database workers.',
+  },
+];
+
+const cfssContribution = [
+  'Architected the offline-first survey collection flow utilizing IndexedDB (Dexie) and service workers',
+  'Developed the bi-directional survey synchronization and conflict-resolution engine',
+  'Integrated Leaflet and MapLibre GIS mapping for student community boundary calculations and GPS logging',
+  'Engineered role-isolated FastAPI route controllers and dependency injectors for Student, Coordinator, and Admin workflows',
+  'Implemented automated PDF export generation for survey data and student rosters using jsPDF',
+  'Verified system reliability against Neon PostgreSQL staging with over 50 automated test suites',
+];
+
+const cfssEvidence = [
+  '50+ backend automated test suites passing (covering auth flows, GIS mapping, sync logic, and role isolation)',
+  'Playwright end-to-end recovery test suite verifying authentication, PDF exports, and admin mutations',
+  'Local staging verification against Neon PostgreSQL confirming connection budgets, rate limits, and RBAC enforcement',
+  'Verified offline draft creation and synchronization recovery without data loss',
 ];
 
 const cpwDecisions = [
@@ -71,31 +104,125 @@ const cpwDecisions = [
   },
 ];
 
-const cpwWorkflows = [
+const cpwContribution = [
+  'Served as Software & Technology Lead, directing technical architecture and production readiness',
+  'Engineered Next.js full-stack architecture with TypeScript, Tailwind CSS, and PostgreSQL',
+  'Designed a dual-tier Vercel Blob storage pipeline to strictly isolate confidential applicant records',
+  'Implemented Paystack donation integration with cryptographic webhook signature verification',
+  'Engineered Arkesel SMS messaging infrastructure for automated application alerts and admin messaging',
+  'Built custom NextAuth authentication with role-based access control and admin security middleware',
+  'Structured entity SEO with Schema.org JSON-LD, dynamic sitemaps, and robots directives',
+  'Developed automated integration and security test suites covering admin routes and webhook integrity',
+];
+
+const cpwEvidence = [
+  'Live production platform active at coachprospersworld.org with automated payment and SMS workflows',
+  '9 automated security and integration test suites passing in repository',
+  'Verified cryptographic HMAC-SHA512 signature validation on Paystack webhook routes',
+  'Zero public indexing of private applicant uploads through dual-tier storage separation',
+];
+
+const masteryDecisions = [
   {
-    title: 'Community Applications & Private Vault',
-    desc: 'Prospective members apply through an intuitive multi-step form. Applicant documents and photos are streamed directly to an isolated private blob store, with admin-only authenticated access.',
+    title: 'Deterministic SM-2 Algorithm Implementation',
+    detail: 'Implemented a pure, deterministic SM-2 baseline calculation: ratings of FORGOT reset intervals to 1 day; HARD, MEDIUM, and EASY expand intervals based on calculated ease factors. Guaranteed minimum ease factor of 1.30 and integer day rounding prevents scheduling instability.',
   },
   {
-    title: 'Paystack Voluntary Donations',
-    desc: 'Donors contribute via mobile money and card rails. Transactions are verified in real time on the server with webhook event confirmation, maintaining an accurate ledger.',
+    title: 'DAG Cycle Detection via Depth-First Search',
+    detail: 'Before persisting a prerequisite dependency between two concepts, a cycle detection service performs a depth-first search on the directed graph, preventing circular dependencies that would break review ordering.',
   },
   {
-    title: 'Automated SMS & Community Alerts',
-    desc: 'Applicants receive instantaneous SMS confirmation. Leadership can broadcast announcements and program notifications directly to community phone numbers via Arkesel.',
+    title: 'Retrieval-First Psychological Enforcement',
+    detail: 'Reference explanations and canonical notes are strictly hidden on initial prompt display. Students must actively retrieve and explain the concept before self-evaluating against the reference answer, preventing the illusion of competence.',
   },
   {
-    title: 'Role-Based Administrative Control',
-    desc: 'Centralized admin operations for managing member statuses, application reviews, donation logs, content publishing, and security audit logs.',
+    title: 'Transactional Schedule State & Append-Only Log',
+    detail: 'Every review attempt creates an immutable Review record while atomically updating the concept\'s scheduling interval, ease factor, and repetition count within a single Prisma transaction.',
   },
 ];
 
-const cpwLessons = [
-  'Applicant data protection must be architectural: physical storage separation is far more reliable than access flags on a shared bucket.',
-  'Payment integrations require strict signature validation and idempotent processing to guard against webhook duplicates and race conditions.',
-  'Third-party SMS gateways in developing regions require defensive timeout handling and status tracking to avoid blocking main web flows.',
-  'Building for real organizations requires balancing rapid editorial CMS flexibility with robust access controls and data integrity.',
+const masteryContribution = [
+  'Architected the full-stack Next.js 15 application with React 19, TypeScript, and Prisma ORM on PostgreSQL',
+  'Implemented the pure SM-2 scheduling service with boundary value protection and deterministic interval calculations',
+  'Built the graph dependency service with depth-first search (DFS) cycle validation',
+  'Developed the interactive review session engine enforcing active recall without premature answer visibility',
+  'Created the diagnostic failure tracking service linking concept difficulties back to missing prerequisite fundamentals',
+  'Wrote comprehensive Vitest unit test suites validating scheduling rules and graph algorithms',
 ];
+
+const masteryEvidence = [
+  '18 passing unit tests in Vitest covering scheduling service formulas and graph cycle prevention',
+  'Strict TypeScript compilation with zero type errors across all route handlers and services',
+  'Complete relational schema modeled in Prisma covering courses, concepts, dependencies, reviews, and failures',
+  'Verified cycle rejection preventing invalid topological ordering in concept graphs',
+];
+
+const agrichemDecisions = [
+  {
+    title: 'Verbatim Quote Machine Verification',
+    detail: 'Every evidence item in the register is tied to a verbatim quote verified against extracted text at specific page coordinates, eliminating hallucinations and manual citation drift.',
+  },
+  {
+    title: 'Explicit Handling of Missing & Undefined Values',
+    detail: 'Raw study tables contained notations like ND (non-detect), <0.01 (below LOD), and dashes (-). The pipeline preserves explicit missing-value semantics rather than converting unknown or below-detection quantities to zero.',
+  },
+  {
+    title: 'Disambiguation of Re-Publications',
+    detail: 'Identified that an article published in 2016 reused the exact organophosphorus sample data from the 2015 thesis, correctly classifying it as a re-publication rather than independent corroborating evidence.',
+  },
+  {
+    title: 'Cryptographic Checksum Locking of Sources',
+    detail: 'All raw PDFs and regulatory registry documents are locked with SHA-256 hashes in a central manifest, halting execution if any upstream source file is altered or corrupted.',
+  },
+];
+
+const agrichemContribution = [
+  'Engineered the Python research pipeline with modular extraction, parsing, and analysis packages',
+  'Developed coordinate-based table parsers to extract multi-column pesticide concentration tables from complex thesis layouts',
+  'Implemented Tesseract OCR fallback for scanned government registries (MoFA)',
+  'Built the verified evidence register tying 346 machine-checked quotes directly to source pages',
+  'Created long-format canonical datasets normalizing 708 observation cells across water, soil, and cocoa matrices',
+  'Authored comprehensive Pytest suites verifying schema consistency and study limits',
+];
+
+const agrichemEvidence = [
+  '346 machine-verified evidence quotes cross-checked against source page coordinates',
+  '708 canonical observation cells extracted and validated across water, soil, and cocoa beans',
+  'Automated Pytest validation suite enforcing schema rules, LOD constraints, and provenance',
+  'Source manifest with SHA-256 checksums locking 7 primary documents',
+];
+
+const statusStyles: Record<ProjectStatus, { bg: string; text: string; border: string; dot?: string }> = {
+  LIVE: {
+    bg: 'bg-emerald-50',
+    text: 'text-emerald-700',
+    border: 'border-emerald-200',
+    dot: 'bg-emerald-500',
+  },
+  BUILT: {
+    bg: 'bg-blue-50',
+    text: 'text-blue-700',
+    border: 'border-blue-200',
+    dot: 'bg-blue-500',
+  },
+  'IN PROGRESS': {
+    bg: 'bg-amber-50',
+    text: 'text-amber-700',
+    border: 'border-amber-200',
+    dot: 'bg-amber-500',
+  },
+  RESEARCH: {
+    bg: 'bg-purple-50',
+    text: 'text-purple-700',
+    border: 'border-purple-200',
+    dot: 'bg-purple-500',
+  },
+  PLANNED: {
+    bg: 'bg-gray-50',
+    text: 'text-gray-600',
+    border: 'border-gray-200',
+  },
+};
 
 function ArchitectureDiagram({ items }: { items: { layer: string; desc: string; icon: string }[] }) {
   const { ref, isInView } = useInView({ threshold: 0.15 });
@@ -115,13 +242,13 @@ function ArchitectureDiagram({ items }: { items: { layer: string; desc: string; 
                 transform: isInView ? 'scale(1)' : 'scale(0.8)',
                 transition: reducedMotion
                   ? 'none'
-                  : `all 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${i * 120}ms`,
+                  : `all 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${i * 100}ms`,
               }}
             >
               <span
                 style={{
                   opacity: isInView ? 1 : 0,
-                  transition: reducedMotion ? 'none' : `opacity 0.4s ease ${i * 120 + 200}ms`,
+                  transition: reducedMotion ? 'none' : `opacity 0.4s ease ${i * 100 + 150}ms`,
                 }}
               >
                 {item.icon}
@@ -136,7 +263,7 @@ function ArchitectureDiagram({ items }: { items: { layer: string; desc: string; 
                   transform: isInView ? 'scaleY(1)' : 'scaleY(0)',
                   transition: reducedMotion
                     ? 'none'
-                    : `transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${i * 120 + 80}ms, background-color 0.4s ease ${i * 120}ms`,
+                    : `transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${i * 100 + 60}ms, background-color 0.4s ease ${i * 100}ms`,
                 }}
               />
             )}
@@ -149,7 +276,7 @@ function ArchitectureDiagram({ items }: { items: { layer: string; desc: string; 
               transform: isInView ? 'none' : 'translateX(12px)',
               transition: reducedMotion
                 ? 'none'
-                : `opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${i * 120}ms, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${i * 120}ms`,
+                : `opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${i * 100}ms, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${i * 100}ms`,
             }}
           >
             <p className="text-[15px] font-bold text-gray-900">{item.layer}</p>
@@ -175,7 +302,6 @@ function BrowserPreview({ src, alt, liveUrl }: { src: string; alt: string; liveU
         transition: reducedMotion ? 'none' : 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
       }}
     >
-      {/* Browser chrome header */}
       <div className="flex items-center justify-between px-4 py-2.5 bg-[#0f1d16] border-b border-gray-800">
         <div className="flex items-center gap-2">
           <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f56]" />
@@ -203,7 +329,6 @@ function BrowserPreview({ src, alt, liveUrl }: { src: string; alt: string; liveU
           )}
         </div>
       </div>
-      {/* Screenshot */}
       <div className="bg-[#0a120e] relative aspect-[16/10] overflow-hidden">
         <img
           src={src}
@@ -213,7 +338,7 @@ function BrowserPreview({ src, alt, liveUrl }: { src: string; alt: string; liveU
         />
       </div>
       <div className="px-5 py-3 bg-[#0f1d16] border-t border-gray-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[12px] text-gray-400 font-mono">
-        <span>Live Production Interface: coachprospersworld.org</span>
+        <span>Verified Public Interface: coachprospersworld.org</span>
         <span className="text-[#c7f25d]">Active in Production</span>
       </div>
     </div>
@@ -243,6 +368,33 @@ export function CaseStudy() {
 
   const isCFSS = project.id === 'cfss';
   const isCPW = project.id === 'coach-prospers-world';
+  const isMastery = project.id === 'mastery-os';
+  const isAgriChem = project.id === 'agrichem';
+
+  const badge = statusStyles[project.status] || statusStyles.BUILT;
+
+  let architectureItems = cpwArchitecture;
+  let decisionsItems = cpwDecisions;
+  let contributionsItems = cpwContribution;
+  let evidenceItems = cpwEvidence;
+
+  if (isCFSS) {
+    architectureItems = cfssArchitecture;
+    decisionsItems = cfssDecisions;
+    contributionsItems = cfssContribution;
+    evidenceItems = cfssEvidence;
+  } else if (isMastery) {
+    architectureItems = masteryArchitecture;
+    decisionsItems = masteryDecisions;
+    contributionsItems = masteryContribution;
+    evidenceItems = masteryEvidence;
+  } else if (isAgriChem) {
+    architectureItems = agrichemArchitecture;
+    decisionsItems = agrichemDecisions;
+    contributionsItems = agrichemContribution;
+    evidenceItems = agrichemEvidence;
+  }
+
   let sectionNum = 0;
   const nextSection = () => String(++sectionNum).padStart(2, '0');
 
@@ -270,9 +422,25 @@ export function CaseStudy() {
             </Link>
 
             <ScrollReveal>
-              <span className="text-[10px] font-bold tracking-[0.25em] uppercase text-gray-400 block mb-4">
-                {project.category}
-              </span>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="text-[10px] font-bold tracking-[0.25em] uppercase text-gray-400">
+                  {project.category}
+                </span>
+                <span className="text-gray-300">·</span>
+                <span
+                  className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-[0.1em] uppercase border ${badge.bg} ${badge.text} ${badge.border}`}
+                >
+                  {badge.dot && (
+                    <span
+                      className={`w-1.5 h-1.5 rounded-full ${badge.dot} ${
+                        project.status === 'LIVE' ? 'animate-pulse' : ''
+                      }`}
+                    />
+                  )}
+                  {project.status}
+                </span>
+              </div>
+
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 tracking-tighter mb-3">
                 {project.title}
               </h1>
@@ -301,6 +469,21 @@ export function CaseStudy() {
                     Role: Software & Technology Lead
                   </span>
                 )}
+                {isCFSS && (
+                  <span className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-blue-700 bg-blue-50 rounded-lg border border-blue-200">
+                    Stage: Pre-Production Staging & Test Suite
+                  </span>
+                )}
+                {isMastery && (
+                  <span className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-blue-700 bg-blue-50 rounded-lg border border-blue-200">
+                    Stage: Built Implementation & Unit Test Suite
+                  </span>
+                )}
+                {isAgriChem && (
+                  <span className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-purple-700 bg-purple-50 rounded-lg border border-purple-200">
+                    Stage: Evidence Register & Canonical Datasets
+                  </span>
+                )}
                 {project.isPrivateRepo && (
                   <span className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-gray-500 bg-gray-50 rounded-lg border border-gray-200">
                     <svg className="w-3.5 h-3.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -313,7 +496,7 @@ export function CaseStudy() {
             </ScrollReveal>
           </section>
 
-          {/* Genuine Browser Frame Visual Preview */}
+          {/* Genuine Browser Frame Visual Preview (Coach Prosper's World) */}
           {isCPW && (
             <section className="section-padding mb-20 max-w-4xl">
               <ScrollReveal>
@@ -357,7 +540,7 @@ export function CaseStudy() {
             <section className="section-padding mb-20 max-w-3xl">
               <ScrollReveal>
                 <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
-                  {nextSection()} — Problem
+                  {nextSection()} — Problem Statement
                 </h2>
                 <p className="text-[15px] text-gray-600 leading-[1.75]">{project.problem}</p>
               </ScrollReveal>
@@ -369,50 +552,20 @@ export function CaseStudy() {
             <section className="section-padding mb-20 max-w-3xl">
               <ScrollReveal>
                 <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
-                  {nextSection()} — System
-                </h2>
-                <p className="text-[15px] text-gray-600 leading-[1.75]">{project.system}</p>
-              </ScrollReveal>
-            </section>
-          )}
-
-          {/* Architecture (CFSS) */}
-          {isCFSS && (
-            <section className="section-padding mb-20 max-w-3xl">
-              <ScrollReveal>
-                <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
-                  {nextSection()} — Architecture
-                </h2>
-                <p className="text-sm text-gray-500 mb-4">
-                  Data flows from the field through offline storage, synchronization, and into the
-                  backend.
-                </p>
-              </ScrollReveal>
-              <ArchitectureDiagram items={cfssArchitecture} />
-            </section>
-          )}
-
-          {/* Architecture (Coach Prosper's World) */}
-          {isCPW && (
-            <section className="section-padding mb-20 max-w-3xl">
-              <ScrollReveal>
-                <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
                   {nextSection()} — System Architecture
                 </h2>
-                <p className="text-sm text-gray-500 mb-4">
-                  Full-stack architecture integrating role-based authentication, dual-tier blob storage, payment processing, and SMS automation.
-                </p>
+                <p className="text-[15px] text-gray-600 leading-[1.75] mb-6">{project.system}</p>
               </ScrollReveal>
-              <ArchitectureDiagram items={cpwArchitecture} />
+              <ArchitectureDiagram items={architectureItems} />
             </section>
           )}
 
-          {/* Capabilities */}
+          {/* Key Capabilities */}
           {project.capabilities && (
             <section className="section-padding mb-20 max-w-3xl">
               <ScrollReveal>
                 <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
-                  {nextSection()} — Key Capabilities
+                  {nextSection()} — Key Capabilities & Features
                 </h2>
                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {project.capabilities.map((cap) => (
@@ -426,88 +579,60 @@ export function CaseStudy() {
             </section>
           )}
 
-          {/* Core Workflows (Coach Prosper's World only) */}
-          {isCPW && (
-            <section className="section-padding mb-20 max-w-3xl">
-              <ScrollReveal>
-                <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
-                  {nextSection()} — Core Workflows & Integrations
-                </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {cpwWorkflows.map((workflow, idx) => (
-                    <div key={idx} className="p-5 rounded-lg border border-gray-200/80 bg-white">
-                      <h3 className="text-base font-bold text-gray-900 mb-2">{workflow.title}</h3>
-                      <p className="text-sm text-gray-600 leading-relaxed">{workflow.desc}</p>
-                    </div>
-                  ))}
-                </div>
-              </ScrollReveal>
-            </section>
-          )}
+          {/* Engineering Decisions & Constraints */}
+          <section className="section-padding mb-20 max-w-3xl">
+            <ScrollReveal>
+              <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
+                {nextSection()} — Engineering Decisions & Reliability
+              </h2>
+              <div className="space-y-6">
+                {decisionsItems.map((decision, idx) => (
+                  <div key={idx} className="border-l-2 border-gray-900 pl-5 py-1">
+                    <h3 className="text-sm font-bold uppercase tracking-wider text-gray-900 mb-1.5">
+                      {decision.title}
+                    </h3>
+                    <p className="text-[15px] text-gray-600 leading-relaxed">
+                      {decision.detail}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </ScrollReveal>
+          </section>
 
-          {/* Engineering Decisions & Constraints (Coach Prosper's World only) */}
-          {isCPW && (
-            <section className="section-padding mb-20 max-w-3xl">
-              <ScrollReveal>
-                <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
-                  {nextSection()} — Engineering Decisions & Reliability
-                </h2>
-                <div className="space-y-6">
-                  {cpwDecisions.map((decision, idx) => (
-                    <div key={idx} className="border-l-2 border-gray-900 pl-5 py-1">
-                      <h3 className="text-sm font-bold uppercase tracking-wider text-gray-900 mb-1.5">
-                        {decision.title}
-                      </h3>
-                      <p className="text-[15px] text-gray-600 leading-relaxed">
-                        {decision.detail}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </ScrollReveal>
-            </section>
-          )}
+          {/* My Role & Engineering Contribution */}
+          <section className="section-padding mb-20 max-w-3xl">
+            <ScrollReveal>
+              <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
+                {nextSection()} — My Engineering Contribution
+              </h2>
+              <ul className="space-y-3">
+                {contributionsItems.map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-2.5 text-[15px] text-gray-600">
+                    <span className="w-1.5 h-1.5 rounded-full bg-gray-900 mt-2 shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </ScrollReveal>
+          </section>
 
-          {/* My Contribution (CFSS only) */}
-          {isCFSS && (
-            <section className="section-padding mb-20 max-w-3xl">
-              <ScrollReveal>
-                <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
-                  {nextSection()} — My Contribution
-                </h2>
-                <ul className="space-y-3">
-                  {cfssContribution.map((item) => (
-                    <li key={item} className="flex items-start gap-2.5 text-[15px] text-gray-600">
-                      <span className="w-1.5 h-1.5 rounded-full bg-gray-900 mt-2 shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </ScrollReveal>
-            </section>
-          )}
-
-          {/* My Role & Contribution (Coach Prosper's World only) */}
-          {isCPW && (
-            <section className="section-padding mb-20 max-w-3xl">
-              <ScrollReveal>
-                <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
-                  {nextSection()} — My Role & Verified Contributions
-                </h2>
-                <p className="text-sm text-gray-500 mb-4">
-                  Serving as <strong>Software & Technology Lead</strong>, driving full-stack engineering, infrastructure hardening, and production deployment:
-                </p>
-                <ul className="space-y-3">
-                  {cpwContribution.map((item) => (
-                    <li key={item} className="flex items-start gap-2.5 text-[15px] text-gray-600">
-                      <span className="w-1.5 h-1.5 rounded-full bg-gray-900 mt-2 shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </ScrollReveal>
-            </section>
-          )}
+          {/* Verified Evidence & Test Coverage */}
+          <section className="section-padding mb-20 max-w-3xl">
+            <ScrollReveal>
+              <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
+                {nextSection()} — Verified Evidence & Testing
+              </h2>
+              <ul className="space-y-3">
+                {evidenceItems.map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-2.5 text-[15px] text-gray-600">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 mt-2 shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </ScrollReveal>
+          </section>
 
           {/* Scale statement */}
           {project.scaleStatement && (
@@ -518,52 +643,6 @@ export function CaseStudy() {
                     {project.scaleStatement}
                   </p>
                 </div>
-              </ScrollReveal>
-            </section>
-          )}
-
-          {/* Lessons Learned (CFSS) */}
-          {isCFSS && (
-            <section className="section-padding mb-20 max-w-3xl">
-              <ScrollReveal>
-                <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
-                  {nextSection()} — Lessons Learned
-                </h2>
-                <ul className="space-y-4">
-                  {cfssLessons.map((lesson, i) => (
-                    <ScrollReveal key={i} delay={i * 80}>
-                      <li className="flex items-start gap-3 text-[15px] text-gray-600 leading-[1.75]">
-                        <span className="text-[10px] font-bold text-gray-400 mt-1 tabular-nums shrink-0">
-                          {String(i + 1).padStart(2, '0')}
-                        </span>
-                        {lesson}
-                      </li>
-                    </ScrollReveal>
-                  ))}
-                </ul>
-              </ScrollReveal>
-            </section>
-          )}
-
-          {/* Lessons Learned (Coach Prosper's World) */}
-          {isCPW && (
-            <section className="section-padding mb-20 max-w-3xl">
-              <ScrollReveal>
-                <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
-                  {nextSection()} — Lessons Learned
-                </h2>
-                <ul className="space-y-4">
-                  {cpwLessons.map((lesson, i) => (
-                    <ScrollReveal key={i} delay={i * 80}>
-                      <li className="flex items-start gap-3 text-[15px] text-gray-600 leading-[1.75]">
-                        <span className="text-[10px] font-bold text-gray-400 mt-1 tabular-nums shrink-0">
-                          {String(i + 1).padStart(2, '0')}
-                        </span>
-                        {lesson}
-                      </li>
-                    </ScrollReveal>
-                  ))}
-                </ul>
               </ScrollReveal>
             </section>
           )}

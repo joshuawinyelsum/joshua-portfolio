@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Project } from '../types';
+import { Project, ProjectStatus } from '../types';
 import { ScrollReveal } from './ScrollReveal';
 
 interface ProjectCardProps {
@@ -7,7 +7,41 @@ interface ProjectCardProps {
   index: number;
 }
 
+const statusBadgeStyles: Record<ProjectStatus, { bg: string; text: string; border: string; dot?: string }> = {
+  LIVE: {
+    bg: 'bg-emerald-50',
+    text: 'text-emerald-700',
+    border: 'border-emerald-200',
+    dot: 'bg-emerald-500',
+  },
+  BUILT: {
+    bg: 'bg-blue-50',
+    text: 'text-blue-700',
+    border: 'border-blue-200',
+    dot: 'bg-blue-500',
+  },
+  'IN PROGRESS': {
+    bg: 'bg-amber-50',
+    text: 'text-amber-700',
+    border: 'border-amber-200',
+    dot: 'bg-amber-500',
+  },
+  RESEARCH: {
+    bg: 'bg-purple-50',
+    text: 'text-purple-700',
+    border: 'border-purple-200',
+    dot: 'bg-purple-500',
+  },
+  PLANNED: {
+    bg: 'bg-gray-50',
+    text: 'text-gray-600',
+    border: 'border-gray-200',
+  },
+};
+
 export function ProjectCard({ project, index }: ProjectCardProps) {
+  const badge = statusBadgeStyles[project.status] || statusBadgeStyles.BUILT;
+
   return (
     <ScrollReveal delay={index * 120}>
       <Link
@@ -15,13 +49,28 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
         className="group block py-10 md:py-12 border-t border-gray-300/80 transition-all duration-500 hover:border-gray-500"
       >
         <div className="flex flex-col gap-6">
-          {/* Top row: number + category */}
-          <div className="flex items-baseline justify-between">
-            <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-gray-400">
-              {project.number}
-            </span>
-            <span className="text-[10px] font-semibold tracking-[0.2em] uppercase text-gray-400 hidden sm:block">
-              {project.category}
+          {/* Top row: number + category + status badge */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-gray-400">
+                {project.number}
+              </span>
+              <span className="text-[10px] font-semibold tracking-[0.2em] uppercase text-gray-400 hidden sm:inline">
+                {project.category}
+              </span>
+            </div>
+
+            <span
+              className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-[0.1em] uppercase border ${badge.bg} ${badge.text} ${badge.border}`}
+            >
+              {badge.dot && (
+                <span
+                  className={`w-1.5 h-1.5 rounded-full ${badge.dot} ${
+                    project.status === 'LIVE' ? 'animate-pulse' : ''
+                  }`}
+                />
+              )}
+              {project.status}
             </span>
           </div>
 

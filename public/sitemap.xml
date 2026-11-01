@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://joshua-portfolio.vercel.app/</loc>
+    <loc>https://joshua-winyelsum.vercel.app/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://joshua-portfolio.vercel.app/cv</loc>
+    <loc>https://joshua-winyelsum.vercel.app/cv</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://joshua-portfolio.vercel.app/case-study/coach-prospers-world</loc>
+    <loc>https://joshua-winyelsum.vercel.app/case-study/coach-prospers-world</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://joshua-portfolio.vercel.app/case-study/cfss</loc>
+    <loc>https://joshua-winyelsum.vercel.app/case-study/cfss</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://joshua-winyelsum.vercel.app/case-study/mastery-os</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://joshua-winyelsum.vercel.app/case-study/agrichem</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 </urlset>
-

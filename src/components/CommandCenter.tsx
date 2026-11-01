@@ -16,9 +16,9 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
       type: 'output',
       content: (
         <div className="text-gray-400 mb-4">
-          Explore like a developer.
+          Explore portfolio via terminal commands.
           <div className="mt-1 flex flex-col gap-0.5">
-            <span className="text-blue-400">projects, research, cv</span>
+            <span className="text-blue-400">projects, cpw, cfss, mastery, agrichem, research, cv, stack</span>
           </div>
           <div className="mt-3 text-[10px] text-gray-500 font-sans tracking-widest">
             [ CTRL K → ENTER ]
@@ -36,7 +36,7 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
   const previousFocus = useRef<HTMLElement | null>(null);
 
   const availableCommands = [
-    'projects', 'cpw', 'research', 'experience', 'skills', 'cv', 'github', 
+    'projects', 'cpw', 'cfss', 'mastery', 'agrichem', 'research', 'experience', 'skills', 'cv', 'github',
     'contact', 'about', 'clear', 'exit', 'help', 'whoami', 'stack'
   ];
 
@@ -95,17 +95,20 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
       case 'help':
         pushOutput(
           <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-gray-300 w-full max-w-sm mt-2 mb-4">
-            <span className="text-blue-400">projects</span><span>Explore projects</span>
-            <span className="text-blue-400">cpw</span><span>Coach Prosper’s World</span>
-            <span className="text-blue-400">research</span><span>Explore research</span>
-            <span className="text-blue-400">experience</span><span>View experience</span>
+            <span className="text-blue-400">projects</span><span>Explore featured work</span>
+            <span className="text-blue-400">cpw</span><span>Coach Prosper’s World (Live)</span>
+            <span className="text-blue-400">cfss</span><span>CFSS (Offline-First GIS)</span>
+            <span className="text-blue-400">mastery</span><span>MasteryOS (Spaced Repetition)</span>
+            <span className="text-blue-400">agrichem</span><span>AgriChem (Data Research)</span>
+            <span className="text-blue-400">research</span><span>Explore research & data</span>
+            <span className="text-blue-400">experience</span><span>View engineering experience</span>
             <span className="text-blue-400">skills</span><span>View technical skills</span>
             <span className="text-blue-400">cv</span><span>Open interactive CV</span>
-            <span className="text-blue-400">github</span><span>Open GitHub</span>
+            <span className="text-blue-400">github</span><span>Open GitHub profile</span>
             <span className="text-blue-400">contact</span><span>Contact Joshua</span>
             <span className="text-blue-400">about</span><span>About Joshua</span>
             <span className="text-blue-400">whoami</span><span>Developer identity</span>
-            <span className="text-blue-400">stack</span><span>Tech stack</span>
+            <span className="text-blue-400">stack</span><span>Verified technical stack</span>
             <span className="text-blue-400">clear</span><span>Clear terminal</span>
             <span className="text-blue-400">exit</span><span>Close console</span>
           </div>
@@ -117,8 +120,23 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
         pushOutput(<span className="text-green-400">Navigating to Coach Prosper’s World case study...</span>);
         setTimeout(() => navigateTo('/case-study/coach-prospers-world'), 300);
         break;
+      case 'cfss':
+        pushOutput(<span className="text-green-400">Navigating to CFSS case study...</span>);
+        setTimeout(() => navigateTo('/case-study/cfss'), 300);
+        break;
+      case 'mastery':
+      case 'masteryos':
+      case 'mastery-os':
+        pushOutput(<span className="text-green-400">Navigating to MasteryOS case study...</span>);
+        setTimeout(() => navigateTo('/case-study/mastery-os'), 300);
+        break;
+      case 'agrichem':
+      case 'ghanaagrichem':
+        pushOutput(<span className="text-green-400">Navigating to AgriChem case study...</span>);
+        setTimeout(() => navigateTo('/case-study/agrichem'), 300);
+        break;
       case 'projects':
-        pushOutput(<span className="text-green-400">Navigating to Projects...</span>);
+        pushOutput(<span className="text-green-400">Navigating to Selected Work...</span>);
         setTimeout(() => navigateTo('/#work'), 300);
         break;
       case 'research':
@@ -130,8 +148,8 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
         setTimeout(() => navigateTo('/#experience'), 300);
         break;
       case 'skills':
-        pushOutput(<span className="text-green-400">Navigating to Engineering Skills...</span>);
-        setTimeout(() => navigateTo('/#engineering'), 300);
+        pushOutput(<span className="text-green-400">Navigating to Engineering Stack...</span>);
+        setTimeout(() => navigateTo('/#stack'), 300);
         break;
       case 'cv':
         pushOutput(<span className="text-green-400">Opening interactive CV...</span>);
@@ -154,19 +172,19 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
           <div className="text-gray-300 my-2 leading-relaxed">
             Joshua Winyelsum<br/>
             <br/>
-            Systems Engineer<br/>
-            ML & Data Systems Researcher<br/>
-            Computer Science Student
+            Software & Systems Engineer<br/>
+            BSc Computer Science Student @ University for Development Studies<br/>
+            Core Focus: Backend Architecture, Relational Databases, Offline-First Systems & Data Pipelines
           </div>
         );
         break;
       case 'stack':
         pushOutput(
           <div className="text-gray-300 my-2 leading-relaxed">
-            Languages: TypeScript, Python, C++, Go, Rust<br/>
-            Frontend: React, Tailwind CSS, Vite<br/>
-            Backend: Node.js, Express, PostgreSQL, MongoDB<br/>
-            Systems: Docker, Linux, AWS, CI/CD
+            Languages: TypeScript, Python, JavaScript, SQL<br/>
+            Backend & Systems: Next.js (App Router), FastAPI, Node.js, REST APIs<br/>
+            Databases & Storage: PostgreSQL, Prisma ORM, IndexedDB (Dexie), Redis<br/>
+            Testing & Engineering: Vitest, Pytest, Playwright, Git, Linux/CLI
           </div>
         );
         break;
@@ -202,7 +220,6 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
   }, [isOpen]);
 
   useEffect(() => {
-    // Auto scroll to bottom
     if (bottomRef.current) {
       bottomRef.current.scrollIntoView();
     }

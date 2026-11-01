@@ -2,44 +2,44 @@ import { Skill } from '../types';
 
 export const skills: Skill[] = [
   // Languages
-  { name: 'Python', category: 'Languages', linkedProjects: ['cropmind', 'agrichem'] },
-  { name: 'TypeScript', category: 'Languages', linkedProjects: ['coach-prospers-world'] },
-  { name: 'JavaScript', category: 'Languages', linkedProjects: ['coach-prospers-world', 'cfss'] },
-  { name: 'HTML', category: 'Languages', linkedProjects: ['coach-prospers-world', 'cfss'] },
-  { name: 'CSS', category: 'Languages', linkedProjects: ['coach-prospers-world', 'cfss'] },
-  { name: 'SQL', category: 'Languages', linkedProjects: ['coach-prospers-world'] },
-  // Frontend
-  { name: 'React', category: 'Frontend', linkedProjects: ['coach-prospers-world', 'cfss'] },
-  { name: 'Next.js', category: 'Frontend', linkedProjects: ['coach-prospers-world'] },
-  { name: 'Vite', category: 'Frontend', linkedProjects: ['cfss'] },
-  // Backend
-  { name: 'FastAPI', category: 'Backend', linkedProjects: ['cfss'] },
-  { name: 'Node.js', category: 'Backend', linkedProjects: ['coach-prospers-world'] },
-  { name: 'Express', category: 'Backend', linkedProjects: [] },
+  { name: 'TypeScript', category: 'Languages', linkedProjects: ['coach-prospers-world', 'cfss', 'mastery-os'] },
+  { name: 'Python', category: 'Languages', linkedProjects: ['cfss', 'agrichem'] },
+  { name: 'JavaScript', category: 'Languages', linkedProjects: ['coach-prospers-world', 'cfss', 'mastery-os'] },
+  { name: 'SQL', category: 'Languages', linkedProjects: ['coach-prospers-world', 'cfss', 'mastery-os'] },
+  { name: 'HTML / CSS', category: 'Languages', linkedProjects: ['coach-prospers-world', 'cfss', 'mastery-os'] },
+
+  // Backend & Systems
+  { name: 'FastAPI', category: 'Backend & Systems', linkedProjects: ['cfss'] },
+  { name: 'Next.js (App Router)', category: 'Backend & Systems', linkedProjects: ['coach-prospers-world', 'cfss', 'mastery-os'] },
+  { name: 'Node.js', category: 'Backend & Systems', linkedProjects: ['coach-prospers-world'] },
+  { name: 'REST APIs', category: 'Backend & Systems', linkedProjects: ['coach-prospers-world', 'cfss', 'mastery-os'] },
+  { name: 'Authentication (JWT / NextAuth)', category: 'Backend & Systems', linkedProjects: ['coach-prospers-world', 'cfss'] },
+
   // Data & Storage
-  { name: 'PostgreSQL', category: 'Data & Storage', linkedProjects: ['coach-prospers-world'] },
-  { name: 'Prisma ORM', category: 'Data & Storage', linkedProjects: ['coach-prospers-world'] },
-  { name: 'MongoDB', category: 'Data & Storage', linkedProjects: [] },
-  { name: 'IndexedDB', category: 'Data & Storage', linkedProjects: ['cfss'] },
-  { name: 'JSON', category: 'Data & Storage', linkedProjects: ['coach-prospers-world', 'cfss', 'agrichem'] },
-  // AI / ML
-  { name: 'Machine Learning', category: 'AI / ML', linkedProjects: ['cropmind'] },
-  { name: 'Computer Vision', category: 'AI / ML', linkedProjects: ['cropmind'] },
-  { name: 'Data Processing', category: 'AI / ML', linkedProjects: ['agrichem', 'cropmind'] },
-  // Engineering
-  { name: 'Git', category: 'Engineering', linkedProjects: ['coach-prospers-world', 'cfss', 'cropmind', 'agrichem'] },
-  { name: 'GitHub', category: 'Engineering', linkedProjects: ['coach-prospers-world', 'cfss', 'cropmind', 'agrichem'] },
-  { name: 'REST APIs', category: 'Engineering', linkedProjects: ['coach-prospers-world', 'cfss'] },
-  { name: 'JWT', category: 'Engineering', linkedProjects: ['coach-prospers-world', 'cfss'] },
-  { name: 'Linux / CLI', category: 'Engineering', linkedProjects: ['coach-prospers-world'] },
-  { name: 'Postman', category: 'Engineering', linkedProjects: ['coach-prospers-world', 'cfss'] },
+  { name: 'PostgreSQL', category: 'Data & Storage', linkedProjects: ['coach-prospers-world', 'cfss', 'mastery-os'] },
+  { name: 'Prisma ORM', category: 'Data & Storage', linkedProjects: ['coach-prospers-world', 'mastery-os'] },
+  { name: 'IndexedDB (Dexie)', category: 'Data & Storage', linkedProjects: ['cfss'] },
+  { name: 'Schema Design & Relational Modeling', category: 'Data & Storage', linkedProjects: ['coach-prospers-world', 'cfss', 'mastery-os'] },
+  { name: 'Data Pipeline Validation', category: 'Data & Storage', linkedProjects: ['agrichem'] },
+
+  // Frontend & UI
+  { name: 'React', category: 'Frontend', linkedProjects: ['coach-prospers-world', 'cfss', 'mastery-os'] },
+  { name: 'Tailwind CSS', category: 'Frontend', linkedProjects: ['coach-prospers-world', 'cfss', 'mastery-os'] },
+  { name: 'Leaflet / GIS Mapping', category: 'Frontend', linkedProjects: ['cfss'] },
+  { name: 'React Flow (Graphs)', category: 'Frontend', linkedProjects: ['mastery-os'] },
+
+  // Engineering & Reliability
+  { name: 'Git & GitHub', category: 'Engineering & Reliability', linkedProjects: ['coach-prospers-world', 'cfss', 'mastery-os', 'agrichem'] },
+  { name: 'Automated Testing (Vitest / Pytest)', category: 'Engineering & Reliability', linkedProjects: ['mastery-os', 'cfss', 'agrichem', 'coach-prospers-world'] },
+  { name: 'E2E Testing (Playwright)', category: 'Engineering & Reliability', linkedProjects: ['cfss', 'coach-prospers-world'] },
+  { name: 'Linux / Shell', category: 'Engineering & Reliability', linkedProjects: ['coach-prospers-world', 'cfss', 'agrichem'] },
+  { name: 'Webhook & Idempotency Engineering', category: 'Engineering & Reliability', linkedProjects: ['coach-prospers-world'] },
 ];
 
 export const skillCategories = [
   'Languages',
-  'Frontend',
-  'Backend',
+  'Backend & Systems',
   'Data & Storage',
-  'AI / ML',
-  'Engineering',
+  'Frontend',
+  'Engineering & Reliability',
 ];

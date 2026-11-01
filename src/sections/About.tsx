@@ -13,36 +13,27 @@ export function About() {
           <div className="lg:col-span-2 space-y-5">
             <ScrollReveal>
               <p className="text-lg md:text-xl text-gray-800 leading-relaxed font-semibold">
-                I'm Joshua Winyelsum, a Computer Science student, software engineer in the making,
-                and AI & data systems researcher.
+                I'm Joshua Winyelsum, a Computer Science student at the University for Development Studies and a software engineer focused on backend systems, database architecture, and data pipelines.
               </p>
             </ScrollReveal>
             <ScrollReveal delay={80}>
               <p className="text-[15px] text-gray-600 leading-[1.8]">
-                My journey into technology started during the COVID-19 lockdowns, when I began
-                teaching myself programming. What started as curiosity became a deeper interest in
-                understanding how software works, how systems scale, and how technology can be
-                applied to problems beyond the screen.
+                My engineering focus centers on building resilient application architectures with FastAPI, Next.js, and PostgreSQL, designing clean relational schemas with Prisma and SQLAlchemy, and ensuring offline reliability with client-side persistence like IndexedDB.
               </p>
             </ScrollReveal>
             <ScrollReveal delay={140}>
               <p className="text-[15px] text-gray-600 leading-[1.8]">
-                Today, I'm strengthening my foundations in Python, backend engineering, problem
-                solving, and systems while exploring machine learning, computer vision, and
-                data-intensive applications.
+                I treat software development as an evidence-driven discipline: architectures must be supported by automated test suites, defensive error handling, and defensible performance constraints rather than unsubstantiated claims.
               </p>
             </ScrollReveal>
             <ScrollReveal delay={200}>
               <p className="text-[15px] text-gray-600 leading-[1.8]">
-                I'm particularly interested in problems where data is fragmented, incomplete, or
-                difficult to use—especially within agriculture and other real-world environments
-                where better data systems and intelligent technology can make a difference.
+                Alongside application engineering, I conduct data systems research—investigating fragmented regulatory datasets, extraction pipelines, and canonical schema harmonization, especially within real-world environments like Ghana's agricultural-chemical sector.
               </p>
             </ScrollReveal>
             <ScrollReveal delay={260}>
               <p className="text-[15px] text-gray-600 leading-[1.8]">
-                I'm also developing as a researcher, investigating datasets, data pipelines,
-                schemas, and the gaps that make real-world information difficult to use effectively.
+                Currently pursuing my BSc in Computer Science at UDS, I continuously bridge academic foundations in systems analysis, database theory, and data structures with practical production engineering.
               </p>
             </ScrollReveal>
           </div>

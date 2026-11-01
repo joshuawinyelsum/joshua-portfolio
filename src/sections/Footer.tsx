@@ -11,18 +11,18 @@ export function Footer() {
             <h3 className="text-base font-bold text-white tracking-tight mb-2">
               Joshua Winyelsum
             </h3>
-            <p className="text-[11px] tracking-wider text-gray-600 mb-2">
-              Systems Engineer · Backend Engineer · ML Engineer · AI & Data Systems Researcher
+            <p className="text-[11px] tracking-wider text-gray-500 mb-2">
+              Software & Systems Engineer · Backend Architecture · Database Design · Data Systems
             </p>
-            <p className="text-[11px] text-gray-700 italic">
-              Building systems. Investigating problems. Learning continuously.
+            <p className="text-[11px] text-gray-600 italic">
+              Building reliable systems. Modeling relational data. Verifying through automated tests.
             </p>
           </div>
 
           <div className="flex flex-col items-start md:items-end gap-3">
             <button
               onClick={scrollToTop}
-              className="group text-[11px] font-medium text-gray-600 hover:text-white transition-colors duration-300 flex items-center gap-1.5"
+              className="group text-[11px] font-medium text-gray-400 hover:text-white transition-colors duration-300 flex items-center gap-1.5"
               aria-label="Back to top"
             >
               Back to top
@@ -36,7 +36,7 @@ export function Footer() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 10l7-7m0 0l7 7" />
               </svg>
             </button>
-            <p className="text-[11px] text-gray-800">
+            <p className="text-[11px] text-gray-600">
               © {new Date().getFullYear()} Joshua Winyelsum
             </p>
           </div>

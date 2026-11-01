@@ -1,3 +1,5 @@
+export type ProjectStatus = 'LIVE' | 'BUILT' | 'IN PROGRESS' | 'RESEARCH' | 'PLANNED';
+
 export interface Project {
   id: string;
   number: string;
@@ -12,7 +14,7 @@ export interface Project {
   scaleStatement?: string;
   cta: string;
   ctaLink: string;
-  status?: 'shipped' | 'building' | 'research';
+  status: ProjectStatus;
   featured: boolean;
   liveUrl?: string;
   isPrivateRepo?: boolean;
@@ -64,7 +66,7 @@ export interface BuildingProject {
   title: string;
   subtitle: string;
   description: string;
-  status: string;
+  status: ProjectStatus;
 }
 
 export interface ResearchArea {

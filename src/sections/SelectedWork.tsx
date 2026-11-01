@@ -10,7 +10,7 @@ export function SelectedWork() {
       <div className="max-w-5xl">
         <SectionHeader
           title="Selected Work"
-          subtitle="Systems I've built."
+          subtitle="Production platforms, systems engineering, and data pipelines."
         />
         <div>
           {featuredProjects.map((project, index) => (
