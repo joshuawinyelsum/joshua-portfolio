@@ -26,7 +26,7 @@ export async function executeCommandLine(
         output: (
           <div className="py-1 text-xs font-mono space-y-1">
             <div className="text-[#E57373] font-semibold flex items-center gap-1.5">
-              <span>✗</span>
+              <span className="font-bold">[!]</span>
               <span>Command unavailable: '{parseResult.prohibitedCommandName}'</span>
             </div>
             <div className="text-[#A6A397] pl-4 text-[11.5px] leading-relaxed">
@@ -45,8 +45,8 @@ export async function executeCommandLine(
         output: (
           <div className="py-1 text-xs font-mono space-y-1">
             <div className="text-[#E57373] font-semibold flex items-center gap-1.5">
-              <span>🛡️</span>
-              <span>Security Policy Rejection</span>
+              <span className="font-bold">[SECURITY]</span>
+              <span>Policy Rejection</span>
             </div>
             <div className="text-[#A6A397] pl-4 text-[11.5px]">
               {parseResult.error}
@@ -62,7 +62,7 @@ export async function executeCommandLine(
     return {
       output: (
         <div className="py-1 text-[#E57373] font-mono text-xs flex items-center gap-1.5">
-          <span>✗</span>
+          <span className="font-bold">[!]</span>
           <span>{parseResult.error}</span>
         </div>
       ),
@@ -121,7 +121,7 @@ export async function executeCommandLine(
         output: (
           <div className="py-1 text-[#E57373] font-mono text-xs space-y-1">
             <div className="flex items-start gap-1.5 font-semibold">
-              <span>✗</span>
+              <span className="font-bold">[!]</span>
               <span>{result.error}</span>
             </div>
             {command.usage && (

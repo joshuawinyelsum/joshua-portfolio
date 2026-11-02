@@ -122,8 +122,9 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
         <div className="text-[#F0EEE7] font-bold text-sm">
           JOSHUA WINYELSUM — DEVELOPER WORKSTATION [v2.5]
         </div>
-        <span className="text-[10px] px-2 py-0.5 rounded bg-[#292A27] text-[#7EC28D] border border-[#7EC28D]/30 font-semibold">
-          ● SIMULATED LINUX ENVIRONMENT
+        <span className="text-[10px] px-2 py-0.5 rounded bg-[#292A27] text-[#7EC28D] border border-[#7EC28D]/30 font-semibold flex items-center gap-1.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#7EC28D]" />
+          <span>SIMULATED LINUX ENVIRONMENT</span>
         </span>
       </div>
       <p className="text-[#A6A397] leading-relaxed">

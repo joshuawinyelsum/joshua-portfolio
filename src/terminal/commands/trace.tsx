@@ -163,7 +163,7 @@ const TRACES: Record<string, ProjectTraceSequence> = {
         layer: 'BACKEND',
         label: 'Step 3: SuperMemo SM-2 Interval Calculation',
         action: 'Engine computes updated Easiness Factor (EF) and new interval based on SuperMemo SM-2 formula.',
-        payload: 'q = 4, prev_EF = 2.50\nnew_EF = 2.50 + (0.1 - (5 - 4) * (0.08 + (5 - 4) * 0.02)) = 2.50\nrepetition_count = 3 ➔ interval = 6 * 2.50 = 15 days',
+        payload: 'q = 4, prev_EF = 2.50\nnew_EF = 2.50 + (0.1 - (5 - 4) * (0.08 + (5 - 4) * 0.02)) = 2.50\nrepetition_count = 3 -> interval = 6 * 2.50 = 15 days',
         metrics: 'Calculation duration: 0.02ms',
         invariants: 'Easiness Factor (EF) cannot drop below minimum threshold of 1.30.',
       },
@@ -171,7 +171,7 @@ const TRACES: Record<string, ProjectTraceSequence> = {
         layer: 'BACKEND',
         label: 'Step 4: Prerequisite Failure Diagnostic',
         action: 'If q < 3 (failure), engine traverses DAG prerequisites to flag conceptual root causes. Since q=4, prerequisite tree marked healthy.',
-        payload: 'traversePrerequisiteRoots(concept_id="c_graph_dfs") ➔ status: "STABLE"',
+        payload: 'traversePrerequisiteRoots(concept_id="c_graph_dfs") -> status: "STABLE"',
         metrics: 'DFS traversal latency: 1.1ms',
         invariants: 'DAG invariant: No circular dependencies allowed in prerequisite graph.',
       },
@@ -292,8 +292,8 @@ export const traceCommand: Command = {
                     {s.payload}
                   </pre>
                   <div className="flex flex-wrap gap-x-4 text-[10px] text-[#7A786E] pt-0.5">
-                    <span>⚡ {s.metrics}</span>
-                    <span>🛡️ {s.invariants}</span>
+                    <span>Performance: {s.metrics}</span>
+                    <span>Invariant: {s.invariants}</span>
                   </div>
                 </div>
               ))}
@@ -401,11 +401,11 @@ export const traceCommand: Command = {
             {/* Performance and Invariants */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-[11px]">
               <div className="p-2 rounded bg-[#262724] border border-[#3A3A35]">
-                <span className="text-[#82AAFF] font-bold">⚡ Performance:</span>{' '}
+                <span className="text-[#82AAFF] font-bold">Performance:</span>{' '}
                 <span className="text-[#A6A397]">{currentStepData.metrics}</span>
               </div>
               <div className="p-2 rounded bg-[#262724] border border-[#3A3A35]">
-                <span className="text-[#E5C07B] font-bold">🛡️ Invariant:</span>{' '}
+                <span className="text-[#E5C07B] font-bold">Invariant:</span>{' '}
                 <span className="text-[#A6A397]">{currentStepData.invariants}</span>
               </div>
             </div>

@@ -71,13 +71,14 @@ export function ContextualNav() {
                     <a
                       href={link}
                       onClick={() => setExpanded(false)}
-                      className={`text-[9px] sm:text-[10px] font-bold tracking-[0.15em] uppercase transition-colors whitespace-nowrap ${
+                      className={`text-[9px] sm:text-[10px] font-bold tracking-[0.15em] uppercase transition-colors whitespace-nowrap inline-flex items-center gap-1.5 ${
                         item === current
                           ? 'text-gray-900 dark:text-white'
                           : 'text-gray-400 dark:text-neutral-500 hover:text-gray-800 dark:hover:text-[#ededeb]'
                       }`}
                     >
-                      {item === current ? `● ${item}` : item}
+                      {item === current && <span className="w-1.5 h-1.5 rounded-full bg-current" />}
+                      <span>{item}</span>
                     </a>
                   ) : (
                     <button
@@ -95,16 +96,17 @@ export function ContextualNav() {
                           navigate(link);
                         }
                       }}
-                      className={`text-[9px] sm:text-[10px] font-bold tracking-[0.15em] uppercase transition-colors whitespace-nowrap ${
+                      className={`text-[9px] sm:text-[10px] font-bold tracking-[0.15em] uppercase transition-colors whitespace-nowrap inline-flex items-center gap-1.5 ${
                         item === current
                           ? 'text-gray-900 dark:text-white'
                           : 'text-gray-400 dark:text-neutral-500 hover:text-gray-800 dark:hover:text-[#ededeb]'
                       }`}
                     >
-                      {item === current ? `● ${item}` : item}
+                      {item === current && <span className="w-1.5 h-1.5 rounded-full bg-current" />}
+                      <span>{item}</span>
                     </button>
                   )}
-                  {i < 3 && <span className="text-gray-200 dark:text-neutral-700 text-[10px]">─</span>}
+                  {i < 3 && <span className="text-gray-200 dark:text-neutral-700 text-[10px]">/</span>}
                 </div>
               );
             })}

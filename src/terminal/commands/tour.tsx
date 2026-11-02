@@ -201,7 +201,7 @@ export const tourCommand: Command = {
           <ul className="space-y-1.5 pl-3 border-l-2 border-[#45453F] text-[#A6A397] text-[11.5px] leading-relaxed">
             {data.details.map((d, i) => (
               <li key={i} className="flex items-start gap-1.5">
-                <span className="text-[#7EC28D] select-none">▸</span>
+                <span className="text-[#7EC28D] select-none font-bold">-</span>
                 <span>{d}</span>
               </li>
             ))}

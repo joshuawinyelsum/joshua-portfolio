@@ -13,38 +13,38 @@ import { Footer } from '../sections/Footer';
 // ==========================================
 
 const cfssArchitecture = [
-  { layer: 'Student & Coordinator Portals', desc: 'Progressive web interface with Leaflet GIS mapping & GPS capture', icon: '👤' },
-  { layer: 'IndexedDB / Dexie Storage', desc: 'Local draft persistence and offline synchronization queue', icon: '💾' },
-  { layer: 'Bi-Directional Sync Layer', desc: 'Resolves survey conflict states when connectivity returns', icon: '🔄' },
-  { layer: 'FastAPI Backend Engine', desc: 'Python 3.12 API with role-based auth, rate-limiting & PDF generation', icon: '⚡' },
-  { layer: 'PostgreSQL Database', desc: 'Relational storage for survey schemas, respondents, and spatial geometries', icon: '🗄' },
-  { layer: 'Celery / Redis Worker Layer', desc: 'Background tasks for heavy batch exports and notification outboxes', icon: '⚙' },
+  { layer: 'Student & Coordinator Portals', desc: 'Progressive web interface with Leaflet GIS mapping & GPS capture' },
+  { layer: 'IndexedDB / Dexie Storage', desc: 'Local draft persistence and offline synchronization queue' },
+  { layer: 'Bi-Directional Sync Layer', desc: 'Resolves survey conflict states when connectivity returns' },
+  { layer: 'FastAPI Backend Engine', desc: 'Python 3.12 API with role-based auth, rate-limiting & PDF generation' },
+  { layer: 'PostgreSQL Database', desc: 'Relational storage for survey schemas, respondents, and spatial geometries' },
+  { layer: 'Celery / Redis Worker Layer', desc: 'Background tasks for heavy batch exports and notification outboxes' },
 ];
 
 const cpwArchitecture = [
-  { layer: 'Next.js App Router', desc: 'Full-stack SSR/SSG client and server route endpoints', icon: '▲' },
-  { layer: 'NextAuth Security Layer', desc: 'Role-based access control, session validation & audit logging', icon: '🛡' },
-  { layer: 'Prisma ORM & PostgreSQL', desc: 'Relational data modeling across 12 operational domains', icon: '🗄' },
-  { layer: 'Dual-Tier Vercel Blob Storage', desc: 'Private store for applicant photos & public CMS media', icon: '☁' },
-  { layer: 'Paystack Payment Gateway', desc: 'Donation initialization & HMAC-SHA512 webhook verification', icon: '💳' },
-  { layer: 'Arkesel SMS Gateway', desc: 'Automated application SMS notifications & administrative broadcast', icon: '📱' },
+  { layer: 'Next.js App Router', desc: 'Full-stack SSR/SSG client and server route endpoints' },
+  { layer: 'NextAuth Security Layer', desc: 'Role-based access control, session validation & audit logging' },
+  { layer: 'Prisma ORM & PostgreSQL', desc: 'Relational data modeling across 12 operational domains' },
+  { layer: 'Dual-Tier Vercel Blob Storage', desc: 'Private store for applicant photos & public CMS media' },
+  { layer: 'Paystack Payment Gateway', desc: 'Donation initialization & HMAC-SHA512 webhook verification' },
+  { layer: 'Arkesel SMS Gateway', desc: 'Automated application SMS notifications & administrative broadcast' },
 ];
 
 const masteryArchitecture = [
-  { layer: 'Next.js 15 & React 19 Frontend', desc: 'Interactive active-recall review session engine with keyboard shortcuts', icon: '▲' },
-  { layer: 'Knowledge Dependency Graph', desc: 'React Flow visualization with DAG cycle detection via Depth-First Search', icon: '🕸' },
-  { layer: 'SM-2 Scheduling Engine', desc: 'Deterministic spaced repetition calculator with bounded ease factors', icon: '⏱' },
-  { layer: 'Diagnostic Failure Service', desc: 'Identifies prerequisite bottlenecks when recall attempts fail', icon: '🔍' },
-  { layer: 'Prisma ORM & PostgreSQL', desc: 'Transactional schedule updates and append-only review history', icon: '🗄' },
-  { layer: 'Vitest Automated Suite', desc: 'Unit tests validating scheduling intervals, ease factor limits & graph DAGs', icon: '🧪' },
+  { layer: 'Next.js 15 & React 19 Frontend', desc: 'Interactive active-recall review session engine with keyboard shortcuts' },
+  { layer: 'Knowledge Dependency Graph', desc: 'React Flow visualization with DAG cycle detection via Depth-First Search' },
+  { layer: 'SM-2 Scheduling Engine', desc: 'Deterministic spaced repetition calculator with bounded ease factors' },
+  { layer: 'Diagnostic Failure Service', desc: 'Identifies prerequisite bottlenecks when recall attempts fail' },
+  { layer: 'Prisma ORM & PostgreSQL', desc: 'Transactional schedule updates and append-only review history' },
+  { layer: 'Vitest Automated Suite', desc: 'Unit tests validating scheduling intervals, ease factor limits & graph DAGs' },
 ];
 
 const agrichemArchitecture = [
-  { layer: 'Immutable Source Archive', desc: '7 regulatory and academic PDF sources locked with SHA-256 checksums', icon: '📄' },
-  { layer: 'Coordinate Table Parser & OCR', desc: 'Custom table extraction with Tesseract OCR fallback for scanned pages', icon: '📐' },
-  { layer: 'Verbatim Evidence Register', desc: '346 verbatim quotes machine-verified against source coordinates and pages', icon: '📋' },
-  { layer: 'Canonicalization Engine', desc: 'Normalizes fragmented schemas into 708 standardized long-format records', icon: '🔄' },
-  { layer: 'Automated Validation Suite', desc: 'Pytest suite verifying schema constraints, limits, and scientific consistency', icon: '🧪' },
+  { layer: 'Immutable Source Archive', desc: '7 regulatory and academic PDF sources locked with SHA-256 checksums' },
+  { layer: 'Coordinate Table Parser & OCR', desc: 'Custom table extraction with Tesseract OCR fallback for scanned pages' },
+  { layer: 'Verbatim Evidence Register', desc: '346 verbatim quotes machine-verified against source coordinates and pages' },
+  { layer: 'Canonicalization Engine', desc: 'Normalizes fragmented schemas into 708 standardized long-format records' },
+  { layer: 'Automated Validation Suite', desc: 'Pytest suite verifying schema constraints, limits, and scientific consistency' },
 ];
 
 // ==========================================
@@ -225,7 +225,7 @@ const statusStyles: Record<ProjectStatus, { bg: string; text: string; border: st
   },
 };
 
-function ArchitectureDiagram({ items }: { items: { layer: string; desc: string; icon: string }[] }) {
+function ArchitectureDiagram({ items }: { items: { layer: string; desc: string }[] }) {
   const { ref, isInView } = useInView({ threshold: 0.15 });
   const reducedMotion = useReducedMotion();
   const { isDark } = useTheme();
@@ -248,12 +248,13 @@ function ArchitectureDiagram({ items }: { items: { layer: string; desc: string; 
               }}
             >
               <span
+                className="font-mono text-[11px] font-bold"
                 style={{
                   opacity: isInView ? 1 : 0,
                   transition: reducedMotion ? 'none' : `opacity 0.4s ease ${i * 100 + 150}ms`,
                 }}
               >
-                {item.icon}
+                {String(i + 1).padStart(2, '0')}
               </span>
             </div>
             {/* Connector */}

@@ -36,7 +36,7 @@ export function CommandLink({ cmd, onClick, label }: { cmd: string; onClick?: ()
 export function SuccessMsg({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex items-center gap-2 py-1 text-[#7EC28D] font-mono text-[13px]">
-      <span className="font-bold">✓</span>
+      <span className="font-bold text-xs">[OK]</span>
       <span>{children}</span>
     </div>
   );
@@ -45,7 +45,7 @@ export function SuccessMsg({ children }: { children: React.ReactNode }) {
 export function ErrorMsg({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex items-start gap-2 py-1 text-[#E57373] font-mono text-[13px]">
-      <span className="font-bold">✗</span>
+      <span className="font-bold text-xs">[ERR]</span>
       <div>{children}</div>
     </div>
   );

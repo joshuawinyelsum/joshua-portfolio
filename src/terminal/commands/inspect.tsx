@@ -66,7 +66,7 @@ const ARCHITECTURES: Record<string, ProjectArchitectureData> = {
         └─ ACK 201 Created (ETag / revision)
         ▼
 [Client State Update]
-  └─ 8. Dexie record transitioned: PendingSync ➔ Synced`,
+  └─ 8. Dexie record transitioned: PendingSync -> Synced`,
     decisions: [
       'Dexie (IndexedDB) chosen over LocalStorage: LocalStorage is synchronous, blocks the UI thread, and is capped at 5MB. IndexedDB supports asynchronous transactions and large geospatial surveys with attachments.',
       'Field-level merge chosen over blind Last-Write-Wins (LWW): In field deployments, coordinators annotate surveys while enumerators collect data; LWW would cause silent data destruction.',
@@ -167,7 +167,7 @@ const ARCHITECTURES: Record<string, ProjectArchitectureData> = {
     dataFlowDiagram: `[Paystack Payment Service]
   │
   ├─ 1. External Donation Completed
-  └─ 2. HTTP POST Webhook ➔ /api/webhooks/paystack
+  └─ 2. HTTP POST Webhook -> /api/webhooks/paystack
         │
         ▼
 [Next.js Production API]
@@ -231,7 +231,7 @@ const ARCHITECTURES: Record<string, ProjectArchitectureData> = {
         ▼
 [Data Normalization Engine (Python)]
   │
-  ├─ 5. Unit Harmonization (mg/kg ➔ μg/kg standardization)
+  ├─ 5. Unit Harmonization (mg/kg -> ug/kg standardization)
   ├─ 6. Explicit Missing-Value Encoding (<LOD vs ND vs NR)
   ├─ 7. Citation De-duplication & Secondary Reprint Disambiguation
   └─ 8. Pytest Validation Suite (346 automated evidence checks)
@@ -356,12 +356,12 @@ export const inspectCommand: Command = {
             {/* Frontend */}
             <div className="p-3 rounded bg-[#20211F] border border-[#45453F] space-y-1.5">
               <div className="text-[10px] font-bold uppercase tracking-wider text-[#82AAFF] flex items-center gap-1.5">
-                <span>🖥️</span> <span>Frontend Architecture</span>
+                <span>[FRONTEND]</span> <span>Architecture</span>
               </div>
               <ul className="space-y-1 text-[11px] text-[#A6A397] leading-relaxed">
                 {arch.frontend.map((item, i) => (
                   <li key={i} className="flex items-start gap-1.5">
-                    <span className="text-[#82AAFF]">▸</span> <span>{item}</span>
+                    <span className="text-[#82AAFF]">-</span> <span>{item}</span>
                   </li>
                 ))}
               </ul>
@@ -370,12 +370,12 @@ export const inspectCommand: Command = {
             {/* Backend */}
             <div className="p-3 rounded bg-[#20211F] border border-[#45453F] space-y-1.5">
               <div className="text-[10px] font-bold uppercase tracking-wider text-[#7EC28D] flex items-center gap-1.5">
-                <span>⚙️</span> <span>Backend Architecture</span>
+                <span>[BACKEND]</span> <span>Architecture</span>
               </div>
               <ul className="space-y-1 text-[11px] text-[#A6A397] leading-relaxed">
                 {arch.backend.map((item, i) => (
                   <li key={i} className="flex items-start gap-1.5">
-                    <span className="text-[#7EC28D]">▸</span> <span>{item}</span>
+                    <span className="text-[#7EC28D]">-</span> <span>{item}</span>
                   </li>
                 ))}
               </ul>
@@ -384,12 +384,12 @@ export const inspectCommand: Command = {
             {/* Database */}
             <div className="p-3 rounded bg-[#20211F] border border-[#45453F] space-y-1.5">
               <div className="text-[10px] font-bold uppercase tracking-wider text-[#E5C07B] flex items-center gap-1.5">
-                <span>🗄️</span> <span>Database Responsibilities</span>
+                <span>[DATABASE]</span> <span>Responsibilities</span>
               </div>
               <ul className="space-y-1 text-[11px] text-[#A6A397] leading-relaxed">
                 {arch.database.map((item, i) => (
                   <li key={i} className="flex items-start gap-1.5">
-                    <span className="text-[#E5C07B]">▸</span> <span>{item}</span>
+                    <span className="text-[#E5C07B]">-</span> <span>{item}</span>
                   </li>
                 ))}
               </ul>
@@ -398,12 +398,12 @@ export const inspectCommand: Command = {
             {/* Offline or Algorithm */}
             <div className="p-3 rounded bg-[#20211F] border border-[#45453F] space-y-1.5">
               <div className="text-[10px] font-bold uppercase tracking-wider text-[#C678DD] flex items-center gap-1.5">
-                <span>🧠</span> <span>Offline Protocol / Algorithmic Core</span>
+                <span>[ALGORITHM]</span> <span>Offline Protocol & Core Logic</span>
               </div>
               <ul className="space-y-1 text-[11px] text-[#A6A397] leading-relaxed">
                 {arch.offlineOrAlgorithm.map((item, i) => (
                   <li key={i} className="flex items-start gap-1.5">
-                    <span className="text-[#C678DD]">▸</span> <span>{item}</span>
+                    <span className="text-[#C678DD]">-</span> <span>{item}</span>
                   </li>
                 ))}
               </ul>
@@ -428,7 +428,7 @@ export const inspectCommand: Command = {
             <ul className="space-y-1.5 text-[11.5px] text-[#A6A397] leading-relaxed pl-2 border-l-2 border-[#45453F]">
               {arch.decisions.map((dec, i) => (
                 <li key={i} className="flex items-start gap-1.5">
-                  <span className="text-[#7EC28D] font-bold">✓</span>
+                  <span className="text-[#7EC28D] font-bold">[+]</span>
                   <span>{dec}</span>
                 </li>
               ))}
@@ -443,7 +443,7 @@ export const inspectCommand: Command = {
             <ul className="space-y-1 text-[11.5px] text-[#A6A397] leading-relaxed pl-2 border-l-2 border-[#E5C07B]/40">
               {arch.limitations.map((lim, i) => (
                 <li key={i} className="flex items-start gap-1.5">
-                  <span className="text-[#E5C07B] font-bold">!</span>
+                  <span className="text-[#E5C07B] font-bold">[!]</span>
                   <span>{lim}</span>
                 </li>
               ))}

@@ -35,9 +35,9 @@ function test(name: string, fn: () => void | Promise<void>) {
   try {
     fn();
     passedTests++;
-    console.log(`  ✓ ${name}`);
+    console.log(`  [PASS] ${name}`);
   } catch (err: unknown) {
-    console.error(`  ✗ FAIL: ${name}`);
+    console.error(`  [FAIL] ${name}`);
     console.error(err);
     process.exitCode = 1;
   }
@@ -349,7 +349,17 @@ test('Static Scan: Zero dangerouslySetInnerHTML in terminal components', () => {
   }
 });
 
+test('Static Scan: Zero emojis across all source files', () => {
+  const emojiPattern = /[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B50}\u{231A}-\u{23FA}]/u;
+  const srcFiles = scanSourceFiles(path.resolve('src'));
+  srcFiles.push(path.resolve('index.html'));
+  for (const file of srcFiles) {
+    const rawContent = fs.readFileSync(file, 'utf8');
+    assert.equal(emojiPattern.test(rawContent), false, `Emoji found in ${file}`);
+  }
+});
+
 console.log(`\n=== RESULTS: ${passedTests}/${totalTests} TESTS PASSED ===\n`);
 if (passedTests === totalTests) {
-  console.log('✓ All security, isolation, and simulation boundaries verified successfully.\n');
+  console.log('All security, isolation, and simulation boundaries verified successfully.\n');
 }

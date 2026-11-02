@@ -272,11 +272,11 @@ export const challengeCommand: Command = {
               <div>
                 {isCorrect ? (
                   <span className="px-2.5 py-1 rounded bg-[#7EC28D]/20 border border-[#7EC28D]/40 text-[#7EC28D] font-bold text-xs flex items-center gap-1.5">
-                    <span>✓</span> <span>CORRECT</span>
+                    <span className="font-bold text-[11px]">[PASSED]</span> <span>CORRECT</span>
                   </span>
                 ) : (
                   <span className="px-2.5 py-1 rounded bg-[#E57373]/20 border border-[#E57373]/40 text-[#E57373] font-bold text-xs flex items-center gap-1.5">
-                    <span>✗</span> <span>INCORRECT</span>
+                    <span className="font-bold text-[11px]">[FAILED]</span> <span>INCORRECT</span>
                   </span>
                 )}
               </div>
