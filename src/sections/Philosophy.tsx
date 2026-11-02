@@ -31,14 +31,14 @@ export function Philosophy() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
           {principles.map((p, i) => (
             <ScrollReveal key={p.title} delay={i * 100}>
-              <div className="border-t-2 border-gray-900 pt-6">
-                <span className="text-[10px] font-bold tracking-[0.2em] text-gray-400 block mb-3">
+              <div className="border-t-2 border-gray-900 dark:border-[#ededeb] pt-6">
+                <span className="text-[10px] font-bold tracking-[0.2em] text-gray-400 dark:text-neutral-500 block mb-3">
                   {p.number}
                 </span>
-                <h3 className="text-[15px] font-bold text-gray-900 mb-3 tracking-tight leading-snug">
+                <h3 className="text-[15px] font-bold text-gray-900 dark:text-[#ededeb] mb-3 tracking-tight leading-snug">
                   {p.title}
                 </h3>
-                <p className="text-[13px] text-gray-600 leading-relaxed">{p.description}</p>
+                <p className="text-[13px] text-gray-600 dark:text-neutral-300 leading-relaxed">{p.description}</p>
               </div>
             </ScrollReveal>
           ))}

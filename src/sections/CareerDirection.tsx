@@ -29,7 +29,7 @@ export function CareerDirection() {
                 {/* Line */}
                 {!isLast && (
                   <div
-                    className="absolute left-[7px] top-5 h-8 w-px bg-gray-300 origin-top"
+                    className="absolute left-[7px] top-5 h-8 w-px bg-gray-300 dark:bg-[#282a32] origin-top"
                     style={{
                       transform: isInView ? 'scaleY(1)' : 'scaleY(0)',
                       transition: reducedMotion
@@ -53,8 +53,8 @@ export function CareerDirection() {
                   <div
                     className={`w-3.5 h-3.5 rounded-full border-2 ${
                       isLast
-                        ? 'bg-blue-600 border-blue-600'
-                        : 'bg-gray-400 border-gray-400'
+                        ? 'bg-blue-600 border-blue-600 dark:bg-blue-500 dark:border-blue-500'
+                        : 'bg-gray-400 border-gray-400 dark:bg-neutral-600 dark:border-neutral-600'
                     }`}
                   />
                 </div>
@@ -62,7 +62,7 @@ export function CareerDirection() {
                 {/* Label */}
                 <span
                   className={`block pb-6 text-[15px] font-medium ${
-                    isLast ? 'text-gray-900 font-bold' : 'text-gray-600'
+                    isLast ? 'text-gray-900 dark:text-[#ededeb] font-bold' : 'text-gray-600 dark:text-neutral-400'
                   }`}
                   style={{
                     opacity: isInView ? 1 : 0,
@@ -80,7 +80,7 @@ export function CareerDirection() {
         </div>
 
         <ScrollReveal delay={300}>
-          <p className="text-[15px] text-gray-600 leading-[1.75] max-w-xl">
+          <p className="text-[15px] text-gray-600 dark:text-neutral-300 leading-[1.75] max-w-xl">
             Progressing systematically from robust backend architectures and relational data modeling toward resilient distributed systems, data pipelines, and applied AI.
           </p>
         </ScrollReveal>

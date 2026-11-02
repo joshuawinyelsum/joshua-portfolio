@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export function ContextualNav() {
   const location = useLocation();
@@ -50,14 +50,14 @@ export function ContextualNav() {
       onMouseLeave={() => setExpanded(false)}
     >
       <div 
-        className={`pointer-events-auto bg-white/90 backdrop-blur-xl border border-gray-200/50 shadow-[0_8px_30px_rgb(0,0,0,0.08)] rounded-full overflow-hidden transition-all duration-300 ease-out flex items-center justify-center p-1.5 ${
+        className={`pointer-events-auto bg-white/90 dark:bg-[#1a1c22]/90 backdrop-blur-xl border border-gray-200/50 dark:border-[#2a2d36] shadow-[0_8px_30px_rgb(0,0,0,0.08)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.5)] rounded-full overflow-hidden transition-all duration-300 ease-out flex items-center justify-center p-1.5 ${
           expanded ? 'w-[320px] md:w-[420px]' : 'w-auto px-4'
         }`}
       >
         {!expanded ? (
           <div className="flex items-center gap-2 py-1 px-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-gray-900 animate-pulse" />
-            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-gray-900">{current}</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-gray-900 dark:bg-[#ededeb] animate-pulse" />
+            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-gray-900 dark:text-[#ededeb]">{current}</span>
           </div>
         ) : (
           <div className="flex items-center justify-between w-full px-2 py-1 gap-2 animate-in fade-in zoom-in-95 duration-200">
@@ -72,7 +72,9 @@ export function ContextualNav() {
                       href={link}
                       onClick={() => setExpanded(false)}
                       className={`text-[9px] sm:text-[10px] font-bold tracking-[0.15em] uppercase transition-colors whitespace-nowrap ${
-                        item === current ? 'text-gray-900' : 'text-gray-400 hover:text-gray-800'
+                        item === current
+                          ? 'text-gray-900 dark:text-white'
+                          : 'text-gray-400 dark:text-neutral-500 hover:text-gray-800 dark:hover:text-[#ededeb]'
                       }`}
                     >
                       {item === current ? `● ${item}` : item}
@@ -94,13 +96,15 @@ export function ContextualNav() {
                         }
                       }}
                       className={`text-[9px] sm:text-[10px] font-bold tracking-[0.15em] uppercase transition-colors whitespace-nowrap ${
-                        item === current ? 'text-gray-900' : 'text-gray-400 hover:text-gray-800'
+                        item === current
+                          ? 'text-gray-900 dark:text-white'
+                          : 'text-gray-400 dark:text-neutral-500 hover:text-gray-800 dark:hover:text-[#ededeb]'
                       }`}
                     >
                       {item === current ? `● ${item}` : item}
                     </button>
                   )}
-                  {i < 3 && <span className="text-gray-200 text-[10px]">─</span>}
+                  {i < 3 && <span className="text-gray-200 dark:text-neutral-700 text-[10px]">─</span>}
                 </div>
               );
             })}

@@ -6,6 +6,21 @@
     <title>Joshua Winyelsum | Software & Systems Engineer</title>
     <meta name="description" content="Joshua Winyelsum is a Computer Science student and software engineer focusing on backend architecture, relational databases, offline-first systems, and data pipelines." />
     
+    <!-- Prevent Theme Flash (FOUC) -->
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('theme');
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (saved === 'dark' || (!saved && prefersDark)) {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
+
     <!-- Canonical URL -->
     <link rel="canonical" href="https://joshua-winyelsum.vercel.app/" />
     
@@ -51,7 +66,7 @@
     }
     </script>
   </head>
-  <body>
+  <body class="transition-colors duration-200">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

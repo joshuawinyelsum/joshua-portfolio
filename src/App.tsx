@@ -7,6 +7,7 @@ import { CV } from './pages/CV';
 import { CommandCenter } from './components/CommandCenter';
 import { ContextualNav } from './components/ContextualNav';
 import { CommandCenterProvider, useCommandCenter } from './contexts/CommandCenterContext';
+import { ThemeProvider } from './contexts/ThemeContext';
 
 function AppContent() {
   const { toggle, isOpen, close } = useCommandCenter();
@@ -42,8 +43,10 @@ function AppContent() {
 
 export default function App() {
   return (
-    <CommandCenterProvider>
-      <AppContent />
-    </CommandCenterProvider>
+    <ThemeProvider>
+      <CommandCenterProvider>
+        <AppContent />
+      </CommandCenterProvider>
+    </ThemeProvider>
   );
 }

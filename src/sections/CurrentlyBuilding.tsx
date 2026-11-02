@@ -5,7 +5,7 @@ import { currentlyBuilding, currentlyLearning } from '../data/currentlyBuilding'
 
 export function CurrentlyBuilding() {
   return (
-    <section id="building" className="py-24 md:py-32 section-padding bg-white">
+    <section id="building" className="py-24 md:py-32 section-padding bg-white dark:bg-[#18191e]">
       <div className="max-w-5xl">
         <SectionHeader
           title="Currently Building"
@@ -19,17 +19,17 @@ export function CurrentlyBuilding() {
         </div>
 
         <ScrollReveal>
-          <div className="border-t border-gray-200 pt-12">
+          <div className="border-t border-gray-200 dark:border-[#282a32] pt-12">
             <div className="flex items-center gap-4 mb-6">
-              <h3 className="text-[10px] font-bold tracking-[0.25em] uppercase text-gray-400">
+              <h3 className="text-[10px] font-bold tracking-[0.25em] uppercase text-gray-400 dark:text-neutral-500">
                 Currently Learning
               </h3>
-              <div className="flex-1 h-px max-w-[40px] bg-gray-200" />
+              <div className="flex-1 h-px max-w-[40px] bg-gray-200 dark:bg-[#282a32]" />
             </div>
             <div className="flex flex-wrap gap-2.5">
               {currentlyLearning.map((item, i) => (
                 <ScrollReveal key={item} delay={i * 40}>
-                  <span className="px-4 py-2 text-[13px] font-medium text-gray-700 bg-gray-50 border border-gray-200 rounded-lg hover:border-gray-300 transition-colors duration-300">
+                  <span className="px-4 py-2 text-[13px] font-medium text-gray-700 dark:text-neutral-300 bg-gray-50 dark:bg-[#1c1e24] border border-gray-200 dark:border-[#282a32] rounded-lg hover:border-gray-300 dark:hover:border-neutral-600 transition-colors duration-300">
                     {item}
                   </span>
                 </ScrollReveal>

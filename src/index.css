@@ -13,23 +13,23 @@
   }
 
   body {
-    @apply bg-[#D9DDE2] text-gray-900;
+    @apply bg-[#D9DDE2] text-gray-900 dark:bg-[#121316] dark:text-[#ededeb] transition-colors duration-200;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
   }
 
   ::selection {
-    @apply bg-gray-900 text-white;
+    @apply bg-gray-900 text-white dark:bg-neutral-800 dark:text-neutral-100;
   }
 
   /* Focus styles */
   :focus-visible {
-    @apply outline-2 outline-offset-2 outline-gray-900 rounded-sm;
+    @apply outline-2 outline-offset-2 outline-gray-900 dark:outline-neutral-300 rounded-sm;
   }
 
   /* Skip to content */
   .skip-link {
-    @apply absolute -top-10 left-4 bg-gray-900 text-white px-4 py-2 z-[100] text-sm font-medium rounded transition-all;
+    @apply absolute -top-10 left-4 bg-gray-900 text-white dark:bg-[#ededeb] dark:text-[#121316] px-4 py-2 z-[100] text-sm font-medium rounded transition-all;
   }
   .skip-link:focus {
     @apply top-4;
@@ -45,11 +45,11 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-gray-400/60 rounded-full;
+    @apply bg-gray-400/60 dark:bg-neutral-700/60 rounded-full;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-gray-500;
+    @apply bg-gray-500 dark:bg-neutral-600;
   }
 }
 
@@ -61,7 +61,7 @@
 
   /* Separator line that draws on scroll */
   .separator {
-    @apply w-full h-px bg-gray-300/60;
+    @apply w-full h-px bg-gray-300/60 dark:bg-[#282a32];
   }
 }
 

@@ -22,7 +22,7 @@ export function EngineeringStack() {
           {skillCategories.map((category, catIndex) => (
             <ScrollReveal key={category} delay={catIndex * 60}>
               <div>
-                <h3 className="text-[10px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-4 pb-2 border-b border-gray-300/60">
+                <h3 className="text-[10px] font-bold tracking-[0.25em] uppercase text-gray-400 dark:text-neutral-500 mb-4 pb-2 border-b border-gray-300/60 dark:border-[#282a32]">
                   {category}
                 </h3>
                 <div className="flex flex-wrap gap-2">
@@ -42,10 +42,10 @@ export function EngineeringStack() {
                           }
                           className={`px-3 py-1.5 text-[11px] font-semibold tracking-wide rounded border transition-all duration-300 ${
                             isActive
-                              ? 'bg-gray-900 text-white border-gray-900 shadow-sm'
+                              ? 'bg-gray-900 text-white border-gray-900 shadow-sm dark:bg-[#ededeb] dark:text-[#121316] dark:border-[#ededeb]'
                               : isSubdued
-                              ? 'bg-transparent text-gray-400 border-gray-200 opacity-40'
-                              : 'bg-white text-gray-700 border-gray-200 hover:border-gray-400 hover:text-gray-900'
+                              ? 'bg-transparent text-gray-400 border-gray-200 opacity-40 dark:text-neutral-600 dark:border-[#282a32]'
+                              : 'bg-white text-gray-700 border-gray-200 hover:border-gray-400 hover:text-gray-900 dark:bg-[#1c1e24] dark:text-neutral-300 dark:border-[#282a32] dark:hover:border-neutral-500 dark:hover:text-[#ededeb]'
                           }`}
                         >
                           {skill.name}
@@ -66,8 +66,8 @@ export function EngineeringStack() {
               : 'max-h-0 opacity-0'
           }`}
         >
-          <div className="p-6 bg-white border border-gray-200 rounded-lg">
-            <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-3">
+          <div className="p-6 bg-white dark:bg-[#18191e] border border-gray-200 dark:border-[#282a32] rounded-lg">
+            <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-gray-400 dark:text-neutral-500 mb-3">
               {activeTech} → Used in
             </p>
             <div className="flex flex-wrap gap-3">
@@ -77,10 +77,10 @@ export function EngineeringStack() {
                 return (
                   <span
                     key={id}
-                    className="px-3 py-1.5 text-sm font-semibold text-gray-900 bg-gray-50 border border-gray-200 rounded-lg"
+                    className="px-3 py-1.5 text-sm font-semibold text-gray-900 dark:text-[#ededeb] bg-gray-50 dark:bg-[#1c1e24] border border-gray-200 dark:border-[#282a32] rounded-lg"
                   >
                     {project.title}
-                    <span className="text-gray-400 font-normal ml-1.5 text-xs">
+                    <span className="text-gray-400 dark:text-neutral-500 font-normal ml-1.5 text-xs">
                       {project.subtitle}
                     </span>
                   </span>

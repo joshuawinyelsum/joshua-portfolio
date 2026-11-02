@@ -5,6 +5,7 @@ import { ProjectStatus } from '../types';
 import { ScrollReveal } from '../components/ScrollReveal';
 import { useInView } from '../hooks/useInView';
 import { useReducedMotion } from '../hooks/useReducedMotion';
+import { useTheme } from '../contexts/ThemeContext';
 import { Footer } from '../sections/Footer';
 
 // ==========================================
@@ -194,39 +195,40 @@ const agrichemEvidence = [
 
 const statusStyles: Record<ProjectStatus, { bg: string; text: string; border: string; dot?: string }> = {
   LIVE: {
-    bg: 'bg-emerald-50',
-    text: 'text-emerald-700',
-    border: 'border-emerald-200',
-    dot: 'bg-emerald-500',
+    bg: 'bg-emerald-50 dark:bg-emerald-950/40',
+    text: 'text-emerald-700 dark:text-emerald-400',
+    border: 'border-emerald-200 dark:border-emerald-800/60',
+    dot: 'bg-emerald-500 dark:bg-emerald-400',
   },
   BUILT: {
-    bg: 'bg-blue-50',
-    text: 'text-blue-700',
-    border: 'border-blue-200',
-    dot: 'bg-blue-500',
+    bg: 'bg-blue-50 dark:bg-blue-950/40',
+    text: 'text-blue-700 dark:text-blue-400',
+    border: 'border-blue-200 dark:border-blue-800/60',
+    dot: 'bg-blue-500 dark:bg-blue-400',
   },
   'IN PROGRESS': {
-    bg: 'bg-amber-50',
-    text: 'text-amber-700',
-    border: 'border-amber-200',
-    dot: 'bg-amber-500',
+    bg: 'bg-amber-50 dark:bg-amber-950/40',
+    text: 'text-amber-700 dark:text-amber-400',
+    border: 'border-amber-200 dark:border-amber-800/60',
+    dot: 'bg-amber-500 dark:bg-amber-400',
   },
   RESEARCH: {
-    bg: 'bg-purple-50',
-    text: 'text-purple-700',
-    border: 'border-purple-200',
-    dot: 'bg-purple-500',
+    bg: 'bg-purple-50 dark:bg-purple-950/40',
+    text: 'text-purple-700 dark:text-purple-400',
+    border: 'border-purple-200 dark:border-purple-800/60',
+    dot: 'bg-purple-500 dark:bg-purple-400',
   },
   PLANNED: {
-    bg: 'bg-gray-50',
-    text: 'text-gray-600',
-    border: 'border-gray-200',
+    bg: 'bg-gray-50 dark:bg-neutral-900/50',
+    text: 'text-gray-600 dark:text-neutral-400',
+    border: 'border-gray-200 dark:border-neutral-800',
   },
 };
 
 function ArchitectureDiagram({ items }: { items: { layer: string; desc: string; icon: string }[] }) {
   const { ref, isInView } = useInView({ threshold: 0.15 });
   const reducedMotion = useReducedMotion();
+  const { isDark } = useTheme();
 
   return (
     <div ref={ref} className="my-10">
@@ -237,8 +239,8 @@ function ArchitectureDiagram({ items }: { items: { layer: string; desc: string; 
             <div
               className="w-10 h-10 rounded-lg border-2 flex items-center justify-center text-sm"
               style={{
-                borderColor: isInView ? '#111111' : '#D1D5DB',
-                backgroundColor: isInView ? '#F9FAFB' : 'transparent',
+                borderColor: isInView ? (isDark ? '#ededeb' : '#111111') : isDark ? '#282a32' : '#D1D5DB',
+                backgroundColor: isInView ? (isDark ? '#1c1e24' : '#F9FAFB') : 'transparent',
                 transform: isInView ? 'scale(1)' : 'scale(0.8)',
                 transition: reducedMotion
                   ? 'none'
@@ -259,7 +261,7 @@ function ArchitectureDiagram({ items }: { items: { layer: string; desc: string; 
               <div
                 className="w-px h-6 origin-top"
                 style={{
-                  backgroundColor: isInView ? '#111111' : '#D1D5DB',
+                  backgroundColor: isInView ? (isDark ? '#ededeb' : '#111111') : isDark ? '#282a32' : '#D1D5DB',
                   transform: isInView ? 'scaleY(1)' : 'scaleY(0)',
                   transition: reducedMotion
                     ? 'none'
@@ -279,8 +281,8 @@ function ArchitectureDiagram({ items }: { items: { layer: string; desc: string; 
                 : `opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${i * 100}ms, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${i * 100}ms`,
             }}
           >
-            <p className="text-[15px] font-bold text-gray-900">{item.layer}</p>
-            <p className="text-sm text-gray-500">{item.desc}</p>
+            <p className="text-[15px] font-bold text-gray-900 dark:text-[#ededeb]">{item.layer}</p>
+            <p className="text-sm text-gray-500 dark:text-neutral-400">{item.desc}</p>
           </div>
         </div>
       ))}
@@ -295,14 +297,14 @@ function BrowserPreview({ src, alt, liveUrl }: { src: string; alt: string; liveU
   return (
     <div
       ref={ref}
-      className="my-10 rounded-xl overflow-hidden border border-gray-200/90 shadow-xl bg-[#0a120e] transition-all duration-700"
+      className="my-10 rounded-xl overflow-hidden border border-gray-200/90 dark:border-[#282a32] shadow-xl bg-[#0a120e] transition-all duration-700"
       style={{
         opacity: isInView ? 1 : 0,
         transform: isInView ? 'none' : 'translateY(16px)',
         transition: reducedMotion ? 'none' : 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
       }}
     >
-      <div className="flex items-center justify-between px-4 py-2.5 bg-[#0f1d16] border-b border-gray-800">
+      <div className="flex items-center justify-between px-4 py-2.5 bg-[#0f1d16] border-b border-gray-800 dark:border-[#282a32]">
         <div className="flex items-center gap-2">
           <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f56]" />
           <div className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]" />
@@ -337,7 +339,7 @@ function BrowserPreview({ src, alt, liveUrl }: { src: string; alt: string; liveU
           loading="lazy"
         />
       </div>
-      <div className="px-5 py-3 bg-[#0f1d16] border-t border-gray-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[12px] text-gray-400 font-mono">
+      <div className="px-5 py-3 bg-[#0f1d16] border-t border-gray-800/80 dark:border-[#282a32] flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[12px] text-gray-400 font-mono">
         <span>Verified Public Interface: coachprospersworld.org</span>
         <span className="text-[#c7f25d]">Active in Production</span>
       </div>
@@ -357,8 +359,8 @@ export function CaseStudy() {
     return (
       <div className="min-h-screen flex items-center justify-center px-6">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Project not found</h1>
-          <Link to="/" className="text-sm font-medium text-blue-600 hover:underline">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-[#ededeb] mb-4">Project not found</h1>
+          <Link to="/" className="text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline">
             ← Back to home
           </Link>
         </div>
@@ -406,7 +408,7 @@ export function CaseStudy() {
           <section className="section-padding mb-16">
             <Link
               to="/"
-              className="group inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gray-900 transition-colors mb-10"
+              className="group inline-flex items-center gap-2 text-sm text-gray-500 dark:text-neutral-400 hover:text-gray-900 dark:hover:text-[#ededeb] transition-colors mb-10"
             >
               <svg
                 aria-hidden="true"
@@ -423,10 +425,10 @@ export function CaseStudy() {
 
             <ScrollReveal>
               <div className="flex items-center gap-3 mb-4">
-                <span className="text-[10px] font-bold tracking-[0.25em] uppercase text-gray-400">
+                <span className="text-[10px] font-bold tracking-[0.25em] uppercase text-gray-400 dark:text-neutral-500">
                   {project.category}
                 </span>
-                <span className="text-gray-300">·</span>
+                <span className="text-gray-300 dark:text-neutral-700">·</span>
                 <span
                   className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-[0.1em] uppercase border ${badge.bg} ${badge.text} ${badge.border}`}
                 >
@@ -441,10 +443,10 @@ export function CaseStudy() {
                 </span>
               </div>
 
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 tracking-tighter mb-3">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 dark:text-[#ededeb] tracking-tighter mb-3">
                 {project.title}
               </h1>
-              <p className="text-lg md:text-xl font-medium text-gray-500 mb-8">
+              <p className="text-lg md:text-xl font-medium text-gray-500 dark:text-neutral-400 mb-8">
                 {project.subtitle}
               </p>
 
@@ -455,7 +457,7 @@ export function CaseStudy() {
                     href={project.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold tracking-wider uppercase text-white bg-gray-900 hover:bg-black rounded-lg transition-colors shadow-sm"
+                    className="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold tracking-wider uppercase text-white dark:text-[#121316] bg-gray-900 dark:bg-[#ededeb] hover:bg-black dark:hover:bg-white rounded-lg transition-colors shadow-sm"
                   >
                     Visit Live Website
                     <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -464,29 +466,29 @@ export function CaseStudy() {
                   </a>
                 )}
                 {isCPW && (
-                  <span className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-gray-700 bg-gray-100 rounded-lg border border-gray-200">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-gray-700 dark:text-neutral-200 bg-gray-100 dark:bg-[#1c1e24] rounded-lg border border-gray-200 dark:border-[#282a32]">
                     <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                     Role: Software & Technology Lead
                   </span>
                 )}
                 {isCFSS && (
-                  <span className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-blue-700 bg-blue-50 rounded-lg border border-blue-200">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 rounded-lg border border-blue-200 dark:border-blue-800/60">
                     Stage: Pre-Production Staging & Test Suite
                   </span>
                 )}
                 {isMastery && (
-                  <span className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-blue-700 bg-blue-50 rounded-lg border border-blue-200">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 rounded-lg border border-blue-200 dark:border-blue-800/60">
                     Stage: Built Implementation & Unit Test Suite
                   </span>
                 )}
                 {isAgriChem && (
-                  <span className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-purple-700 bg-purple-50 rounded-lg border border-purple-200">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-purple-700 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/40 rounded-lg border border-purple-200 dark:border-purple-800/60">
                     Stage: Evidence Register & Canonical Datasets
                   </span>
                 )}
                 {project.isPrivateRepo && (
-                  <span className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-gray-500 bg-gray-50 rounded-lg border border-gray-200">
-                    <svg className="w-3.5 h-3.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <span className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-gray-500 dark:text-neutral-400 bg-gray-50 dark:bg-[#1c1e24] rounded-lg border border-gray-200 dark:border-[#282a32]">
+                    <svg className="w-3.5 h-3.5 text-gray-400 dark:text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                     </svg>
                     Source Code Private
@@ -516,7 +518,7 @@ export function CaseStudy() {
                 {project.technologies.map((tech) => (
                   <span
                     key={tech}
-                    className="px-3 py-1.5 text-[11px] font-semibold tracking-wide text-gray-600 bg-white border border-gray-200 rounded"
+                    className="px-3 py-1.5 text-[11px] font-semibold tracking-wide text-gray-600 dark:text-neutral-300 bg-white dark:bg-[#1c1e24] border border-gray-200 dark:border-[#282a32] rounded"
                   >
                     {tech}
                   </span>
@@ -528,10 +530,10 @@ export function CaseStudy() {
           {/* Overview */}
           <section className="section-padding mb-20 max-w-3xl">
             <ScrollReveal>
-              <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
+              <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 dark:text-neutral-500 mb-5">
                 {nextSection()} — Overview
               </h2>
-              <p className="text-lg text-gray-700 leading-relaxed">{project.description}</p>
+              <p className="text-lg text-gray-700 dark:text-neutral-200 leading-relaxed">{project.description}</p>
             </ScrollReveal>
           </section>
 
@@ -539,10 +541,10 @@ export function CaseStudy() {
           {project.problem && (
             <section className="section-padding mb-20 max-w-3xl">
               <ScrollReveal>
-                <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
+                <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 dark:text-neutral-500 mb-5">
                   {nextSection()} — Problem Statement
                 </h2>
-                <p className="text-[15px] text-gray-600 leading-[1.75]">{project.problem}</p>
+                <p className="text-[15px] text-gray-600 dark:text-neutral-300 leading-[1.75]">{project.problem}</p>
               </ScrollReveal>
             </section>
           )}
@@ -551,10 +553,10 @@ export function CaseStudy() {
           {project.system && (
             <section className="section-padding mb-20 max-w-3xl">
               <ScrollReveal>
-                <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
+                <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 dark:text-neutral-500 mb-5">
                   {nextSection()} — System Architecture
                 </h2>
-                <p className="text-[15px] text-gray-600 leading-[1.75] mb-6">{project.system}</p>
+                <p className="text-[15px] text-gray-600 dark:text-neutral-300 leading-[1.75] mb-6">{project.system}</p>
               </ScrollReveal>
               <ArchitectureDiagram items={architectureItems} />
             </section>
@@ -564,13 +566,13 @@ export function CaseStudy() {
           {project.capabilities && (
             <section className="section-padding mb-20 max-w-3xl">
               <ScrollReveal>
-                <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
+                <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 dark:text-neutral-500 mb-5">
                   {nextSection()} — Key Capabilities & Features
                 </h2>
                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {project.capabilities.map((cap) => (
-                    <li key={cap} className="flex items-start gap-2.5 text-[15px] text-gray-600">
-                      <span className="w-1.5 h-1.5 rounded-full bg-gray-400 mt-2 shrink-0" />
+                    <li key={cap} className="flex items-start gap-2.5 text-[15px] text-gray-600 dark:text-neutral-300">
+                      <span className="w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-neutral-600 mt-2 shrink-0" />
                       {cap}
                     </li>
                   ))}
@@ -582,16 +584,16 @@ export function CaseStudy() {
           {/* Engineering Decisions & Constraints */}
           <section className="section-padding mb-20 max-w-3xl">
             <ScrollReveal>
-              <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
+              <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 dark:text-neutral-500 mb-5">
                 {nextSection()} — Engineering Decisions & Reliability
               </h2>
               <div className="space-y-6">
                 {decisionsItems.map((decision, idx) => (
-                  <div key={idx} className="border-l-2 border-gray-900 pl-5 py-1">
-                    <h3 className="text-sm font-bold uppercase tracking-wider text-gray-900 mb-1.5">
+                  <div key={idx} className="border-l-2 border-gray-900 dark:border-[#ededeb] pl-5 py-1">
+                    <h3 className="text-sm font-bold uppercase tracking-wider text-gray-900 dark:text-[#ededeb] mb-1.5">
                       {decision.title}
                     </h3>
-                    <p className="text-[15px] text-gray-600 leading-relaxed">
+                    <p className="text-[15px] text-gray-600 dark:text-neutral-300 leading-relaxed">
                       {decision.detail}
                     </p>
                   </div>
@@ -603,13 +605,13 @@ export function CaseStudy() {
           {/* My Role & Engineering Contribution */}
           <section className="section-padding mb-20 max-w-3xl">
             <ScrollReveal>
-              <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
+              <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 dark:text-neutral-500 mb-5">
                 {nextSection()} — My Engineering Contribution
               </h2>
               <ul className="space-y-3">
                 {contributionsItems.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5 text-[15px] text-gray-600">
-                    <span className="w-1.5 h-1.5 rounded-full bg-gray-900 mt-2 shrink-0" />
+                  <li key={idx} className="flex items-start gap-2.5 text-[15px] text-gray-600 dark:text-neutral-300">
+                    <span className="w-1.5 h-1.5 rounded-full bg-gray-900 dark:bg-[#ededeb] mt-2 shrink-0" />
                     {item}
                   </li>
                 ))}
@@ -620,13 +622,13 @@ export function CaseStudy() {
           {/* Verified Evidence & Test Coverage */}
           <section className="section-padding mb-20 max-w-3xl">
             <ScrollReveal>
-              <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 mb-5">
+              <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 dark:text-neutral-500 mb-5">
                 {nextSection()} — Verified Evidence & Testing
               </h2>
               <ul className="space-y-3">
                 {evidenceItems.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5 text-[15px] text-gray-600">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 mt-2 shrink-0" />
+                  <li key={idx} className="flex items-start gap-2.5 text-[15px] text-gray-600 dark:text-neutral-300">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 dark:bg-emerald-500 mt-2 shrink-0" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -638,8 +640,8 @@ export function CaseStudy() {
           {project.scaleStatement && (
             <section className="section-padding mb-20 max-w-3xl">
               <ScrollReveal>
-                <div className="border-l-2 border-gray-900 pl-6 py-2">
-                  <p className="text-lg font-semibold text-gray-800 italic leading-relaxed">
+                <div className="border-l-2 border-gray-900 dark:border-[#ededeb] pl-6 py-2">
+                  <p className="text-lg font-semibold text-gray-800 dark:text-neutral-200 italic leading-relaxed">
                     {project.scaleStatement}
                   </p>
                 </div>
@@ -651,7 +653,7 @@ export function CaseStudy() {
           <section className="section-padding mb-16">
             <Link
               to="/"
-              className="group inline-flex items-center gap-2 text-sm font-semibold text-gray-900 hover:text-blue-600 transition-colors"
+              className="group inline-flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-[#ededeb] hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
             >
               <svg
                 aria-hidden="true"
