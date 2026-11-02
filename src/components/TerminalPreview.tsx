@@ -4,20 +4,20 @@ export function TerminalPreview() {
   const { open } = useCommandCenter();
 
   return (
-    <div 
+    <div
       onClick={() => {
         if (window.innerWidth >= 768) open();
       }}
-      className="group relative w-full max-w-sm mx-auto sm:max-w-md bg-[#0d1117]/90 backdrop-blur-md rounded-lg shadow-2xl border border-gray-700/50 overflow-hidden md:cursor-pointer hover:border-gray-500/50 transition-colors duration-300"
+      className="group relative w-full max-w-sm mx-auto sm:max-w-md bg-white/95 dark:bg-[#121418]/90 backdrop-blur-md rounded-lg shadow-xl dark:shadow-2xl border border-gray-300/80 dark:border-[#282a32] overflow-hidden md:cursor-pointer hover:border-gray-400 dark:hover:border-neutral-600 transition-colors duration-300"
     >
       {/* Terminal Header */}
-      <div className="flex items-center px-4 py-2 bg-[#161b22]/90 border-b border-gray-700/50 relative">
+      <div className="flex items-center px-4 py-2 bg-[#eceef1]/90 dark:bg-[#181a20]/90 border-b border-gray-300/80 dark:border-[#282a32] relative">
         <div className="flex gap-1.5">
           <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f56]" />
           <div className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]" />
           <div className="w-2.5 h-2.5 rounded-full bg-[#27c93f]" />
         </div>
-        <span className="absolute left-1/2 -translate-x-1/2 text-[#8b949e] font-semibold text-[9px] tracking-[0.2em] uppercase">
+        <span className="absolute left-1/2 -translate-x-1/2 text-gray-600 dark:text-[#8b949e] font-semibold text-[9px] tracking-[0.2em] uppercase">
           JOSHUA@PORTFOLIO
         </span>
         <button
@@ -25,8 +25,8 @@ export function TerminalPreview() {
             e.stopPropagation();
             open();
           }}
-          className="absolute right-3 p-1.5 rounded-md hover:bg-gray-700/50 text-gray-500 hover:text-gray-300 md:hidden transition-colors"
-          aria-label="Open Developer Console"
+          className="absolute right-3 p-1.5 rounded-md hover:bg-black/5 dark:hover:bg-white/5 text-gray-500 hover:text-gray-800 dark:hover:text-gray-200 md:hidden transition-colors"
+          aria-label="Open Command Center"
         >
           <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -35,32 +35,30 @@ export function TerminalPreview() {
       </div>
 
       {/* Terminal Body */}
-      <div className="p-5 font-mono text-[12px] sm:text-[13px] text-gray-300 leading-relaxed">
+      <div className="p-5 font-mono text-[12px] sm:text-[13px] text-gray-700 dark:text-gray-300 leading-relaxed">
         <div className="flex items-center gap-2 mb-2">
-          <span className="text-[#27c93f]">$</span>
-          <span className="text-gray-100">explore</span>
+          <span className="text-blue-600 dark:text-blue-400 font-bold">$</span>
+          <span className="text-gray-900 dark:text-gray-100 font-semibold">explore</span>
         </div>
-        <div className="text-gray-400 mb-4 opacity-0 animate-[fade-in_0.5s_ease-out_0.5s_forwards]">
-          Explore like a developer.
+        <div className="text-gray-500 dark:text-gray-400 mb-4 opacity-0 animate-[fade-in_0.5s_ease-out_0.5s_forwards]">
+          Interactive engineering command center.
           <div className="mt-1 flex flex-col gap-0.5">
-            <span className="text-blue-400">projects</span>
-            <span className="text-blue-400">research</span>
-            <span className="text-blue-400">cv</span>
+            <span className="text-blue-600 dark:text-blue-400">projects, cpw, cfss, mastery, agrichem</span>
+            <span className="text-blue-600 dark:text-blue-400">stack, skills, cv, theme [dark|light]</span>
           </div>
         </div>
-        
-        <div className="border-t border-dashed border-gray-700/50 pt-3 mt-3 flex items-center justify-between text-[10px] text-gray-500 font-sans tracking-widest opacity-0 animate-[fade-in_0.5s_ease-out_1s_forwards]">
+
+        <div className="border-t border-dashed border-gray-300 dark:border-gray-700/50 pt-3 mt-3 flex items-center justify-between text-[10px] text-gray-400 dark:text-gray-500 font-sans tracking-widest opacity-0 animate-[fade-in_0.5s_ease-out_1s_forwards]">
           <span>CTRL K</span>
           <span>→</span>
           <span>ENTER</span>
         </div>
 
-        <div className="mt-4 flex items-center gap-2 text-gray-100 opacity-0 animate-[fade-in_0.5s_ease-out_1.5s_forwards]">
-          <span className="text-[#27c93f]">joshua@portfolio:~$</span>
-          <span className="w-1.5 h-4 bg-gray-400 animate-pulse" />
+        <div className="mt-4 flex items-center gap-2 text-gray-900 dark:text-gray-100 opacity-0 animate-[fade-in_0.5s_ease-out_1.5s_forwards]">
+          <span className="text-blue-600 dark:text-blue-400 font-bold">joshua@portfolio:~$</span>
+          <span className="w-1.5 h-4 bg-blue-600 dark:bg-blue-400 animate-pulse" />
         </div>
       </div>
     </div>
   );
 }
-

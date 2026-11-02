@@ -11,8 +11,9 @@
       (function() {
         try {
           var saved = localStorage.getItem('theme');
+          var pref = localStorage.getItem('theme-preference');
           var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          if (saved === 'dark' || (!saved && prefersDark)) {
+          if (saved === 'dark' || (pref === 'dark') || ((!saved || pref === 'system' || saved === 'system') && prefersDark)) {
             document.documentElement.classList.add('dark');
           } else {
             document.documentElement.classList.remove('dark');
