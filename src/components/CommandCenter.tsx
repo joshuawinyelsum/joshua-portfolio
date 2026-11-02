@@ -17,7 +17,7 @@ interface HistoryItem {
 
 export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const navigate = useNavigate();
-  const { theme, themePreference, setThemePreference, toggleTheme, isDark } = useTheme();
+  const { theme, themePreference, setThemePreference, toggleTheme } = useTheme();
 
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<HistoryItem[]>([]);
@@ -76,42 +76,42 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
     runCommand: (cmdString: string) => executeCommand(cmdString),
   });
 
-  // Initial welcome greeting
+  // Initial welcome greeting (warm dark palette)
   const getWelcomeContent = (): React.ReactNode => (
     <div className="space-y-3 pb-3 text-xs font-mono">
-      <div className="text-gray-900 dark:text-[#ededeb] font-bold text-sm">
+      <div className="text-[#F0EEE7] font-bold text-sm">
         JOSHUA WINYELSUM — ENGINEERING COMMAND CENTER [v2.4]
       </div>
-      <p className="text-gray-600 dark:text-neutral-400 leading-relaxed">
-        Interactive portfolio console. Navigate systems, explore verified projects, inspect architecture, and control website appearance.
+      <p className="text-[#A6A397] leading-relaxed">
+        Interactive engineering console. Navigate portfolio sections, inspect verified project specifications, review architecture, and control the website theme.
       </p>
       <div className="flex flex-wrap items-center gap-2 pt-1">
-        <span className="text-[10px] uppercase font-bold text-gray-400 dark:text-neutral-500 tracking-wider">Quick Start:</span>
+        <span className="text-[10px] uppercase font-bold text-[#7A786E] tracking-wider">Quick Commands:</span>
         <button
           type="button"
           onClick={() => executeCommand('projects')}
-          className="px-2 py-0.5 rounded bg-blue-500/10 text-blue-700 dark:text-blue-400 hover:bg-blue-500/20 text-[11px] font-semibold cursor-pointer"
+          className="px-2 py-0.5 rounded bg-[#292A27] border border-[#45453F] text-[#82AAFF] hover:bg-[#32332F] text-[11px] font-semibold cursor-pointer transition-colors"
         >
           $ projects
         </button>
         <button
           type="button"
           onClick={() => executeCommand('skills')}
-          className="px-2 py-0.5 rounded bg-blue-500/10 text-blue-700 dark:text-blue-400 hover:bg-blue-500/20 text-[11px] font-semibold cursor-pointer"
+          className="px-2 py-0.5 rounded bg-[#292A27] border border-[#45453F] text-[#82AAFF] hover:bg-[#32332F] text-[11px] font-semibold cursor-pointer transition-colors"
         >
           $ skills
         </button>
         <button
           type="button"
           onClick={() => executeCommand('theme toggle')}
-          className="px-2 py-0.5 rounded bg-blue-500/10 text-blue-700 dark:text-blue-400 hover:bg-blue-500/20 text-[11px] font-semibold cursor-pointer"
+          className="px-2 py-0.5 rounded bg-[#292A27] border border-[#45453F] text-[#82AAFF] hover:bg-[#32332F] text-[11px] font-semibold cursor-pointer transition-colors"
         >
           $ theme toggle
         </button>
         <button
           type="button"
           onClick={() => executeCommand('help')}
-          className="px-2 py-0.5 rounded bg-gray-200 dark:bg-[#1c1e24] text-gray-700 dark:text-neutral-300 hover:opacity-80 text-[11px] font-semibold cursor-pointer"
+          className="px-2 py-0.5 rounded bg-[#292A27] border border-[#45453F] text-[#F0EEE7] hover:bg-[#32332F] text-[11px] font-semibold cursor-pointer transition-colors"
         >
           $ help
         </button>
@@ -177,13 +177,13 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
 
         if (result.error) {
           pushOutput(
-            <div className="py-1 text-rose-600 dark:text-rose-400 font-mono text-xs space-y-1">
+            <div className="py-1 text-[#E57373] font-mono text-xs space-y-1">
               <div className="flex items-start gap-1.5 font-semibold">
                 <span>✗</span>
                 <span>{typeof result.error === 'string' ? result.error : result.error}</span>
               </div>
               {command.usage && (
-                <div className="text-gray-500 dark:text-neutral-500 text-[11px] pl-4">
+                <div className="text-[#A6A397] text-[11px] pl-4">
                   Usage: {command.usage}
                 </div>
               )}
@@ -194,7 +194,7 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
         }
       } catch (err: unknown) {
         pushOutput(
-          <div className="py-1 text-rose-600 dark:text-rose-400 font-mono text-xs">
+          <div className="py-1 text-[#E57373] font-mono text-xs">
             Execution error: {err instanceof Error ? err.message : String(err)}
           </div>
         );
@@ -204,24 +204,24 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
       const suggestion = suggestCommand(commandName);
       pushOutput(
         <div className="py-1 text-xs font-mono space-y-1">
-          <div className="text-rose-600 dark:text-rose-400">
+          <div className="text-[#E57373]">
             Command not found: <span className="font-bold">{commandName}</span>
           </div>
           {suggestion && (
-            <div className="text-gray-600 dark:text-neutral-400 flex items-center gap-1.5">
+            <div className="text-[#A6A397] flex items-center gap-1.5">
               <span>Did you mean:</span>
               <button
                 type="button"
                 onClick={() => executeCommand(suggestion)}
-                className="text-blue-600 dark:text-blue-400 font-bold hover:underline cursor-pointer"
+                className="text-[#82AAFF] font-bold hover:underline cursor-pointer"
               >
                 {suggestion}
               </button>
               <span>?</span>
             </div>
           )}
-          <div className="text-[11px] text-gray-400 dark:text-neutral-500">
-            Type <button type="button" onClick={() => executeCommand('help')} className="text-blue-600 dark:text-blue-400 hover:underline">help</button> to see all available commands.
+          <div className="text-[11px] text-[#7A786E]">
+            Type <button type="button" onClick={() => executeCommand('help')} className="text-[#82AAFF] hover:underline cursor-pointer">help</button> to see all available commands.
           </div>
         </div>
       );
@@ -313,13 +313,18 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
     <dialog
       ref={dialogRef}
       onClick={handleBackdropClick}
-      className={`backdrop:bg-black/40 dark:backdrop:bg-black/75 fixed inset-0 z-[100] m-0 w-full max-w-none h-full max-h-none bg-transparent p-3 sm:p-6 md:pt-[8vh] flex-col items-center duration-200 motion-reduce:duration-0 motion-reduce:transition-none ${
+      className={`backdrop:bg-black/70 fixed inset-0 z-[100] m-0 w-full max-w-none h-full max-h-none bg-transparent p-3 sm:p-6 md:pt-[8vh] flex-col items-center duration-200 motion-reduce:duration-0 motion-reduce:transition-none ${
         isOpen ? 'flex animate-in fade-in-0' : 'hidden'
       }`}
       aria-label="Engineering Command Center"
     >
+      {/*
+        PERMANENT WARM DARK CONTAINER:
+        Always uses warm charcoal (#20211F), surface (#292A27), ivory text (#F0EEE7),
+        muted warm grey (#A6A397), and borders (#45453F) regardless of website light/dark theme.
+      */}
       <div
-        className="w-full max-w-3xl h-[72vh] min-h-[440px] max-h-[820px] bg-[#fbfcfd] dark:bg-[#121418] rounded-xl shadow-2xl border border-gray-300 dark:border-[#282a32] flex flex-col font-mono text-[13px] overflow-hidden transition-colors duration-200"
+        className="w-full max-w-3xl h-[72vh] min-h-[440px] max-h-[820px] bg-[#20211F] text-[#F0EEE7] rounded-xl shadow-2xl border border-[#45453F] flex flex-col font-mono text-[13px] overflow-hidden"
         role="document"
         onClick={(e) => {
           e.stopPropagation();
@@ -330,8 +335,8 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
           }
         }}
       >
-        {/* Terminal Window Header */}
-        <div className="flex items-center justify-between px-4 py-2.5 bg-[#eceef1] dark:bg-[#181a20] border-b border-gray-300 dark:border-[#282a32] select-none shrink-0">
+        {/* Terminal Window Header (Always Warm Dark) */}
+        <div className="flex items-center justify-between px-4 py-2.5 bg-[#292A27] border-b border-[#45453F] select-none shrink-0">
           {/* Traffic light dots */}
           <div className="flex items-center gap-2">
             <button
@@ -349,34 +354,34 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
 
           {/* Centered title / Identity */}
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-gray-700 dark:text-neutral-300">
+            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#F0EEE7]">
               JOSHUA@PORTFOLIO
             </span>
-            <span className="text-gray-300 dark:text-neutral-700 hidden sm:inline">|</span>
-            <span className="text-[10px] text-gray-500 dark:text-neutral-500 hidden sm:inline tracking-wider">
+            <span className="text-[#45453F] hidden sm:inline">|</span>
+            <span className="text-[10px] text-[#A6A397] hidden sm:inline tracking-wider">
               COMMAND CENTER
             </span>
           </div>
 
           {/* Header Action Tools */}
           <div className="flex items-center gap-2">
-            {/* Theme Toggle Capsule */}
+            {/* Website Theme Controller Capsule */}
             <button
               type="button"
               onClick={toggleTheme}
-              className="hidden sm:inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-semibold border border-gray-300 dark:border-[#282a32] bg-white dark:bg-[#1c1e24] text-gray-700 dark:text-neutral-300 hover:border-gray-400 dark:hover:border-neutral-500 transition-colors cursor-pointer"
-              title={`Switch to ${isDark ? 'light' : 'dark'} mode (or run 'theme toggle')`}
+              className="hidden sm:inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-semibold border border-[#45453F] bg-[#32332F] text-[#F0EEE7] hover:bg-[#3E403B] transition-colors cursor-pointer"
+              title={`Switch website to ${theme === 'dark' ? 'light' : 'dark'} mode (terminal remains dark)`}
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
-              <span>{isDark ? 'DARK' : 'LIGHT'}</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#82AAFF]" />
+              <span>SITE: {theme.toUpperCase()}</span>
             </button>
 
             {/* Clear Screen */}
             <button
               type="button"
               onClick={() => setHistory([])}
-              className="p-1 rounded text-gray-500 dark:text-neutral-400 hover:text-gray-900 dark:hover:text-[#ededeb] hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
-              title="Clear terminal (Ctrl+L)"
+              className="p-1 rounded text-[#A6A397] hover:text-[#F0EEE7] hover:bg-[#32332F] transition-colors cursor-pointer"
+              title="Clear terminal output (Ctrl+L)"
               aria-label="Clear output"
             >
               <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -388,7 +393,7 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
             <button
               type="button"
               onClick={onClose}
-              className="p-1 rounded text-gray-500 dark:text-neutral-400 hover:text-gray-900 dark:hover:text-[#ededeb] hover:bg-black/5 dark:hover:bg-white/5 transition-colors cursor-pointer"
+              className="p-1 rounded text-[#A6A397] hover:text-[#F0EEE7] hover:bg-[#32332F] transition-colors cursor-pointer"
               title="Close (Esc)"
               aria-label="Close"
             >
@@ -399,13 +404,13 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
           </div>
         </div>
 
-        {/* Terminal Body Scroll Area */}
-        <div className="flex-1 p-4 sm:p-5 overflow-y-auto text-gray-800 dark:text-neutral-200 space-y-3">
+        {/* Terminal Body Scroll Area (Always Warm Dark) */}
+        <div className="flex-1 p-4 sm:p-5 overflow-y-auto bg-[#20211F] text-[#F0EEE7] space-y-3">
           {history.map((item) => (
             <div key={item.id}>
               {item.type === 'input' ? (
-                <div className="flex items-start gap-2 text-gray-900 dark:text-[#ededeb] font-semibold pt-1">
-                  <span className="text-blue-600 dark:text-blue-400 shrink-0 select-none">joshua@portfolio:~$</span>
+                <div className="flex items-start gap-2 text-[#F0EEE7] font-semibold pt-1">
+                  <span className="text-[#82AAFF] shrink-0 select-none">joshua@portfolio:~$</span>
                   <span className="break-all">{item.content}</span>
                 </div>
               ) : (
@@ -416,21 +421,21 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
 
           {/* Autocomplete hint box */}
           {autocompleteHint && (
-            <div className="p-2 rounded bg-black/[0.03] dark:bg-white/[0.04] border border-gray-200 dark:border-[#282a32] text-xs text-gray-600 dark:text-neutral-400">
-              <span className="text-[10px] uppercase font-bold text-gray-400 dark:text-neutral-500 mr-2">Completions:</span>
+            <div className="p-2 rounded bg-[#292A27] border border-[#45453F] text-xs text-[#A6A397]">
+              <span className="text-[10px] uppercase font-bold text-[#7A786E] mr-2">Completions:</span>
               <span>{autocompleteHint}</span>
             </div>
           )}
 
           {/* Active input row */}
           <div className="flex items-center gap-2 pt-1">
-            <span className="text-blue-600 dark:text-blue-400 font-bold shrink-0 select-none">
+            <span className="text-[#82AAFF] font-bold shrink-0 select-none">
               joshua@portfolio:~$
             </span>
             <input
               ref={inputRef}
               type="text"
-              className="flex-1 bg-transparent border-0 p-0 m-0 text-gray-900 dark:text-[#ededeb] font-mono text-[13px] focus:ring-0 focus:outline-none caret-blue-600 dark:caret-blue-400 placeholder:text-gray-400 dark:placeholder:text-neutral-600"
+              className="flex-1 bg-transparent border-0 p-0 m-0 text-[#F0EEE7] font-mono text-[13px] focus:ring-0 focus:outline-none caret-[#F0EEE7] placeholder:text-[#7A786E]"
               value={input}
               onChange={(e) => {
                 setInput(e.target.value);
@@ -448,15 +453,15 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
           <div ref={bottomRef} />
         </div>
 
-        {/* Footer shortcuts info */}
-        <div className="px-4 py-2 bg-[#eceef1]/60 dark:bg-[#181a20]/60 border-t border-gray-300/80 dark:border-[#282a32] text-[10px] text-gray-500 dark:text-neutral-400 flex flex-col sm:flex-row sm:items-center justify-between gap-1 select-none shrink-0">
+        {/* Footer shortcuts info (Always Warm Dark) */}
+        <div className="px-4 py-2 bg-[#292A27] border-t border-[#45453F] text-[10px] text-[#A6A397] flex flex-col sm:flex-row sm:items-center justify-between gap-1 select-none shrink-0">
           <div className="flex items-center gap-3">
-            <span><kbd className="px-1 py-0.5 rounded bg-gray-200 dark:bg-[#282a32] text-gray-800 dark:text-neutral-200">TAB</kbd> Complete</span>
-            <span><kbd className="px-1 py-0.5 rounded bg-gray-200 dark:bg-[#282a32] text-gray-800 dark:text-neutral-200">↑/↓</kbd> History</span>
-            <span><kbd className="px-1 py-0.5 rounded bg-gray-200 dark:bg-[#282a32] text-gray-800 dark:text-neutral-200">CTRL+K</kbd> Toggle</span>
+            <span><kbd className="px-1.5 py-0.5 rounded bg-[#32332F] border border-[#45453F] text-[#F0EEE7]">TAB</kbd> Complete</span>
+            <span><kbd className="px-1.5 py-0.5 rounded bg-[#32332F] border border-[#45453F] text-[#F0EEE7]">↑/↓</kbd> History</span>
+            <span><kbd className="px-1.5 py-0.5 rounded bg-[#32332F] border border-[#45453F] text-[#F0EEE7]">CTRL+K</kbd> Toggle</span>
           </div>
-          <div className="text-[10px] text-gray-400 dark:text-neutral-500">
-            Type <code className="text-blue-600 dark:text-blue-400 font-semibold">exit</code> or press <kbd className="px-1 py-0.5 rounded bg-gray-200 dark:bg-[#282a32] text-gray-800 dark:text-neutral-200">ESC</kbd> to return
+          <div className="text-[10px] text-[#7A786E]">
+            Type <code className="text-[#82AAFF] font-semibold">exit</code> or press <kbd className="px-1.5 py-0.5 rounded bg-[#32332F] border border-[#45453F] text-[#F0EEE7]">ESC</kbd> to return
           </div>
         </div>
       </div>

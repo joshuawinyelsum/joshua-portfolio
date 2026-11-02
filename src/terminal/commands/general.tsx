@@ -1,6 +1,6 @@
 import React from 'react';
-import { Command, CommandContext } from '../types';
-import { InfoHeader, SuccessMsg, ErrorMsg, CommandLink } from '../components/TerminalUI';
+import { Command } from '../types';
+import { InfoHeader, SuccessMsg } from '../components/TerminalUI';
 
 export const generalCommands: Command[] = [
   {
@@ -92,15 +92,15 @@ export const generalCommands: Command[] = [
               <InfoHeader title={`Help: ${foundKey.toUpperCase()}`} subtitle={cat.desc} />
               <div className="grid grid-cols-1 gap-2">
                 {cat.cmds.map((c) => (
-                  <div key={c.name} className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 py-1 border-b border-gray-200/40 dark:border-[#282a32]/60">
-                    <span className="text-blue-600 dark:text-blue-400 font-bold shrink-0 w-28">
+                  <div key={c.name} className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 py-1 border-b border-[#45453F]/60">
+                    <span className="text-[#82AAFF] font-bold shrink-0 w-28">
                       {c.name}
                     </span>
-                    <span className="text-gray-600 dark:text-neutral-300 text-xs flex-1">
+                    <span className="text-[#A6A397] text-xs flex-1">
                       {c.desc}
                     </span>
                     {c.usage && (
-                      <span className="text-gray-400 dark:text-neutral-500 text-[11px]">
+                      <span className="text-[#7A786E] text-[11px]">
                         {c.usage}
                       </span>
                     )}
@@ -116,17 +116,17 @@ export const generalCommands: Command[] = [
         output: (
           <div className="space-y-4 font-mono text-[13px]">
             <InfoHeader title="COMMAND CENTER DIRECTORY" subtitle="Explore portfolio via CLI" />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {Object.entries(categories).map(([catKey, cat]) => (
-                <div key={catKey} className="p-3 rounded-lg bg-black/[0.02] dark:bg-white/[0.02] border border-gray-200/80 dark:border-[#282a32]">
-                  <div className="flex items-center justify-between mb-2 pb-1 border-b border-gray-200/60 dark:border-[#282a32]">
-                    <span className="text-xs font-bold uppercase tracking-wider text-gray-900 dark:text-[#ededeb]">
+                <div key={catKey} className="p-3 rounded-lg bg-[#292A27] border border-[#45453F]">
+                  <div className="flex items-center justify-between mb-2 pb-1 border-b border-[#45453F]">
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#F0EEE7]">
                       {catKey}
                     </span>
                     <button
                       type="button"
                       onClick={() => ctx.runCommand(`help ${catKey}`)}
-                      className="text-[10px] text-blue-600 dark:text-blue-400 hover:underline cursor-pointer"
+                      className="text-[10px] text-[#82AAFF] hover:underline cursor-pointer"
                     >
                       help {catKey} →
                     </button>
@@ -134,12 +134,12 @@ export const generalCommands: Command[] = [
                   <div className="space-y-1">
                     {cat.cmds.slice(0, 4).map((c) => (
                       <div key={c.name} className="flex items-baseline justify-between text-xs">
-                        <span className="text-blue-600 dark:text-blue-400 font-semibold">{c.name}</span>
-                        <span className="text-gray-500 dark:text-neutral-400 text-[11px] truncate max-w-[180px]">{c.desc}</span>
+                        <span className="text-[#82AAFF] font-semibold">{c.name}</span>
+                        <span className="text-[#A6A397] text-[11px] truncate max-w-[180px]">{c.desc}</span>
                       </div>
                     ))}
                     {cat.cmds.length > 4 && (
-                      <div className="text-[10px] text-gray-400 dark:text-neutral-500 pt-1">
+                      <div className="text-[10px] text-[#7A786E] pt-1">
                         +{cat.cmds.length - 4} more commands...
                       </div>
                     )}
@@ -147,10 +147,10 @@ export const generalCommands: Command[] = [
                 </div>
               ))}
             </div>
-            <div className="pt-2 text-[11px] text-gray-500 dark:text-neutral-400 border-t border-gray-200/60 dark:border-[#282a32] flex flex-wrap gap-x-4 gap-y-1">
-              <span>Tip: Press <kbd className="px-1 py-0.5 rounded bg-gray-200 dark:bg-[#282a32] text-gray-800 dark:text-neutral-200">TAB</kbd> for auto-complete</span>
-              <span>Use <kbd className="px-1 py-0.5 rounded bg-gray-200 dark:bg-[#282a32] text-gray-800 dark:text-neutral-200">↑</kbd><kbd className="px-1 py-0.5 rounded bg-gray-200 dark:bg-[#282a32] text-gray-800 dark:text-neutral-200">↓</kbd> for history</span>
-              <span>Type <span className="text-blue-600 dark:text-blue-400">theme toggle</span> to switch mode</span>
+            <div className="pt-2 text-[11px] text-[#A6A397] border-t border-[#45453F] flex flex-wrap gap-x-4 gap-y-1">
+              <span>Tip: Press <kbd className="px-1.5 py-0.5 rounded bg-[#292A27] border border-[#45453F] text-[#F0EEE7]">TAB</kbd> for auto-complete</span>
+              <span>Use <kbd className="px-1.5 py-0.5 rounded bg-[#292A27] border border-[#45453F] text-[#F0EEE7]">↑</kbd><kbd className="px-1.5 py-0.5 rounded bg-[#292A27] border border-[#45453F] text-[#F0EEE7]">↓</kbd> for history</span>
+              <span>Type <span className="text-[#82AAFF]">theme toggle</span> to switch website theme</span>
             </div>
           </div>
         ),
@@ -175,7 +175,7 @@ export const generalCommands: Command[] = [
     execute: (_args, ctx) => {
       if (ctx.commandHistory.length === 0) {
         return {
-          output: <div className="text-gray-500 dark:text-neutral-400 font-mono text-xs">No previous commands entered in this session.</div>,
+          output: <div className="text-[#A6A397] font-mono text-xs">No previous commands entered in this session.</div>,
         };
       }
       return {
@@ -185,8 +185,8 @@ export const generalCommands: Command[] = [
             <div className="space-y-0.5">
               {ctx.commandHistory.map((cmd, i) => (
                 <div key={i} className="flex items-center gap-3 py-0.5">
-                  <span className="text-gray-400 dark:text-neutral-600 w-6 text-right tabular-nums">{i + 1}</span>
-                  <span className="text-gray-900 dark:text-[#ededeb]">{cmd}</span>
+                  <span className="text-[#7A786E] w-6 text-right tabular-nums">{i + 1}</span>
+                  <span className="text-[#F0EEE7]">{cmd}</span>
                 </div>
               ))}
             </div>
@@ -203,21 +203,21 @@ export const generalCommands: Command[] = [
       output: (
         <div className="space-y-2 font-mono text-[13px] leading-relaxed">
           <InfoHeader title="IDENTITY & FOCUS" />
-          <div className="text-gray-900 dark:text-[#ededeb] font-bold text-base">
+          <div className="text-[#F0EEE7] font-bold text-base">
             Joshua Winyelsum
           </div>
-          <div className="text-gray-600 dark:text-neutral-400 text-xs">
+          <div className="text-[#A6A397] text-xs">
             Software & Systems Engineer · Computer Science Student
           </div>
-          <div className="text-gray-700 dark:text-neutral-300 text-xs">
+          <div className="text-[#F0EEE7] text-xs">
             BSc Computer Science @ University for Development Studies (Tamale, Ghana)
           </div>
-          <div className="p-3 rounded bg-blue-500/5 border border-blue-500/20 text-gray-700 dark:text-neutral-300 text-xs space-y-1">
-            <p className="font-semibold text-gray-900 dark:text-[#ededeb]">Core Technical Disciplines:</p>
-            <p>• Backend architecture & relational data modeling (Next.js, FastAPI, PostgreSQL, Prisma)</p>
-            <p>• Offline-first resilient client systems (IndexedDB, Dexie, bi-directional sync)</p>
-            <p>• Data research pipelines, OCR extraction & canonical schema harmonization</p>
-            <p>• Evidence-backed engineering verified by automated test suites</p>
+          <div className="p-3 rounded bg-[#292A27] border border-[#45453F] text-[#F0EEE7] text-xs space-y-1.5">
+            <p className="font-semibold text-[#82AAFF]">Core Technical Disciplines:</p>
+            <p className="text-[#A6A397]">• Backend architecture & relational data modeling (Next.js, FastAPI, PostgreSQL, Prisma)</p>
+            <p className="text-[#A6A397]">• Offline-first resilient client systems (IndexedDB, Dexie, bi-directional sync)</p>
+            <p className="text-[#A6A397]">• Data research pipelines, OCR extraction & canonical schema harmonization</p>
+            <p className="text-[#A6A397]">• Evidence-backed engineering verified by automated test suites</p>
           </div>
         </div>
       ),
@@ -231,14 +231,14 @@ export const generalCommands: Command[] = [
       output: (
         <div className="space-y-2 font-mono text-xs leading-relaxed">
           <InfoHeader title="ABOUT JOSHUA WINYELSUM" />
-          <p className="text-gray-700 dark:text-neutral-300">
+          <p className="text-[#F0EEE7]">
             I build resilient backend systems, database architectures, and data pipelines. I treat software engineering as an evidence-driven discipline where system architecture must be backed by automated test suites, clean relational constraints, and real-world failure tolerance.
           </p>
           <div className="pt-2 flex items-center gap-3">
             <button
               type="button"
               onClick={() => ctx.navigate('/#about')}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-gray-900 dark:bg-[#ededeb] text-white dark:text-[#121316] font-semibold text-[11px] hover:opacity-90 cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-[#292A27] text-[#F0EEE7] border border-[#45453F] font-semibold text-[11px] hover:bg-[#32332F] cursor-pointer transition-colors"
             >
               Navigate to About Section →
             </button>
@@ -256,12 +256,12 @@ export const generalCommands: Command[] = [
       return {
         output: (
           <div className="font-mono text-xs space-y-1">
-            <div className="text-gray-900 dark:text-[#ededeb]">
-              <span className="text-gray-400 dark:text-neutral-500">Local: </span>
+            <div className="text-[#F0EEE7]">
+              <span className="text-[#A6A397]">Local: </span>
               {now.toString()}
             </div>
-            <div className="text-gray-600 dark:text-neutral-400">
-              <span className="text-gray-400 dark:text-neutral-500">UTC: </span>
+            <div className="text-[#A6A397]">
+              <span className="text-[#7A786E]">UTC: </span>
               {now.toISOString()}
             </div>
           </div>
@@ -278,11 +278,11 @@ export const generalCommands: Command[] = [
     execute: (args) => {
       if (args.length === 0) {
         return {
-          output: <div className="text-gray-400 dark:text-neutral-500 font-mono text-xs italic">Usage: echo &lt;text&gt;</div>,
+          output: <div className="text-[#7A786E] font-mono text-xs italic">Usage: echo &lt;text&gt;</div>,
         };
       }
       return {
-        output: <div className="text-gray-800 dark:text-neutral-200 font-mono text-xs">{args.join(' ')}</div>,
+        output: <div className="text-[#F0EEE7] font-mono text-xs">{args.join(' ')}</div>,
       };
     },
   },

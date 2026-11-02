@@ -10,7 +10,7 @@ export const utilityCommands: Command[] = [
     description: 'Display personal engineering banner.',
     execute: () => ({
       output: (
-        <pre className="font-mono text-[11px] leading-tight text-blue-600 dark:text-blue-400 select-none overflow-x-auto">
+        <pre className="font-mono text-[11px] leading-tight text-[#82AAFF] select-none overflow-x-auto">
 {`   ██╗ ██████╗ ███████╗██╗  ██╗██╗   ██╗ █████╗
    ██║██╔═══██╗██╔════╝██║  ██║██║   ██║██╔══██╗
    ██║██║   ██║███████╗███████║██║   ██║███████║
@@ -40,7 +40,7 @@ export const utilityCommands: Command[] = [
         output: (
           <div className="space-y-1 font-mono text-xs">
             <InfoHeader title="MESSAGE OF THE DAY" />
-            <p className="text-gray-800 dark:text-neutral-200 leading-relaxed italic">
+            <p className="text-[#F0EEE7] leading-relaxed italic">
               "{randomMsg}"
             </p>
           </div>
@@ -55,13 +55,14 @@ export const utilityCommands: Command[] = [
     description: 'Display portfolio and terminal release version.',
     execute: () => ({
       output: (
-        <div className="font-mono text-xs space-y-1 text-gray-700 dark:text-neutral-300">
+        <div className="font-mono text-xs space-y-1 text-[#F0EEE7]">
           <InfoHeader title="SYSTEM VERSION" />
-          <div>Portfolio Engine: <span className="text-blue-600 dark:text-blue-400 font-bold">v2.4.0</span> (Architecture Edition)</div>
-          <div>Framework: React 18 · Vite 6 · Tailwind CSS 3</div>
-          <div>Routing: React Router v6 (SPA with zero-FOUC state)</div>
-          <div>Terminal Registry: 20 native commands with fuzzy autocomplete</div>
-          <div>Host: Vercel Edge Network</div>
+          <div>Portfolio Engine: <span className="text-[#82AAFF] font-bold">v2.4.0</span> (Architecture Edition)</div>
+          <div className="text-[#A6A397]">Framework: React 18 · Vite 6 · Tailwind CSS 3</div>
+          <div className="text-[#A6A397]">Terminal Scope: Independent Dark Console (#20211F)</div>
+          <div className="text-[#A6A397]">Routing: React Router v6 (SPA with zero-FOUC state)</div>
+          <div className="text-[#A6A397]">Terminal Registry: 20 native commands with fuzzy autocomplete</div>
+          <div className="text-[#A6A397]">Host: Vercel Edge Network</div>
         </div>
       ),
     }),
@@ -76,23 +77,24 @@ export const utilityCommands: Command[] = [
         <div className="space-y-3 font-mono text-xs">
           <InfoHeader title="PORTFOLIO SYSTEM STATUS & TAXONOMY" />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            <div className="p-2.5 rounded bg-black/[0.02] dark:bg-white/[0.02] border border-gray-200/80 dark:border-[#282a32] space-y-1">
-              <span className="text-[10px] font-bold text-gray-400 dark:text-neutral-500 uppercase tracking-widest block">Status Taxonomy</span>
+            <div className="p-2.5 rounded bg-[#292A27] border border-[#45453F] space-y-1">
+              <span className="text-[10px] font-bold text-[#A6A397] uppercase tracking-widest block">Status Taxonomy</span>
               <div className="space-y-1 text-[11px]">
-                <div className="flex items-center gap-2"><StatusBadge status="LIVE" /> <span className="text-gray-600 dark:text-neutral-400">Public accessible deployment verified</span></div>
-                <div className="flex items-center gap-2"><StatusBadge status="BUILT" /> <span className="text-gray-600 dark:text-neutral-400">Implementation complete with test suite</span></div>
-                <div className="flex items-center gap-2"><StatusBadge status="IN PROGRESS" /> <span className="text-gray-600 dark:text-neutral-400">Active development</span></div>
-                <div className="flex items-center gap-2"><StatusBadge status="RESEARCH" /> <span className="text-gray-600 dark:text-neutral-400">Evidence register & dataset analysis</span></div>
-                <div className="flex items-center gap-2"><StatusBadge status="PLANNED" /> <span className="text-gray-600 dark:text-neutral-400">Conceptual exploration</span></div>
+                <div className="flex items-center gap-2"><StatusBadge status="LIVE" /> <span className="text-[#A6A397]">Public accessible deployment verified</span></div>
+                <div className="flex items-center gap-2"><StatusBadge status="BUILT" /> <span className="text-[#A6A397]">Implementation complete with test suite</span></div>
+                <div className="flex items-center gap-2"><StatusBadge status="IN PROGRESS" /> <span className="text-[#A6A397]">Active development</span></div>
+                <div className="flex items-center gap-2"><StatusBadge status="RESEARCH" /> <span className="text-[#A6A397]">Evidence register & dataset analysis</span></div>
+                <div className="flex items-center gap-2"><StatusBadge status="PLANNED" /> <span className="text-[#A6A397]">Conceptual exploration</span></div>
               </div>
             </div>
-            <div className="p-2.5 rounded bg-black/[0.02] dark:bg-white/[0.02] border border-gray-200/80 dark:border-[#282a32] space-y-1">
-              <span className="text-[10px] font-bold text-gray-400 dark:text-neutral-500 uppercase tracking-widest block">Environment Metrics</span>
-              <div className="space-y-1 text-[11px] text-gray-700 dark:text-neutral-300">
-                <div>Active Theme: <span className="font-bold uppercase text-blue-600 dark:text-blue-400">{ctx.theme}</span> ({ctx.themePreference})</div>
+            <div className="p-2.5 rounded bg-[#292A27] border border-[#45453F] space-y-1">
+              <span className="text-[10px] font-bold text-[#A6A397] uppercase tracking-widest block">Environment Metrics</span>
+              <div className="space-y-1 text-[11px] text-[#F0EEE7]">
+                <div>Website Theme: <span className="font-bold uppercase text-[#82AAFF]">{ctx.theme}</span> ({ctx.themePreference})</div>
+                <div>Terminal Design: <span className="font-bold text-[#7EC28D]">Permanently Dark (#20211F)</span></div>
                 <div>Verified Projects: <span className="font-bold">{ctx.projects.length} featured</span></div>
-                <div>Automated Tests: <span className="font-bold text-emerald-600 dark:text-emerald-400">Passing (Vitest, Pytest, Playwright)</span></div>
-                <div>Integrity: <span className="font-bold text-emerald-600 dark:text-emerald-400">Verified Evidence-Backed</span></div>
+                <div>Automated Tests: <span className="font-bold text-[#7EC28D]">Passing (Vitest, Pytest, Playwright)</span></div>
+                <div>Integrity: <span className="font-bold text-[#7EC28D]">Verified Evidence-Backed</span></div>
               </div>
             </div>
           </div>

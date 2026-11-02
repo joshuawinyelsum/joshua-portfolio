@@ -49,7 +49,7 @@ export const technicalCommands: Command[] = [
                 {filteredSkills.map((s) => (
                   <span
                     key={s.name}
-                    className="px-2.5 py-1 rounded bg-black/[0.03] dark:bg-white/[0.04] border border-gray-200 dark:border-[#282a32] text-gray-800 dark:text-[#ededeb] font-semibold"
+                    className="px-2.5 py-1 rounded bg-[#32332F] border border-[#45453F] text-[#F0EEE7] font-semibold"
                   >
                     {s.name}
                   </span>
@@ -72,15 +72,15 @@ export const technicalCommands: Command[] = [
                 const catSkills = ctx.skills.filter((s) => s.category === cat);
                 if (catSkills.length === 0) return null;
                 return (
-                  <div key={cat} className="p-3 rounded bg-black/[0.02] dark:bg-white/[0.02] border border-gray-200/80 dark:border-[#282a32]">
-                    <div className="flex items-center justify-between mb-2 pb-1 border-b border-gray-200/60 dark:border-[#282a32]">
-                      <span className="font-bold text-[11px] text-gray-900 dark:text-[#ededeb] uppercase tracking-wider">{cat}</span>
+                  <div key={cat} className="p-3 rounded bg-[#292A27] border border-[#45453F]">
+                    <div className="flex items-center justify-between mb-2 pb-1 border-b border-[#45453F]">
+                      <span className="font-bold text-[11px] text-[#F0EEE7] uppercase tracking-wider">{cat}</span>
                     </div>
                     <div className="flex flex-wrap gap-1.5">
                       {catSkills.map((s) => (
                         <span
                           key={s.name}
-                          className="px-2 py-0.5 rounded bg-gray-100 dark:bg-[#1c1e24] border border-gray-200 dark:border-[#282a32] text-gray-700 dark:text-neutral-300 text-[11px]"
+                          className="px-2 py-0.5 rounded bg-[#32332F] border border-[#45453F] text-[#F0EEE7] text-[11px]"
                         >
                           {s.name}
                         </span>
@@ -90,8 +90,8 @@ export const technicalCommands: Command[] = [
                 );
               })}
             </div>
-            <div className="text-[11px] text-gray-400 dark:text-neutral-500 pt-1">
-              Filter by category: <code className="text-blue-600 dark:text-blue-400">stack frontend</code> · <code className="text-blue-600 dark:text-blue-400">stack backend</code> · <code className="text-blue-600 dark:text-blue-400">stack database</code> · <code className="text-blue-600 dark:text-blue-400">stack tools</code>
+            <div className="text-[11px] text-[#A6A397] pt-1">
+              Filter by category: <code className="text-[#82AAFF]">stack frontend</code> · <code className="text-[#82AAFF]">stack backend</code> · <code className="text-[#82AAFF]">stack database</code> · <code className="text-[#82AAFF]">stack tools</code>
             </div>
           </div>
         ),
@@ -109,27 +109,27 @@ export const technicalCommands: Command[] = [
         <div className="space-y-3 font-mono text-xs leading-relaxed">
           <InfoHeader title="SOFTWARE ARCHITECTURE & SYSTEM DESIGN PHILOSOPHY" />
           <div className="space-y-2.5">
-            <div className="border-l-2 border-blue-500 pl-3">
-              <span className="font-bold text-gray-900 dark:text-[#ededeb] block">01 / Problem-First Reality</span>
-              <span className="text-gray-600 dark:text-neutral-400">
+            <div className="border-l-2 border-[#82AAFF] pl-3">
+              <span className="font-bold text-[#F0EEE7] block">01 / Problem-First Reality</span>
+              <span className="text-[#A6A397]">
                 Software must withstand messy input, unreliable connectivity, and changing requirements. I design data structures and constraints to model reality before choosing frameworks.
               </span>
             </div>
-            <div className="border-l-2 border-blue-500 pl-3">
-              <span className="font-bold text-gray-900 dark:text-[#ededeb] block">02 / Relational Integrity & Schema Design</span>
-              <span className="text-gray-600 dark:text-neutral-400">
+            <div className="border-l-2 border-[#82AAFF] pl-3">
+              <span className="font-bold text-[#F0EEE7] block">02 / Relational Integrity & Schema Design</span>
+              <span className="text-[#A6A397]">
                 Data consistency starts at the storage boundary. Strict foreign keys, atomic transactions, idempotency keys, and explicit nullability prevent cascading failures.
               </span>
             </div>
-            <div className="border-l-2 border-blue-500 pl-3">
-              <span className="font-bold text-gray-900 dark:text-[#ededeb] block">03 / Offline-First & Resilient Sync</span>
-              <span className="text-gray-600 dark:text-neutral-400">
+            <div className="border-l-2 border-[#82AAFF] pl-3">
+              <span className="font-bold text-[#F0EEE7] block">03 / Offline-First & Resilient Sync</span>
+              <span className="text-[#A6A397]">
                 In environments with patchy networks, applications must persist locally first (IndexedDB/Dexie), queue mutations reliably, and synchronize with deterministic conflict resolution.
               </span>
             </div>
-            <div className="border-l-2 border-blue-500 pl-3">
-              <span className="font-bold text-gray-900 dark:text-[#ededeb] block">04 / Evidence-Backed Verification</span>
-              <span className="text-gray-600 dark:text-neutral-400">
+            <div className="border-l-2 border-[#82AAFF] pl-3">
+              <span className="font-bold text-[#F0EEE7] block">04 / Evidence-Backed Verification</span>
+              <span className="text-[#A6A397]">
                 Claims are empty without tests. Systems are hardened with unit suites (Vitest/Pytest), role-isolation integration tests, and end-to-end recovery verification (Playwright).
               </span>
             </div>
@@ -148,27 +148,27 @@ export const technicalCommands: Command[] = [
         <div className="space-y-3 font-mono text-xs leading-relaxed">
           <InfoHeader title="TECHNICAL INTERESTS & FOCUS AREAS" />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[12px]">
-            <div className="p-2.5 rounded bg-black/[0.02] dark:bg-white/[0.02] border border-gray-200/80 dark:border-[#282a32]">
-              <span className="text-blue-600 dark:text-blue-400 font-bold block mb-1">Backend & Systems Engineering</span>
-              <p className="text-gray-600 dark:text-neutral-400 text-[11px]">
+            <div className="p-2.5 rounded bg-[#292A27] border border-[#45453F]">
+              <span className="text-[#82AAFF] font-bold block mb-1">Backend & Systems Engineering</span>
+              <p className="text-[#A6A397] text-[11px]">
                 High-throughput APIs, asynchronous workers, connection budgeting, background task queues, and defensive middleware.
               </p>
             </div>
-            <div className="p-2.5 rounded bg-black/[0.02] dark:bg-white/[0.02] border border-gray-200/80 dark:border-[#282a32]">
-              <span className="text-blue-600 dark:text-blue-400 font-bold block mb-1">Database Architecture & Storage</span>
-              <p className="text-gray-600 dark:text-neutral-400 text-[11px]">
+            <div className="p-2.5 rounded bg-[#292A27] border border-[#45453F]">
+              <span className="text-[#82AAFF] font-bold block mb-1">Database Architecture & Storage</span>
+              <p className="text-[#A6A397] text-[11px]">
                 Relational modeling, query optimization, migration discipline, append-only event logs, and IndexedDB client storage.
               </p>
             </div>
-            <div className="p-2.5 rounded bg-black/[0.02] dark:bg-white/[0.02] border border-gray-200/80 dark:border-[#282a32]">
-              <span className="text-blue-600 dark:text-blue-400 font-bold block mb-1">Distributed & Offline-First Systems</span>
-              <p className="text-gray-600 dark:text-neutral-400 text-[11px]">
+            <div className="p-2.5 rounded bg-[#292A27] border border-[#45453F]">
+              <span className="text-[#82AAFF] font-bold block mb-1">Distributed & Offline-First Systems</span>
+              <p className="text-[#A6A397] text-[11px]">
                 Bi-directional synchronization, conflict resolution algorithms, local queueing, and network-partition resilience.
               </p>
             </div>
-            <div className="p-2.5 rounded bg-black/[0.02] dark:bg-white/[0.02] border border-gray-200/80 dark:border-[#282a32]">
-              <span className="text-blue-600 dark:text-blue-400 font-bold block mb-1">Data Pipelines & Machine Learning Systems</span>
-              <p className="text-gray-600 dark:text-neutral-400 text-[11px]">
+            <div className="p-2.5 rounded bg-[#292A27] border border-[#45453F]">
+              <span className="text-[#82AAFF] font-bold block mb-1">Data Pipelines & Machine Learning Systems</span>
+              <p className="text-[#A6A397] text-[11px]">
                 Schema harmonization, OCR verification registers, ETL pipelines, and applied machine learning integration.
               </p>
             </div>

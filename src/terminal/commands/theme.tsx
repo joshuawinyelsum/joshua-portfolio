@@ -20,20 +20,24 @@ export const themeCommands: Command[] = [
               <InfoHeader title="WEBSITE THEME CONTROLS" />
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <span className="text-gray-500 dark:text-neutral-400 w-32">Active theme:</span>
-                  <span className="font-bold text-gray-900 dark:text-[#ededeb] uppercase">{ctx.theme}</span>
+                  <span className="text-[#A6A397] w-36">Website active theme:</span>
+                  <span className="font-bold text-[#F0EEE7] uppercase">{ctx.theme}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-gray-500 dark:text-neutral-400 w-32">Preference mode:</span>
-                  <span className="font-bold text-blue-600 dark:text-blue-400 uppercase">{ctx.themePreference}</span>
+                  <span className="text-[#A6A397] w-36">Preference mode:</span>
+                  <span className="font-bold text-[#82AAFF] uppercase">{ctx.themePreference}</span>
+                </div>
+                <div className="flex items-center gap-2 pt-1 text-[11px] text-[#A6A397]">
+                  <span>Terminal mode:</span>
+                  <span className="text-[#7EC28D] font-bold">INDEPENDENT DARK (#20211F)</span>
                 </div>
               </div>
-              <div className="pt-2 border-t border-gray-200/60 dark:border-[#282a32] text-gray-600 dark:text-neutral-400 space-y-1">
-                <div className="text-[11px] font-semibold text-gray-800 dark:text-neutral-200">Available commands:</div>
-                <div>• <code className="text-blue-600 dark:text-blue-400 font-bold">theme dark</code> — Activate dark mode</div>
-                <div>• <code className="text-blue-600 dark:text-blue-400 font-bold">theme light</code> — Activate light mode</div>
-                <div>• <code className="text-blue-600 dark:text-blue-400 font-bold">theme system</code> — Follow operating system preference</div>
-                <div>• <code className="text-blue-600 dark:text-blue-400 font-bold">theme toggle</code> — Toggle between light and dark</div>
+              <div className="pt-2 border-t border-[#45453F] text-[#A6A397] space-y-1">
+                <div className="text-[11px] font-semibold text-[#F0EEE7]">Available website theme commands:</div>
+                <div>• <code className="text-[#82AAFF] font-bold">theme dark</code> — Activate dark mode across website</div>
+                <div>• <code className="text-[#82AAFF] font-bold">theme light</code> — Activate light mode across website</div>
+                <div>• <code className="text-[#82AAFF] font-bold">theme system</code> — Follow OS appearance preference</div>
+                <div>• <code className="text-[#82AAFF] font-bold">theme toggle</code> — Toggle between light and dark</div>
               </div>
             </div>
           ),
@@ -73,9 +77,9 @@ export const themeCommands: Command[] = [
           return {
             error: (
               <div className="space-y-1">
-                <div>Unsupported theme: <span className="font-bold underline">{mode}</span></div>
-                <div className="text-gray-500 dark:text-neutral-400 text-xs">
-                  Available options: <span className="text-blue-600 dark:text-blue-400">light, dark, system, toggle</span>.
+                <div>Unsupported theme: <span className="font-bold underline text-[#E57373]">{mode}</span></div>
+                <div className="text-[#A6A397] text-xs">
+                  Available options: <span className="text-[#82AAFF]">light, dark, system, toggle</span>.
                 </div>
               </div>
             ) as unknown as string,
