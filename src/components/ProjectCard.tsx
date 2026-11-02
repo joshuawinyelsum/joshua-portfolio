@@ -76,7 +76,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
 
           {/* Title + Subtitle */}
           <div>
-            <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-[#ededeb] tracking-tighter mb-2 transition-all duration-500 group-hover:translate-x-1 group-hover:text-gray-800 dark:group-hover:text-white">
+            <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-[#ededeb] tracking-tighter break-words mb-2 transition-all duration-500 group-hover:translate-x-1 group-hover:text-gray-800 dark:group-hover:text-white">
               {project.title}
             </h3>
             <p className="text-sm font-medium tracking-[0.12em] uppercase text-gray-500 dark:text-neutral-400">

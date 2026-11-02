@@ -348,21 +348,25 @@ export const traceCommand: Command = {
               </div>
             </div>
             {/* Step indicator pills */}
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-0.5">
               {trace.steps.map((_, i) => (
                 <button
                   key={i}
                   type="button"
                   onClick={() => ctx.runCommand(`trace ${targetKey} ${i + 1}`)}
-                  className={`w-5 h-2 rounded-full cursor-pointer transition-colors ${
-                    i + 1 === step
-                      ? 'bg-[#82AAFF]'
-                      : i + 1 < step
-                      ? 'bg-[#7EC28D]'
-                      : 'bg-[#45453F] hover:bg-[#7A786E]'
-                  }`}
+                  className="p-1 min-w-[24px] min-h-[24px] flex items-center justify-center cursor-pointer transition-colors"
                   title={`Step ${i + 1}`}
-                />
+                >
+                  <span
+                    className={`w-4 h-1.5 rounded-full block ${
+                      i + 1 === step
+                        ? 'bg-[#82AAFF]'
+                        : i + 1 < step
+                        ? 'bg-[#7EC28D]'
+                        : 'bg-[#45453F] hover:bg-[#7A786E]'
+                    }`}
+                  />
+                </button>
               ))}
             </div>
           </div>
@@ -418,32 +422,32 @@ export const traceCommand: Command = {
                 type="button"
                 disabled={step === 1}
                 onClick={() => ctx.runCommand(`trace ${targetKey} prev`)}
-                className={`px-3 py-1 rounded text-[11px] font-semibold transition-colors cursor-pointer ${
+                className={`px-3 py-1.5 min-h-[34px] flex items-center rounded text-[11px] font-semibold transition-colors cursor-pointer ${
                   step === 1
                     ? 'opacity-40 cursor-not-allowed text-[#7A786E]'
                     : 'bg-[#32332F] text-[#F0EEE7] hover:bg-[#3E403B] border border-[#45453F]'
                 }`}
               >
-                ← Prev Step
+                Prev Step
               </button>
               <button
                 type="button"
                 disabled={step === trace.steps.length}
                 onClick={() => ctx.runCommand(`trace ${targetKey} next`)}
-                className={`px-3 py-1 rounded text-[11px] font-semibold transition-colors cursor-pointer ${
+                className={`px-3 py-1.5 min-h-[34px] flex items-center rounded text-[11px] font-semibold transition-colors cursor-pointer ${
                   step === trace.steps.length
                     ? 'opacity-40 cursor-not-allowed text-[#7A786E]'
                     : 'bg-[#82AAFF] text-[#1E1E1E] hover:bg-[#99BBFF]'
                 }`}
               >
-                Next Step →
+                Next Step
               </button>
               <button
                 type="button"
                 onClick={() => ctx.runCommand(`trace ${targetKey} all`)}
-                className="px-2.5 py-1 rounded bg-[#32332F] text-[#A6A397] hover:text-[#F0EEE7] hover:bg-[#3E403B] text-[11px] font-semibold transition-colors cursor-pointer"
+                className="px-2.5 py-1.5 min-h-[34px] flex items-center rounded bg-[#32332F] text-[#A6A397] hover:text-[#F0EEE7] hover:bg-[#3E403B] text-[11px] font-semibold transition-colors cursor-pointer"
               >
-                Show All Steps
+                Show All
               </button>
             </div>
             <div className="text-[10px] text-[#7A786E]">

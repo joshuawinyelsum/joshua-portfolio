@@ -140,42 +140,42 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
           <button
             type="button"
             onClick={() => executeCommand('tour')}
-            className="px-2.5 py-1 rounded bg-[#82AAFF]/15 border border-[#82AAFF]/30 text-[#82AAFF] hover:bg-[#82AAFF]/25 text-[11px] font-semibold cursor-pointer transition-colors"
+            className="px-2.5 py-1.5 min-h-[34px] flex items-center rounded bg-[#82AAFF]/15 border border-[#82AAFF]/30 text-[#82AAFF] hover:bg-[#82AAFF]/25 text-[11px] font-semibold cursor-pointer transition-colors"
           >
             $ tour (Guided Walkthrough)
           </button>
           <button
             type="button"
             onClick={() => executeCommand('inspect cfss')}
-            className="px-2.5 py-1 rounded bg-[#292A27] border border-[#45453F] text-[#F0EEE7] hover:bg-[#32332F] text-[11px] font-semibold cursor-pointer transition-colors"
+            className="px-2.5 py-1.5 min-h-[34px] flex items-center rounded bg-[#292A27] border border-[#45453F] text-[#F0EEE7] hover:bg-[#32332F] text-[11px] font-semibold cursor-pointer transition-colors"
           >
             $ inspect cfss
           </button>
           <button
             type="button"
             onClick={() => executeCommand('trace cfss')}
-            className="px-2.5 py-1 rounded bg-[#292A27] border border-[#45453F] text-[#7EC28D] hover:bg-[#32332F] text-[11px] font-semibold cursor-pointer transition-colors"
+            className="px-2.5 py-1.5 min-h-[34px] flex items-center rounded bg-[#292A27] border border-[#45453F] text-[#7EC28D] hover:bg-[#32332F] text-[11px] font-semibold cursor-pointer transition-colors"
           >
             $ trace cfss
           </button>
           <button
             type="button"
             onClick={() => executeCommand('challenge')}
-            className="px-2.5 py-1 rounded bg-[#292A27] border border-[#45453F] text-[#E5C07B] hover:bg-[#32332F] text-[11px] font-semibold cursor-pointer transition-colors"
+            className="px-2.5 py-1.5 min-h-[34px] flex items-center rounded bg-[#292A27] border border-[#45453F] text-[#E5C07B] hover:bg-[#32332F] text-[11px] font-semibold cursor-pointer transition-colors"
           >
             $ challenge
           </button>
           <button
             type="button"
             onClick={() => executeCommand('security')}
-            className="px-2.5 py-1 rounded bg-[#292A27] border border-[#45453F] text-[#C678DD] hover:bg-[#32332F] text-[11px] font-semibold cursor-pointer transition-colors"
+            className="px-2.5 py-1.5 min-h-[34px] flex items-center rounded bg-[#292A27] border border-[#45453F] text-[#C678DD] hover:bg-[#32332F] text-[11px] font-semibold cursor-pointer transition-colors"
           >
             $ security
           </button>
           <button
             type="button"
             onClick={() => executeCommand('help')}
-            className="px-2 py-1 rounded bg-[#292A27] border border-[#45453F] text-[#A6A397] hover:text-[#F0EEE7] hover:bg-[#32332F] text-[11px] font-semibold cursor-pointer transition-colors"
+            className="px-2.5 py-1.5 min-h-[34px] flex items-center rounded bg-[#292A27] border border-[#45453F] text-[#A6A397] hover:text-[#F0EEE7] hover:bg-[#32332F] text-[11px] font-semibold cursor-pointer transition-colors"
           >
             $ help
           </button>
@@ -323,7 +323,7 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
     <dialog
       ref={dialogRef}
       onClick={handleBackdropClick}
-      className={`backdrop:bg-black/70 fixed inset-0 z-[100] m-0 w-full max-w-none h-full max-h-none bg-transparent p-3 sm:p-6 md:pt-[8vh] flex-col items-center duration-200 motion-reduce:duration-0 motion-reduce:transition-none ${
+      className={`backdrop:bg-black/70 fixed inset-0 z-[100] m-0 w-full max-w-none h-full max-h-none bg-transparent p-2 sm:p-4 md:pt-[6vh] flex flex-col items-center justify-center sm:justify-start duration-200 motion-reduce:duration-0 motion-reduce:transition-none ${
         isOpen ? 'flex animate-in fade-in-0' : 'hidden'
       }`}
       aria-label="Engineering Command Center"
@@ -334,7 +334,7 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
         muted warm grey (#A6A397), and borders (#45453F) regardless of website light/dark theme.
       */}
       <div
-        className="w-full max-w-3xl h-[76vh] min-h-[460px] max-h-[860px] bg-[#20211F] text-[#F0EEE7] rounded-xl shadow-2xl border border-[#45453F] flex flex-col font-mono text-[13px] overflow-hidden"
+        className="w-full max-w-3xl h-[92vh] sm:h-[80vh] max-h-[94vh] min-h-0 bg-[#20211F] text-[#F0EEE7] rounded-lg sm:rounded-xl shadow-2xl border border-[#45453F] flex flex-col font-mono text-[13px] overflow-hidden"
         role="document"
         onClick={(e) => {
           e.stopPropagation();
@@ -345,7 +345,7 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
         }}
       >
         {/* Terminal Window Header (Warm Dark) */}
-        <div className="flex items-center justify-between px-4 py-2.5 bg-[#292A27] border-b border-[#45453F] select-none shrink-0">
+        <div className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-2.5 bg-[#292A27] border-b border-[#45453F] select-none shrink-0">
           {/* Traffic light dots */}
           <div className="flex items-center gap-1.5">
             <button
@@ -362,9 +362,10 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
           </div>
 
           {/* Centered title / Identity */}
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#F0EEE7]">
-              JOSHUA@WINYELSUM-WORKSTATION
+          <div className="flex items-center gap-1 sm:gap-2">
+            <span className="text-[10px] font-bold tracking-[0.15em] sm:tracking-[0.2em] uppercase text-[#F0EEE7]">
+              <span className="hidden sm:inline">JOSHUA@WINYELSUM-WORKSTATION</span>
+              <span className="inline sm:hidden">JOSHUA@PORTFOLIO</span>
             </span>
             <span className="text-[#45453F] hidden sm:inline">:</span>
             <span className="text-[10px] text-[#82AAFF] hidden sm:inline font-bold">
@@ -373,7 +374,7 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
           </div>
 
           {/* Header Action Tools */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 sm:gap-2">
             {/* Website Theme Controller Capsule */}
             <button
               type="button"
@@ -389,7 +390,7 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
             <button
               type="button"
               onClick={() => setHistory([])}
-              className="p-1 rounded text-[#A6A397] hover:text-[#F0EEE7] hover:bg-[#32332F] transition-colors cursor-pointer"
+              className="p-1.5 sm:p-1 min-w-[32px] min-h-[32px] flex items-center justify-center rounded text-[#A6A397] hover:text-[#F0EEE7] hover:bg-[#32332F] transition-colors cursor-pointer"
               title="Clear terminal output (Ctrl+L)"
               aria-label="Clear output"
             >
@@ -402,7 +403,7 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
             <button
               type="button"
               onClick={onClose}
-              className="p-1 rounded text-[#A6A397] hover:text-[#F0EEE7] hover:bg-[#32332F] transition-colors cursor-pointer"
+              className="p-1.5 sm:p-1 min-w-[32px] min-h-[32px] flex items-center justify-center rounded text-[#A6A397] hover:text-[#F0EEE7] hover:bg-[#32332F] transition-colors cursor-pointer"
               title="Close (Esc)"
               aria-label="Close"
             >
@@ -414,12 +415,12 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
         </div>
 
         {/* Terminal Body Scroll Area */}
-        <div className="flex-1 p-4 sm:p-5 overflow-y-auto bg-[#20211F] text-[#F0EEE7] space-y-3">
+        <div className="flex-1 p-3.5 sm:p-5 overflow-y-auto bg-[#20211F] text-[#F0EEE7] space-y-3">
           {history.map((item) => (
             <div key={item.id}>
               {item.type === 'input' ? (
                 <div className="flex items-start gap-2 text-[#F0EEE7] font-semibold pt-1">
-                  <span className="text-[#82AAFF] shrink-0 select-none">
+                  <span className="text-[#82AAFF] shrink-0 select-none text-xs sm:text-[13px]">
                     joshua@portfolio:{item.promptPath || '~'}$
                   </span>
                   <span className="break-all">{item.content}</span>
@@ -440,13 +441,14 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
 
           {/* Active input row */}
           <div className="flex items-center gap-2 pt-1">
-            <span className="text-[#82AAFF] font-bold shrink-0 select-none">
-              joshua@portfolio:{displayPromptPath}$
+            <span className="text-[#82AAFF] font-bold shrink-0 select-none text-xs sm:text-[13px]">
+              <span className="hidden sm:inline">joshua@portfolio:{displayPromptPath}$</span>
+              <span className="inline sm:hidden">joshua:{displayPromptPath}$</span>
             </span>
             <input
               ref={inputRef}
               type="text"
-              className="flex-1 bg-transparent border-0 p-0 m-0 text-[#F0EEE7] font-mono text-[13px] focus:ring-0 focus:outline-none caret-[#F0EEE7] placeholder:text-[#7A786E]"
+              className="flex-1 bg-transparent border-0 p-0 m-0 text-[#F0EEE7] font-mono text-[16px] sm:text-[13px] focus:ring-0 focus:outline-none caret-[#F0EEE7] placeholder:text-[#7A786E]"
               value={input}
               onChange={(e) => {
                 setInput(e.target.value);
@@ -462,6 +464,30 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
             />
           </div>
           <div ref={bottomRef} />
+        </div>
+
+        {/* Mobile Touch Quick Launcher Strip */}
+        <div className="px-3 py-1.5 bg-[#252623] border-t border-[#45453F] flex items-center gap-1.5 overflow-x-auto shrink-0 select-none">
+          <span className="text-[10px] uppercase font-bold text-[#7A786E] shrink-0 mr-1">QUICK:</span>
+          {[
+            { label: 'tour', cmd: 'tour', color: 'text-[#82AAFF] bg-[#82AAFF]/10 border-[#82AAFF]/25' },
+            { label: 'inspect cfss', cmd: 'inspect cfss', color: 'text-[#F0EEE7] bg-[#2F302C] border-[#45453F]' },
+            { label: 'trace cfss', cmd: 'trace cfss', color: 'text-[#7EC28D] bg-[#7EC28D]/10 border-[#7EC28D]/25' },
+            { label: 'challenge', cmd: 'challenge', color: 'text-[#E5C07B] bg-[#E5C07B]/10 border-[#E5C07B]/25' },
+            { label: 'security', cmd: 'security', color: 'text-[#C678DD] bg-[#C678DD]/10 border-[#C678DD]/25' },
+            { label: 'ls', cmd: 'ls', color: 'text-[#A6A397] bg-[#2F302C] border-[#45453F]' },
+            { label: 'cat ABOUT.md', cmd: 'cat ABOUT.md', color: 'text-[#A6A397] bg-[#2F302C] border-[#45453F]' },
+            { label: 'help', cmd: 'help', color: 'text-[#A6A397] bg-[#2F302C] border-[#45453F]' },
+          ].map((chip) => (
+            <button
+              key={chip.cmd}
+              type="button"
+              onClick={() => executeCommand(chip.cmd)}
+              className={`px-2 py-1 min-h-[30px] rounded text-[10.5px] font-semibold border whitespace-nowrap shrink-0 transition-colors cursor-pointer hover:brightness-125 ${chip.color}`}
+            >
+              ${chip.label}
+            </button>
+          ))}
         </div>
 
         {/* Footer shortcuts info */}

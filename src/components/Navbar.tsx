@@ -91,7 +91,7 @@ export function Navbar() {
             : 'bg-transparent py-5'
         }`}
       >
-        <div className="max-w-6xl mx-auto px-6 md:px-12 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-12 flex items-center justify-between">
           <button
             onClick={() => {
               if (isHome) {
@@ -101,7 +101,7 @@ export function Navbar() {
                 setTimeout(() => window.scrollTo({ top: 0, behavior: 'instant' }), 50);
               }
             }}
-            className="text-lg font-bold tracking-tight text-gray-900 dark:text-[#ededeb] group"
+            className="text-base sm:text-lg font-bold tracking-tight text-gray-900 dark:text-[#ededeb] group"
           >
             Joshua Winyelsum
             <span className="inline-block w-1.5 h-1.5 bg-blue-600 rounded-full ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -144,10 +144,10 @@ export function Navbar() {
               </div>
 
               {/* Mobile menu controls on home */}
-              <div className="flex md:hidden items-center gap-2">
+              <div className="flex md:hidden items-center gap-1 sm:gap-2">
                 <ThemeToggle />
                 <button
-                  className="p-2 -mr-2 text-gray-900 dark:text-[#ededeb] rounded-lg hover:bg-gray-900/5 dark:hover:bg-white/5 transition-colors"
+                  className="min-w-[44px] min-h-[44px] p-2.5 -mr-2 flex items-center justify-center text-gray-900 dark:text-[#ededeb] rounded-lg hover:bg-gray-900/5 dark:hover:bg-white/5 transition-colors"
                   onClick={() => setMobileMenuOpen(true)}
                   aria-label="Open menu"
                   aria-expanded={mobileMenuOpen}
@@ -160,12 +160,15 @@ export function Navbar() {
             </>
           ) : (
             /* Subpage navigation (CV or Case Study) */
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               <Link
                 to="/"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-neutral-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+                className="inline-flex items-center gap-1.5 px-3 py-2 min-h-[44px] text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-neutral-300 hover:text-gray-900 dark:hover:text-white transition-colors"
               >
-                <span className="text-gray-400 dark:text-neutral-500">←</span> Home
+                <svg className="w-3.5 h-3.5 text-gray-400 dark:text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                </svg>
+                <span>Home</span>
               </Link>
               <div className="w-px h-4 bg-gray-300 dark:bg-[#282a32]" />
               <ThemeToggle />

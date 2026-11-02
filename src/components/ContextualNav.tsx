@@ -45,13 +45,14 @@ export function ContextualNav() {
 
   return (
     <div 
-      className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[90] flex flex-col items-center group pointer-events-none"
+      className="fixed bottom-[calc(1.5rem+env(safe-area-inset-bottom,0px))] left-1/2 -translate-x-1/2 z-[90] flex flex-col items-center group pointer-events-none"
       onMouseEnter={() => setExpanded(true)}
       onMouseLeave={() => setExpanded(false)}
     >
       <div 
-        className={`pointer-events-auto bg-white/90 dark:bg-[#1a1c22]/90 backdrop-blur-xl border border-gray-200/50 dark:border-[#2a2d36] shadow-[0_8px_30px_rgb(0,0,0,0.08)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.5)] rounded-full overflow-hidden transition-all duration-300 ease-out flex items-center justify-center p-1.5 ${
-          expanded ? 'w-[320px] md:w-[420px]' : 'w-auto px-4'
+        onClick={() => setExpanded((prev) => !prev)}
+        className={`pointer-events-auto bg-white/90 dark:bg-[#1a1c22]/90 backdrop-blur-xl border border-gray-200/50 dark:border-[#2a2d36] shadow-[0_8px_30px_rgb(0,0,0,0.08)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.5)] rounded-full overflow-hidden transition-all duration-300 ease-out flex items-center justify-center p-1.5 cursor-pointer ${
+          expanded ? 'w-[calc(100vw-32px)] sm:w-[320px] md:w-[420px] max-w-[420px]' : 'w-auto px-4'
         }`}
       >
         {!expanded ? (

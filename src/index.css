@@ -10,12 +10,18 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
   }
 
   body {
     @apply bg-[#D9DDE2] text-gray-900 dark:bg-[#121316] dark:text-[#ededeb] transition-colors duration-200;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
   }
 
   ::selection {
@@ -54,9 +60,9 @@
 }
 
 @layer components {
-  /* Consistent section padding */
+  /* Consistent fluid section padding */
   .section-padding {
-    @apply px-6 md:px-12 lg:px-24 xl:px-32;
+    @apply px-4 sm:px-6 md:px-12 lg:px-24 xl:px-32;
   }
 
   /* Separator line that draws on scroll */

@@ -303,21 +303,21 @@ export const challengeCommand: Command = {
             </div>
 
             {/* Next Challenge Action */}
-            <div className="flex items-center justify-between pt-1 border-t border-[#45453F]">
+            <div className="flex flex-wrap items-center justify-between pt-1 border-t border-[#45453F] gap-2">
               <button
                 type="button"
                 onClick={() => ctx.runCommand('challenge')}
-                className="px-2.5 py-1 rounded bg-[#32332F] text-[#F0EEE7] hover:bg-[#3E403B] text-[11px] font-semibold cursor-pointer transition-colors"
+                className="px-3 py-1.5 min-h-[34px] flex items-center rounded bg-[#32332F] text-[#F0EEE7] hover:bg-[#3E403B] text-[11px] font-semibold cursor-pointer transition-colors"
               >
-                ← Back to Challenge List
+                Back to Challenge List
               </button>
               {challenge.id < CHALLENGES.length && (
                 <button
                   type="button"
                   onClick={() => ctx.runCommand(`challenge ${challenge.id + 1}`)}
-                  className="px-3 py-1 rounded bg-[#82AAFF] text-[#1E1E1E] hover:bg-[#99BBFF] text-[11px] font-semibold cursor-pointer transition-colors"
+                  className="px-3 py-1.5 min-h-[34px] flex items-center rounded bg-[#82AAFF] text-[#1E1E1E] hover:bg-[#99BBFF] text-[11px] font-semibold cursor-pointer transition-colors"
                 >
-                  Next Challenge ({challenge.id + 1}) →
+                  Next Challenge ({challenge.id + 1})
                 </button>
               )}
             </div>

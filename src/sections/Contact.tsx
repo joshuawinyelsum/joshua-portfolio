@@ -34,7 +34,7 @@ export function Contact() {
                 </p>
                 <a
                   href={`mailto:${contactInfo.email}`}
-                  className="group inline-flex items-center gap-2 text-base md:text-lg text-white dark:text-[#ededeb] hover:text-blue-400 transition-colors duration-300"
+                  className="group inline-flex items-center gap-2 text-base md:text-lg text-white dark:text-[#ededeb] hover:text-blue-400 break-all transition-colors duration-300"
                 >
                   {contactInfo.email}
                   <svg

@@ -91,7 +91,7 @@ export const linuxCommands: Command[] = [
     execute: () => {
       return {
         output: (
-          <div className="space-y-1 font-mono text-xs text-[#A6A397]">
+          <div className="space-y-1 font-mono text-xs text-[#A6A397] overflow-x-auto max-w-full">
             <div className="flex gap-4 font-bold border-b border-[#45453F] pb-1 text-[#F0EEE7]">
               <span className="w-12">PID</span>
               <span className="w-16">USER</span>

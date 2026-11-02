@@ -16,7 +16,7 @@ const principles = [
   },
   {
     number: '03',
-    title: 'Research → Build → Measure → Improve.',
+    title: 'Research · Build · Measure · Improve.',
     description:
       'I learn by turning questions into experiments, experiments into systems, and systems into useful products.',
   },

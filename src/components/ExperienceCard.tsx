@@ -18,7 +18,7 @@ export function ExperienceCard({ item, index }: ExperienceCardProps) {
             </p>
           </div>
           {item.technologies.length > 0 && (
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               {item.technologies.map((tech) => (
                 <span
                   key={tech}

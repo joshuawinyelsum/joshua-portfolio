@@ -323,20 +323,20 @@ export const inspectCommand: Command = {
                 {arch.name}
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <button
                 type="button"
                 onClick={() => ctx.runCommand(`trace ${arch.id}`)}
-                className="px-2.5 py-1 rounded bg-[#7EC28D]/20 text-[#7EC28D] border border-[#7EC28D]/40 hover:bg-[#7EC28D]/30 text-[11px] font-semibold transition-colors cursor-pointer"
+                className="px-2.5 py-1.5 min-h-[34px] flex items-center rounded bg-[#7EC28D]/20 text-[#7EC28D] border border-[#7EC28D]/40 hover:bg-[#7EC28D]/30 text-[11px] font-semibold transition-colors cursor-pointer"
               >
                 $ trace {arch.id}
               </button>
               <button
                 type="button"
                 onClick={() => ctx.navigate(arch.ctaLink)}
-                className="px-2.5 py-1 rounded bg-[#32332F] text-[#F0EEE7] hover:bg-[#3E403B] border border-[#45453F] text-[11px] font-semibold transition-colors cursor-pointer"
+                className="px-2.5 py-1.5 min-h-[34px] flex items-center rounded bg-[#32332F] text-[#F0EEE7] hover:bg-[#3E403B] border border-[#45453F] text-[11px] font-semibold transition-colors cursor-pointer"
               >
-                Open Case Study →
+                Open Case Study
               </button>
             </div>
           </div>

@@ -173,21 +173,25 @@ export const tourCommand: Command = {
               </div>
             </div>
             {/* Progress indicator pills */}
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-0.5">
               {TOUR_STEPS.map((s) => (
                 <button
                   key={s.step}
                   type="button"
                   onClick={() => ctx.runCommand(`tour jump ${s.step}`)}
-                  className={`w-5 h-2 rounded-full cursor-pointer transition-colors ${
-                    s.step === data.step
-                      ? 'bg-[#82AAFF]'
-                      : s.step < data.step
-                      ? 'bg-[#7EC28D]'
-                      : 'bg-[#45453F] hover:bg-[#7A786E]'
-                  }`}
+                  className="p-1 min-w-[24px] min-h-[24px] flex items-center justify-center cursor-pointer transition-colors"
                   title={`Jump to step ${s.step}: ${s.title}`}
-                />
+                >
+                  <span
+                    className={`w-4 h-1.5 rounded-full block ${
+                      s.step === data.step
+                        ? 'bg-[#82AAFF]'
+                        : s.step < data.step
+                        ? 'bg-[#7EC28D]'
+                        : 'bg-[#45453F] hover:bg-[#7A786E]'
+                    }`}
+                  />
+                </button>
               ))}
             </div>
           </div>
@@ -228,25 +232,25 @@ export const tourCommand: Command = {
                 type="button"
                 disabled={currentStep === 1}
                 onClick={() => ctx.runCommand('tour prev')}
-                className={`px-3 py-1 rounded text-[11px] font-semibold transition-colors cursor-pointer ${
+                className={`px-3 py-1.5 min-h-[34px] flex items-center rounded text-[11px] font-semibold transition-colors cursor-pointer ${
                   currentStep === 1
                     ? 'opacity-40 cursor-not-allowed text-[#7A786E]'
                     : 'bg-[#32332F] text-[#F0EEE7] hover:bg-[#3E403B] border border-[#45453F]'
                 }`}
               >
-                ← Previous
+                Previous
               </button>
               <button
                 type="button"
                 disabled={currentStep === TOUR_STEPS.length}
                 onClick={() => ctx.runCommand('tour next')}
-                className={`px-3 py-1 rounded text-[11px] font-semibold transition-colors cursor-pointer ${
+                className={`px-3 py-1.5 min-h-[34px] flex items-center rounded text-[11px] font-semibold transition-colors cursor-pointer ${
                   currentStep === TOUR_STEPS.length
                     ? 'opacity-40 cursor-not-allowed text-[#7A786E]'
                     : 'bg-[#82AAFF] text-[#1E1E1E] hover:bg-[#99BBFF]'
                 }`}
               >
-                Next →
+                Next
               </button>
             </div>
 

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 
 interface MobileMenuProps {
@@ -10,9 +11,31 @@ interface MobileMenuProps {
 export function MobileMenu({ isOpen, onClose, navItems, onNavClick }: MobileMenuProps) {
   const reducedMotion = useReducedMotion();
 
+  // Prevent background scrolling while menu is open
+  useEffect(() => {
+    if (isOpen) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [isOpen]);
+
+  // Close on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (isOpen && e.key === 'Escape') {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   return (
     <div
-      className={`fixed inset-0 z-[60] bg-[#D9DDE2] dark:bg-[#121316] flex flex-col ${
+      className={`fixed inset-0 z-[60] bg-[#D9DDE2] dark:bg-[#121316] flex flex-col pt-[env(safe-area-inset-top,0px)] pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))] ${
         reducedMotion ? '' : 'transition-all duration-300 ease-out'
       } ${
         isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
@@ -28,7 +51,7 @@ export function MobileMenu({ isOpen, onClose, navItems, onNavClick }: MobileMenu
         </span>
         <button
           onClick={onClose}
-          className="p-2.5 -mr-2 text-gray-900 dark:text-[#ededeb] rounded-lg hover:bg-gray-900/5 dark:hover:bg-white/5 transition-colors"
+          className="min-w-[44px] min-h-[44px] p-2.5 -mr-2 flex items-center justify-center text-gray-900 dark:text-[#ededeb] rounded-lg hover:bg-gray-900/5 dark:hover:bg-white/5 transition-colors"
           aria-label="Close menu"
         >
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>

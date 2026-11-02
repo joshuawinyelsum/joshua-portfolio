@@ -75,7 +75,7 @@ export const filesystemCommands: Command[] = [
       if (longFormat) {
         return {
           output: (
-            <div className="space-y-1 font-mono text-xs text-[#A6A397]">
+            <div className="space-y-1 font-mono text-xs text-[#A6A397] overflow-x-auto max-w-full">
               <div className="text-[11px] text-[#7A786E] pb-0.5 border-b border-[#45453F]">
                 total {items.length}
               </div>

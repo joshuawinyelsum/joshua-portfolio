@@ -25,7 +25,7 @@ export function CommandLink({ cmd, onClick, label }: { cmd: string; onClick?: ()
     <button
       type="button"
       onClick={onClick}
-      className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-[#82AAFF]/15 text-[#82AAFF] hover:bg-[#82AAFF]/25 transition-colors font-mono text-[11px] font-semibold cursor-pointer"
+      className="inline-flex items-center gap-1 px-2 py-1 min-h-[30px] rounded bg-[#82AAFF]/15 text-[#82AAFF] hover:bg-[#82AAFF]/25 transition-colors font-mono text-[11px] font-semibold cursor-pointer"
       title={`Run '${cmd}'`}
     >
       <span>$ {label || cmd}</span>

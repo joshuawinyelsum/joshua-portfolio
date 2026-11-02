@@ -40,7 +40,7 @@ export function EngineeringStack() {
                           onClick={() =>
                             setActiveTech(activeTech === skill.name ? null : skill.name)
                           }
-                          className={`px-3 py-1.5 text-[11px] font-semibold tracking-wide rounded border transition-all duration-300 ${
+                          className={`px-3 py-1.5 min-h-[34px] flex items-center text-[11px] font-semibold tracking-wide rounded border transition-all duration-300 ${
                             isActive
                               ? 'bg-gray-900 text-white border-gray-900 shadow-sm dark:bg-[#ededeb] dark:text-[#121316] dark:border-[#ededeb]'
                               : isSubdued
@@ -66,9 +66,9 @@ export function EngineeringStack() {
               : 'max-h-0 opacity-0'
           }`}
         >
-          <div className="p-6 bg-white dark:bg-[#18191e] border border-gray-200 dark:border-[#282a32] rounded-lg">
+          <div className="p-4 sm:p-6 bg-white dark:bg-[#18191e] border border-gray-200 dark:border-[#282a32] rounded-lg">
             <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-gray-400 dark:text-neutral-500 mb-3">
-              {activeTech} → Used in
+              {activeTech} · Used in
             </p>
             <div className="flex flex-wrap gap-3">
               {linkedProjectIds.map((id) => {

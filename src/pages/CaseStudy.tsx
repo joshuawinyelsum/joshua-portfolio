@@ -312,22 +312,25 @@ function BrowserPreview({ src, alt, liveUrl }: { src: string; alt: string; liveU
           <div className="w-2.5 h-2.5 rounded-full bg-[#27c93f]" />
         </div>
         {liveUrl && (
-          <div className="flex items-center gap-1.5 px-3 py-1 rounded bg-[#0a120e] border border-gray-700/60 text-[11px] font-mono text-gray-300 max-w-[280px] sm:max-w-sm truncate">
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded bg-[#0a120e] border border-gray-700/60 text-[11px] font-mono text-gray-300 max-w-[130px] sm:max-w-sm truncate">
             <svg className="w-3 h-3 text-[#c7f25d] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
             <span className="truncate">{liveUrl.replace('https://', '')}</span>
           </div>
         )}
-        <div className="w-14 text-right">
+        <div className="text-right">
           {liveUrl && (
             <a
               href={liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[11px] font-mono text-[#c7f25d] hover:underline"
+              className="inline-flex items-center gap-1 text-[11px] font-mono text-[#c7f25d] hover:underline"
             >
-              Open ↗
+              <span>Open</span>
+              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+              </svg>
             </a>
           )}
         </div>
@@ -361,8 +364,11 @@ export function CaseStudy() {
       <div className="min-h-screen flex items-center justify-center px-6">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-[#ededeb] mb-4">Project not found</h1>
-          <Link to="/" className="text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline">
-            ← Back to home
+          <Link to="/" className="inline-flex items-center gap-1.5 text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline">
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+            </svg>
+            <span>Back to home</span>
           </Link>
         </div>
       </div>
@@ -444,7 +450,7 @@ export function CaseStudy() {
                 </span>
               </div>
 
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 dark:text-[#ededeb] tracking-tighter mb-3">
+              <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 dark:text-[#ededeb] tracking-tighter break-words mb-3">
                 {project.title}
               </h1>
               <p className="text-lg md:text-xl font-medium text-gray-500 dark:text-neutral-400 mb-8">

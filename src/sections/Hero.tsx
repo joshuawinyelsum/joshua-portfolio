@@ -71,7 +71,7 @@ export function Hero() {
             </p>
 
             <h1
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] font-extrabold leading-[1.05] tracking-tight text-gray-900 dark:text-[#ededeb] mb-6"
+              className="text-3xl sm:text-5xl md:text-6xl lg:text-[4.5rem] font-extrabold leading-[1.05] tracking-tight break-words text-gray-900 dark:text-[#ededeb] mb-6"
               style={animate(100)}
             >
               JOSHUA<br/>WINYELSUM
@@ -96,12 +96,12 @@ export function Hero() {
             </p>
 
             <div 
-              className="flex flex-col sm:flex-row gap-4"
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto"
               style={animate(550)}
             >
               <a
                 href="#work"
-                className="group inline-flex items-center justify-center gap-2.5 px-6 py-3 bg-gray-900 text-white dark:bg-[#ededeb] dark:text-[#121316] text-[13px] font-semibold tracking-wide rounded-md hover:bg-gray-800 dark:hover:bg-white transition-all duration-300 shadow-sm"
+                className="group inline-flex items-center justify-center gap-2.5 px-6 py-3 min-h-[44px] bg-gray-900 text-white dark:bg-[#ededeb] dark:text-[#121316] text-[13px] font-semibold tracking-wide rounded-md hover:bg-gray-800 dark:hover:bg-white transition-all duration-300 shadow-sm"
               >
                 View Selected Work
                 <svg className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -110,7 +110,7 @@ export function Hero() {
               </a>
               <a
                 href="#contact"
-                className="inline-flex items-center justify-center gap-2.5 px-6 py-3 border border-gray-200 dark:border-[#2c2f38] text-gray-700 dark:text-neutral-300 text-[13px] font-semibold tracking-wide rounded-md hover:border-gray-300 dark:hover:border-neutral-500 hover:bg-gray-50 dark:hover:bg-[#1a1c22] transition-all duration-300"
+                className="inline-flex items-center justify-center gap-2.5 px-6 py-3 min-h-[44px] border border-gray-200 dark:border-[#2c2f38] text-gray-700 dark:text-neutral-300 text-[13px] font-semibold tracking-wide rounded-md hover:border-gray-300 dark:hover:border-neutral-500 hover:bg-gray-50 dark:hover:bg-[#1a1c22] transition-all duration-300"
               >
                 Get in Touch
               </a>
@@ -119,7 +119,7 @@ export function Hero() {
 
           {/* Right Column: Engineering Visual */}
           <div 
-            className="relative flex justify-center lg:justify-end z-0 mt-8 lg:mt-0"
+            className="relative flex justify-center lg:justify-end z-0 mt-8 lg:mt-0 max-w-full overflow-hidden"
             style={{
               ...animate(700),
               ...(mounted && !reducedMotion
@@ -132,8 +132,8 @@ export function Hero() {
             }}
           >
             {/* Abstract Node Architecture Graphic */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-40">
-              <svg width="100%" height="100%" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" className="absolute scale-[1.5] sm:scale-100">
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-40 overflow-hidden">
+              <svg width="100%" height="100%" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg" className="absolute scale-100 max-w-full">
                 <circle cx="200" cy="200" r="140" stroke={isDark ? '#2a2d36' : '#E5E7EB'} strokeWidth="1" strokeDasharray="4 4" />
                 <circle cx="200" cy="200" r="80" stroke={isDark ? '#2a2d36' : '#E5E7EB'} strokeWidth="1" />
                 
