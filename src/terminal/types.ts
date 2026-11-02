@@ -2,9 +2,43 @@ import React from 'react';
 import { Project, Skill, ExperienceItem, ResearchArea, SocialLink } from '../types';
 import { Theme, ThemePreference } from '../contexts/ThemeContext';
 
-export type CommandCategory = 'General' | 'Navigation' | 'Projects' | 'Technical' | 'Theme' | 'Utility';
+export type CommandCategory =
+  | 'Filesystem'
+  | 'Linux'
+  | 'Recruiter'
+  | 'Projects'
+  | 'Navigation'
+  | 'General'
+  | 'Technical'
+  | 'Theme'
+  | 'Utility';
+
+export interface TraceState {
+  project: string;
+  step: number;
+  active: boolean;
+}
+
+export interface ChallengeState {
+  answered: boolean;
+  selected: string;
+  correct: boolean;
+}
 
 export interface CommandContext {
+  // Virtual filesystem session state
+  cwd: string;
+  setCwd: (newCwd: string) => void;
+
+  // Recruiter interactive features
+  tourStep: number;
+  setTourStep: (step: number) => void;
+  traceState: TraceState;
+  setTraceState: (state: TraceState) => void;
+  challengeProgress: Record<number, ChallengeState>;
+  setChallengeAnswer: (challengeId: number, selected: string, correct: boolean) => void;
+
+  // Global application context
   navigate: (path: string) => void;
   openExternal: (url: string) => void;
   theme: Theme;

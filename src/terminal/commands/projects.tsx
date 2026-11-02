@@ -1,6 +1,7 @@
 import React from 'react';
 import { Command } from '../types';
 import { StatusBadge, InfoHeader, SuccessMsg } from '../components/TerminalUI';
+import { isApprovedInternalRoute } from '../navigationAllowlist';
 
 function resolveProjectId(query: string): string | null {
   const q = query.toLowerCase().trim();
@@ -14,7 +15,7 @@ function resolveProjectId(query: string): string | null {
 export const projectCommands: Command[] = [
   {
     name: 'project',
-    aliases: ['proj', 'inspect'],
+    aliases: ['proj', 'specs'],
     category: 'Projects',
     description: 'Display in-depth engineering specs and evidence for a project.',
     usage: 'project <cfss|mastery|cpw|agrichem>',
@@ -179,31 +180,59 @@ export const projectCommands: Command[] = [
   {
     name: 'open',
     category: 'Projects',
-    description: 'Navigate directly to a project case study page.',
-    usage: 'open <cfss|mastery|cpw|agrichem>',
-    examples: ['open cfss', 'open cpw', 'open mastery', 'open agrichem'],
+    description: 'Navigate directly to an allowlisted project case study page or section.',
+    usage: 'open <cfss|mastery|cpw|agrichem|cv>',
+    examples: ['open cfss', 'open cpw', 'open mastery', 'open agrichem', 'open cv'],
     execute: (args, ctx) => {
       if (args.length === 0) {
         return {
-          error: "Usage: open <cfss|mastery|cpw|agrichem>. Run 'projects' to list all.",
+          error: "Usage: open <cfss|mastery|cpw|agrichem|cv>. Run 'projects' to list all.",
         };
       }
-      const targetId = resolveProjectId(args[0]);
+      const rawTarget = args[0].toLowerCase().trim();
+
+      // Check section shortcuts
+      const sectionMap: Record<string, string> = {
+        cv: '/cv',
+        about: '/#about',
+        work: '/#work',
+        projects: '/#work',
+        skills: '/#skills',
+        timeline: '/#timeline',
+        research: '/#research',
+        contact: '/#contact',
+      };
+
+      if (sectionMap[rawTarget]) {
+        const route = sectionMap[rawTarget];
+        if (!isApprovedInternalRoute(route)) {
+          return { error: `Navigation blocked: '${route}' is not on the route allowlist.` };
+        }
+        setTimeout(() => ctx.navigate(route), 200);
+        return {
+          output: <SuccessMsg>Navigating to {rawTarget.toUpperCase()} ({route})...</SuccessMsg>,
+        };
+      }
+
+      const targetId = resolveProjectId(rawTarget);
       if (!targetId) {
         return {
-          error: `Unknown project: '${args[0]}'. Available options: cfss, mastery, cpw, agrichem.`,
+          error: `Unknown project or section: '${args[0]}'. Available options: cfss, mastery, cpw, agrichem, cv.`,
         };
       }
       const project = ctx.projects.find((p) => p.id === targetId);
       if (!project) {
         return { error: `Project '${targetId}' not found.` };
       }
+      if (!isApprovedInternalRoute(project.ctaLink)) {
+        return { error: `Navigation blocked: Destination '${project.ctaLink}' is not allowlisted.` };
+      }
       setTimeout(() => ctx.navigate(project.ctaLink), 200);
       return {
         output: <SuccessMsg>Navigating to {project.title} case study ({project.ctaLink})...</SuccessMsg>,
       };
     },
-    getSubcommands: () => ['cfss', 'mastery', 'cpw', 'agrichem'],
+    getSubcommands: () => ['cfss', 'mastery', 'cpw', 'agrichem', 'cv', 'about', 'skills', 'contact'],
   },
   // Dedicated shortcuts
   {

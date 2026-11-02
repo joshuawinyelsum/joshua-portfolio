@@ -6,18 +6,27 @@ import { skills } from '../data/skills';
 import { experience } from '../data/experience';
 import { researchAreas } from '../data/research';
 import { socialLinks, contactInfo } from '../data/social';
-import { findCommand, suggestCommand, getCompletions } from '../terminal/registry';
-import { CommandContext } from '../terminal/types';
+import { getCompletions } from '../terminal/registry';
+import { executeCommandLine } from '../terminal/commandExecutor';
+import { CommandContext, TraceState, ChallengeState } from '../terminal/types';
+import { isApprovedInternalRoute, isApprovedExternalUrl } from '../terminal/navigationAllowlist';
 
 interface HistoryItem {
   id: string;
   type: 'input' | 'output';
   content: React.ReactNode;
+  promptPath?: string;
 }
 
 export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const navigate = useNavigate();
   const { theme, themePreference, setThemePreference, toggleTheme } = useTheme();
+
+  // Session state: isolated to each visitor session
+  const [cwd, setCwd] = useState('/home/joshua');
+  const [tourStep, setTourStep] = useState(1);
+  const [traceState, setTraceState] = useState<TraceState>({ project: 'cfss', step: 1, active: false });
+  const [challengeProgress, setChallengeProgress] = useState<Record<number, ChallengeState>>({});
 
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<HistoryItem[]>([]);
@@ -30,9 +39,28 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
   const bottomRef = useRef<HTMLDivElement>(null);
   const previousFocus = useRef<HTMLElement | null>(null);
 
+  // Path formatter for the terminal prompt (e.g. /home/joshua -> ~)
+  const formatPromptPath = (path: string): string => {
+    if (path === '/home/joshua') return '~';
+    if (path.startsWith('/home/joshua/')) return '~' + path.substring(12);
+    return path;
+  };
+
+  const displayPromptPath = formatPromptPath(cwd);
+
+  const setChallengeAnswer = (challengeId: number, selected: string, correct: boolean) => {
+    setChallengeProgress((prev) => ({
+      ...prev,
+      [challengeId]: { answered: true, selected, correct },
+    }));
+  };
+
+  // Safe navigation restricted to allowlist
   const navigateTo = (path: string) => {
     onClose();
+
     if (path.startsWith('/#')) {
+      if (!isApprovedInternalRoute(path)) return;
       const targetId = path.substring(2);
       if (window.location.pathname !== '/') {
         navigate('/');
@@ -45,19 +73,30 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
         if (el) el.scrollIntoView({ behavior: 'smooth' });
       }
     } else if (path.startsWith('http') || path.startsWith('mailto') || path.startsWith('tel')) {
+      if (!isApprovedExternalUrl(path)) return;
       window.open(path, '_blank', 'noopener,noreferrer');
     } else {
+      if (!isApprovedInternalRoute(path)) return;
       navigate(path);
       window.scrollTo({ top: 0, behavior: 'instant' });
     }
   };
 
   const openExternal = (url: string) => {
+    if (!isApprovedExternalUrl(url)) return;
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   // Build the execution context passed to all commands
   const getContext = (): CommandContext => ({
+    cwd,
+    setCwd,
+    tourStep,
+    setTourStep,
+    traceState,
+    setTraceState,
+    challengeProgress,
+    setChallengeAnswer,
     navigate: navigateTo,
     openExternal,
     theme,
@@ -76,45 +115,70 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
     runCommand: (cmdString: string) => executeCommand(cmdString),
   });
 
-  // Initial welcome greeting (warm dark palette)
+  // Initial welcome greeting
   const getWelcomeContent = (): React.ReactNode => (
     <div className="space-y-3 pb-3 text-xs font-mono">
-      <div className="text-[#F0EEE7] font-bold text-sm">
-        JOSHUA WINYELSUM — ENGINEERING COMMAND CENTER [v2.4]
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#45453F] pb-2">
+        <div className="text-[#F0EEE7] font-bold text-sm">
+          JOSHUA WINYELSUM — DEVELOPER WORKSTATION [v2.5]
+        </div>
+        <span className="text-[10px] px-2 py-0.5 rounded bg-[#292A27] text-[#7EC28D] border border-[#7EC28D]/30 font-semibold">
+          ● SIMULATED LINUX ENVIRONMENT
+        </span>
       </div>
       <p className="text-[#A6A397] leading-relaxed">
-        Interactive engineering console. Navigate portfolio sections, inspect verified project specifications, review architecture, and control the website theme.
+        Interactive developer console and simulated Linux environment. Inspect project architectures, simulate request lifecycles, solve systems challenges, and explore the read-only virtual filesystem.
       </p>
-      <div className="flex flex-wrap items-center gap-2 pt-1">
-        <span className="text-[10px] uppercase font-bold text-[#7A786E] tracking-wider">Quick Commands:</span>
-        <button
-          type="button"
-          onClick={() => executeCommand('projects')}
-          className="px-2 py-0.5 rounded bg-[#292A27] border border-[#45453F] text-[#82AAFF] hover:bg-[#32332F] text-[11px] font-semibold cursor-pointer transition-colors"
-        >
-          $ projects
-        </button>
-        <button
-          type="button"
-          onClick={() => executeCommand('skills')}
-          className="px-2 py-0.5 rounded bg-[#292A27] border border-[#45453F] text-[#82AAFF] hover:bg-[#32332F] text-[11px] font-semibold cursor-pointer transition-colors"
-        >
-          $ skills
-        </button>
-        <button
-          type="button"
-          onClick={() => executeCommand('theme toggle')}
-          className="px-2 py-0.5 rounded bg-[#292A27] border border-[#45453F] text-[#82AAFF] hover:bg-[#32332F] text-[11px] font-semibold cursor-pointer transition-colors"
-        >
-          $ theme toggle
-        </button>
-        <button
-          type="button"
-          onClick={() => executeCommand('help')}
-          className="px-2 py-0.5 rounded bg-[#292A27] border border-[#45453F] text-[#F0EEE7] hover:bg-[#32332F] text-[11px] font-semibold cursor-pointer transition-colors"
-        >
-          $ help
-        </button>
+
+      {/* Recruiter Quick Launcher Chips */}
+      <div className="space-y-1.5 pt-1">
+        <span className="text-[10px] uppercase font-bold text-[#7A786E] tracking-wider block">
+          Featured Experiences:
+        </span>
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            onClick={() => executeCommand('tour')}
+            className="px-2.5 py-1 rounded bg-[#82AAFF]/15 border border-[#82AAFF]/30 text-[#82AAFF] hover:bg-[#82AAFF]/25 text-[11px] font-semibold cursor-pointer transition-colors"
+          >
+            $ tour (Guided Walkthrough)
+          </button>
+          <button
+            type="button"
+            onClick={() => executeCommand('inspect cfss')}
+            className="px-2.5 py-1 rounded bg-[#292A27] border border-[#45453F] text-[#F0EEE7] hover:bg-[#32332F] text-[11px] font-semibold cursor-pointer transition-colors"
+          >
+            $ inspect cfss
+          </button>
+          <button
+            type="button"
+            onClick={() => executeCommand('trace cfss')}
+            className="px-2.5 py-1 rounded bg-[#292A27] border border-[#45453F] text-[#7EC28D] hover:bg-[#32332F] text-[11px] font-semibold cursor-pointer transition-colors"
+          >
+            $ trace cfss
+          </button>
+          <button
+            type="button"
+            onClick={() => executeCommand('challenge')}
+            className="px-2.5 py-1 rounded bg-[#292A27] border border-[#45453F] text-[#E5C07B] hover:bg-[#32332F] text-[11px] font-semibold cursor-pointer transition-colors"
+          >
+            $ challenge
+          </button>
+          <button
+            type="button"
+            onClick={() => executeCommand('security')}
+            className="px-2.5 py-1 rounded bg-[#292A27] border border-[#45453F] text-[#C678DD] hover:bg-[#32332F] text-[11px] font-semibold cursor-pointer transition-colors"
+          >
+            $ security
+          </button>
+          <button
+            type="button"
+            onClick={() => executeCommand('help')}
+            className="px-2 py-1 rounded bg-[#292A27] border border-[#45453F] text-[#A6A397] hover:text-[#F0EEE7] hover:bg-[#32332F] text-[11px] font-semibold cursor-pointer transition-colors"
+          >
+            $ help
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -143,13 +207,14 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
     const trimmed = rawInput.trim();
     setAutocompleteHint(null);
 
-    // Record user command in visual output
+    // Record user command in visual output with current prompt path
     setHistory((prev) => [
       ...prev,
       {
         id: `${Date.now()}-input`,
         type: 'input',
         content: trimmed,
+        promptPath: displayPromptPath,
       },
     ]);
 
@@ -159,72 +224,16 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
     setCommandHistory((prev) => [...prev, trimmed]);
     setHistoryIndex(-1);
 
-    const parts = trimmed.split(/\s+/);
-    const commandName = parts[0].toLowerCase();
-    const args = parts.slice(1);
+    const ctx = getContext();
+    const result = await executeCommandLine(trimmed, ctx);
 
-    const command = findCommand(commandName);
+    if (result.isClear) {
+      // Handled in ctx.clearHistory()
+      return;
+    }
 
-    if (command) {
-      try {
-        const ctx = getContext();
-        const result = await command.execute(args, ctx);
-
-        if (result.isClear) {
-          // Handled via ctx.clearHistory
-          return;
-        }
-
-        if (result.error) {
-          pushOutput(
-            <div className="py-1 text-[#E57373] font-mono text-xs space-y-1">
-              <div className="flex items-start gap-1.5 font-semibold">
-                <span>✗</span>
-                <span>{typeof result.error === 'string' ? result.error : result.error}</span>
-              </div>
-              {command.usage && (
-                <div className="text-[#A6A397] text-[11px] pl-4">
-                  Usage: {command.usage}
-                </div>
-              )}
-            </div>
-          );
-        } else if (result.output) {
-          pushOutput(result.output);
-        }
-      } catch (err: unknown) {
-        pushOutput(
-          <div className="py-1 text-[#E57373] font-mono text-xs">
-            Execution error: {err instanceof Error ? err.message : String(err)}
-          </div>
-        );
-      }
-    } else {
-      // Unknown command: calculate fuzzy match suggestion
-      const suggestion = suggestCommand(commandName);
-      pushOutput(
-        <div className="py-1 text-xs font-mono space-y-1">
-          <div className="text-[#E57373]">
-            Command not found: <span className="font-bold">{commandName}</span>
-          </div>
-          {suggestion && (
-            <div className="text-[#A6A397] flex items-center gap-1.5">
-              <span>Did you mean:</span>
-              <button
-                type="button"
-                onClick={() => executeCommand(suggestion)}
-                className="text-[#82AAFF] font-bold hover:underline cursor-pointer"
-              >
-                {suggestion}
-              </button>
-              <span>?</span>
-            </div>
-          )}
-          <div className="text-[11px] text-[#7A786E]">
-            Type <button type="button" onClick={() => executeCommand('help')} className="text-[#82AAFF] hover:underline cursor-pointer">help</button> to see all available commands.
-          </div>
-        </div>
-      );
+    if (result.output) {
+      pushOutput(result.output);
     }
   };
 
@@ -324,29 +333,28 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
         muted warm grey (#A6A397), and borders (#45453F) regardless of website light/dark theme.
       */}
       <div
-        className="w-full max-w-3xl h-[72vh] min-h-[440px] max-h-[820px] bg-[#20211F] text-[#F0EEE7] rounded-xl shadow-2xl border border-[#45453F] flex flex-col font-mono text-[13px] overflow-hidden"
+        className="w-full max-w-3xl h-[76vh] min-h-[460px] max-h-[860px] bg-[#20211F] text-[#F0EEE7] rounded-xl shadow-2xl border border-[#45453F] flex flex-col font-mono text-[13px] overflow-hidden"
         role="document"
         onClick={(e) => {
           e.stopPropagation();
-          // Refocus input unless user is selecting text
           const selection = window.getSelection();
           if (!selection || selection.isCollapsed) {
             inputRef.current?.focus();
           }
         }}
       >
-        {/* Terminal Window Header (Always Warm Dark) */}
+        {/* Terminal Window Header (Warm Dark) */}
         <div className="flex items-center justify-between px-4 py-2.5 bg-[#292A27] border-b border-[#45453F] select-none shrink-0">
           {/* Traffic light dots */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
             <button
               type="button"
               onClick={onClose}
-              className="w-3 h-3 rounded-full bg-[#ff5f56] hover:opacity-80 transition-opacity cursor-pointer flex items-center justify-center text-[8px] text-black/60 group"
-              title="Close terminal (Esc)"
-              aria-label="Close terminal"
+              className="w-3 h-3 rounded-full bg-[#ff5f56] hover:brightness-110 cursor-pointer transition"
+              title="Close terminal"
+              aria-label="Close"
             >
-              <span className="opacity-0 group-hover:opacity-100 font-bold leading-none">×</span>
+              <span className="sr-only">Close</span>
             </button>
             <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
             <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
@@ -355,11 +363,11 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
           {/* Centered title / Identity */}
           <div className="flex items-center gap-2">
             <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#F0EEE7]">
-              JOSHUA@PORTFOLIO
+              JOSHUA@WINYELSUM-WORKSTATION
             </span>
-            <span className="text-[#45453F] hidden sm:inline">|</span>
-            <span className="text-[10px] text-[#A6A397] hidden sm:inline tracking-wider">
-              COMMAND CENTER
+            <span className="text-[#45453F] hidden sm:inline">:</span>
+            <span className="text-[10px] text-[#82AAFF] hidden sm:inline font-bold">
+              {displayPromptPath}
             </span>
           </div>
 
@@ -404,13 +412,15 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
           </div>
         </div>
 
-        {/* Terminal Body Scroll Area (Always Warm Dark) */}
+        {/* Terminal Body Scroll Area */}
         <div className="flex-1 p-4 sm:p-5 overflow-y-auto bg-[#20211F] text-[#F0EEE7] space-y-3">
           {history.map((item) => (
             <div key={item.id}>
               {item.type === 'input' ? (
                 <div className="flex items-start gap-2 text-[#F0EEE7] font-semibold pt-1">
-                  <span className="text-[#82AAFF] shrink-0 select-none">joshua@portfolio:~$</span>
+                  <span className="text-[#82AAFF] shrink-0 select-none">
+                    joshua@portfolio:{item.promptPath || '~'}$
+                  </span>
                   <span className="break-all">{item.content}</span>
                 </div>
               ) : (
@@ -430,7 +440,7 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
           {/* Active input row */}
           <div className="flex items-center gap-2 pt-1">
             <span className="text-[#82AAFF] font-bold shrink-0 select-none">
-              joshua@portfolio:~$
+              joshua@portfolio:{displayPromptPath}$
             </span>
             <input
               ref={inputRef}
@@ -446,14 +456,14 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
               autoCorrect="off"
               autoCapitalize="off"
               spellCheck="false"
-              placeholder="type 'help', 'projects', 'theme dark'..."
+              placeholder="type 'tour', 'inspect cfss', 'help', 'ls'..."
               aria-label="Terminal command input"
             />
           </div>
           <div ref={bottomRef} />
         </div>
 
-        {/* Footer shortcuts info (Always Warm Dark) */}
+        {/* Footer shortcuts info */}
         <div className="px-4 py-2 bg-[#292A27] border-t border-[#45453F] text-[10px] text-[#A6A397] flex flex-col sm:flex-row sm:items-center justify-between gap-1 select-none shrink-0">
           <div className="flex items-center gap-3">
             <span><kbd className="px-1.5 py-0.5 rounded bg-[#32332F] border border-[#45453F] text-[#F0EEE7]">TAB</kbd> Complete</span>
@@ -461,7 +471,7 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
             <span><kbd className="px-1.5 py-0.5 rounded bg-[#32332F] border border-[#45453F] text-[#F0EEE7]">CTRL+K</kbd> Toggle</span>
           </div>
           <div className="text-[10px] text-[#7A786E]">
-            Type <code className="text-[#82AAFF] font-semibold">exit</code> or press <kbd className="px-1.5 py-0.5 rounded bg-[#32332F] border border-[#45453F] text-[#F0EEE7]">ESC</kbd> to return
+            Type <code className="text-[#82AAFF] font-semibold">tour</code> for guided walkthrough • <code className="text-[#7EC28D] font-semibold">security</code> for audit
           </div>
         </div>
       </div>

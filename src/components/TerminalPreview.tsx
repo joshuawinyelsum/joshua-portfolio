@@ -41,10 +41,10 @@ export function TerminalPreview() {
           <span className="text-[#F0EEE7] font-semibold">explore</span>
         </div>
         <div className="text-[#A6A397] mb-4 opacity-0 animate-[fade-in_0.5s_ease-out_0.5s_forwards]">
-          Interactive engineering command center.
+          Interactive developer workstation simulation.
           <div className="mt-1 flex flex-col gap-0.5">
-            <span className="text-[#82AAFF]">projects, cpw, cfss, mastery, agrichem</span>
-            <span className="text-[#82AAFF]">stack, skills, cv, theme [dark|light]</span>
+            <span className="text-[#82AAFF]">tour, inspect cfss, trace cfss, challenge</span>
+            <span className="text-[#82AAFF]">ls, cat README.md, security, theme toggle</span>
           </div>
         </div>
 
