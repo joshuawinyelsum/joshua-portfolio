@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Menu } from 'lucide-react';
 import { MobileMenu } from './MobileMenu';
 import { ThemeToggle } from './ThemeToggle';
+import { ArrowLink } from './ui/ArrowLink';
+import { Button } from './ui/Button';
 
 const navItems = [
   { label: 'Work', id: 'work' },
@@ -85,13 +88,12 @@ export function Navbar() {
   return (
     <header>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? 'bg-white/90 dark:bg-[#121316]/90 backdrop-blur-md shadow-sm dark:shadow-[0_4px_20px_rgba(0,0,0,0.3)] border-b border-gray-200/50 dark:border-[#282a32] py-3'
-            : 'bg-transparent py-5'
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-base ease-out ${
+          scrolled ? 'bg-canvas/85 py-3 shadow-nav backdrop-blur-md' : 'bg-transparent py-5'
         }`}
       >
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-12 flex items-center justify-between">
+        <div className="section-padding">
+        <div className="container-content flex items-center justify-between">
           <button
             onClick={() => {
               if (isHome) {
@@ -101,79 +103,56 @@ export function Navbar() {
                 setTimeout(() => window.scrollTo({ top: 0, behavior: 'instant' }), 50);
               }
             }}
-            className="text-base sm:text-lg font-bold tracking-tight text-gray-900 dark:text-[#ededeb] group"
+            className="group whitespace-nowrap text-base font-bold tracking-tight text-ink sm:text-lg"
           >
             Joshua Winyelsum
-            <span className="inline-block w-1.5 h-1.5 bg-blue-600 rounded-full ml-1 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <span className="ml-1 inline-block h-1.5 w-1.5 rounded-full bg-lavender opacity-0 transition-opacity duration-fast group-hover:opacity-100" />
           </button>
 
           {isHome ? (
             <>
               {/* Desktop nav on home */}
-              <div className="hidden md:flex items-center gap-1">
+              <div className="hidden items-center md:flex lg:gap-1">
                 {navItems.map((item) => (
                   <button
                     key={item.id}
                     onClick={() => handleNavClick(item.id)}
-                    className={`relative px-3 py-1.5 text-[11px] font-medium tracking-wider uppercase transition-colors duration-200 rounded ${
-                      activeId === item.id
-                        ? 'text-gray-900 dark:text-white font-semibold'
-                        : 'text-gray-500 dark:text-neutral-400 hover:text-gray-800 dark:hover:text-[#ededeb]'
-                    }`}
+                    aria-current={activeId === item.id ? 'true' : undefined}
+                    className="nav-link"
                   >
                     {item.label}
                   </button>
                 ))}
-                <button
-                  onClick={() => handleNavClick('contact')}
-                  className="group inline-flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-medium tracking-wider uppercase text-gray-900 dark:text-[#ededeb] hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 mr-2"
-                >
+                <Button size="sm" icon="arrow" onClick={() => handleNavClick('contact')} className="ml-3 mr-3">
                   Contact
-                  <svg
-                    className="w-3 h-3 transition-transform duration-200 group-hover:translate-x-0.5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
-                </button>
-                <div className="w-px h-4 bg-gray-300 dark:bg-[#282a32] mx-1" />
+                </Button>
                 <ThemeToggle />
               </div>
 
               {/* Mobile menu controls on home */}
-              <div className="flex md:hidden items-center gap-1 sm:gap-2">
+              <div className="flex items-center gap-2 md:hidden">
                 <ThemeToggle />
-                <button
-                  className="min-w-[44px] min-h-[44px] p-2.5 -mr-2 flex items-center justify-center text-gray-900 dark:text-[#ededeb] rounded-lg hover:bg-gray-900/5 dark:hover:bg-white/5 transition-colors"
+                <Button
+                  variant="icon"
+                  size="sm"
                   onClick={() => setMobileMenuOpen(true)}
                   aria-label="Open menu"
                   aria-expanded={mobileMenuOpen}
                 >
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" />
-                  </svg>
-                </button>
+                  <Menu className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
+                </Button>
               </div>
             </>
           ) : (
             /* Subpage navigation (CV or Case Study) */
-            <div className="flex items-center gap-2 sm:gap-3">
-              <Link
-                to="/"
-                className="inline-flex items-center gap-1.5 px-3 py-2 min-h-[44px] text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-neutral-300 hover:text-gray-900 dark:hover:text-white transition-colors"
-              >
-                <svg className="w-3.5 h-3.5 text-gray-400 dark:text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-                </svg>
-                <span>Home</span>
-              </Link>
-              <div className="w-px h-4 bg-gray-300 dark:bg-[#282a32]" />
+            <div className="flex items-center gap-4">
+              <ArrowLink to="/" back className="min-h-[44px] !text-ink">
+                Home
+              </ArrowLink>
               <ThemeToggle />
             </div>
           )}
+        </div>
         </div>
       </nav>
 

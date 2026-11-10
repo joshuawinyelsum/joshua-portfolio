@@ -5,7 +5,7 @@ export function Footer() {
 
   return (
     <footer className="py-14 section-padding bg-[#111111] dark:bg-[#0c0d10] dark:border-t dark:border-[#1e2026] text-gray-500">
-      <div className="max-w-5xl">
+      <div className="container-content">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8">
           <div>
             <h3 className="text-base font-bold text-white dark:text-[#ededeb] tracking-tight mb-2">

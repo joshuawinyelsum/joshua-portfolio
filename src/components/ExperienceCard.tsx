@@ -1,39 +1,45 @@
 import { ExperienceItem } from '../types';
 import { ScrollReveal } from './ScrollReveal';
+import { ArrowLink } from './ui/ArrowLink';
+import { Tag } from './ui/Tag';
 
 interface ExperienceCardProps {
   item: ExperienceItem;
   index: number;
 }
 
+/** One role in the experience list: an editorial row, no surface. */
 export function ExperienceCard({ item, index }: ExperienceCardProps) {
   return (
-    <ScrollReveal delay={index * 100}>
-      <div className="border-t border-gray-300/80 dark:border-[#282a32] pt-7 pb-10">
-        <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-2 mb-4">
-          <div>
-            <h3 className="text-lg font-bold text-gray-900 dark:text-[#ededeb]">{item.company}</h3>
-            <p className="text-sm font-semibold tracking-[0.1em] uppercase text-gray-500 dark:text-neutral-400">
-              {item.role}
-            </p>
-          </div>
+    <li>
+      <ScrollReveal
+        delay={index * 80}
+        className="grid gap-x-10 gap-y-3 py-8 md:grid-cols-[minmax(0,4fr)_minmax(0,7fr)]"
+      >
+        <div>
+          <h3 className="text-title font-bold text-ink">{item.company}</h3>
+          {item.programme && <p className="mt-1 text-small text-ink-muted">{item.programme}</p>}
+          <p className="mt-1 text-small font-medium text-accent">{item.role}</p>
+        </div>
+        <div>
+          <p className="max-w-2xl text-body text-ink-soft">{item.description}</p>
           {item.technologies.length > 0 && (
-            <div className="flex flex-wrap gap-2">
+            <div className="mt-4 flex flex-wrap gap-1.5">
               {item.technologies.map((tech) => (
-                <span
-                  key={tech}
-                  className="px-2.5 py-1 text-[10px] font-semibold tracking-wide uppercase bg-white dark:bg-[#1c1e24] border border-gray-200 dark:border-[#282a32] rounded text-gray-500 dark:text-neutral-400"
-                >
-                  {tech}
-                </span>
+                <Tag key={tech}>{tech}</Tag>
               ))}
             </div>
           )}
+          {item.project && (
+            <div className="mt-5 flex flex-wrap items-center gap-x-7 gap-y-3">
+              {item.project.evidencePath && <ArrowLink to={item.project.evidencePath}>Project evidence</ArrowLink>}
+              <ArrowLink href={item.project.url} external>
+                Open {item.project.name}
+              </ArrowLink>
+            </div>
+          )}
         </div>
-        <p className="text-[15px] text-gray-600 dark:text-neutral-300 leading-[1.75] max-w-2xl">
-          {item.description}
-        </p>
-      </div>
-    </ScrollReveal>
+      </ScrollReveal>
+    </li>
   );
 }

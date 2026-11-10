@@ -1,38 +1,56 @@
+import type { ReactNode } from 'react';
 import { ScrollReveal } from './ScrollReveal';
 
 interface SectionHeaderProps {
   title: string;
   subtitle?: string;
+  /** Part of the headline to set in the accent colour (must match exactly). */
+  accent?: string;
+  /** Optional content aligned to the right of the headline on wide screens. */
+  aside?: ReactNode;
   align?: 'left' | 'center';
-  dark?: boolean;
 }
 
-export function SectionHeader({ title, subtitle, align = 'left', dark = false }: SectionHeaderProps) {
+function withAccent(text: string, accent?: string) {
+  if (!accent) return text;
+  const index = text.indexOf(accent);
+  if (index === -1) return text;
+
   return (
-    <ScrollReveal className={`mb-16 md:mb-20 ${align === 'center' ? 'text-center' : ''}`}>
-      <div className="flex items-center gap-4 mb-5">
-        <h2
-          className={`text-[11px] font-bold tracking-[0.25em] uppercase ${
-            dark ? 'text-gray-500' : 'text-gray-400 dark:text-neutral-500'
-          }`}
-        >
-          {title}
-        </h2>
-        <div
-          className={`flex-1 h-px max-w-[60px] ${
-            dark ? 'bg-gray-700' : 'bg-gray-300 dark:bg-[#282a32]'
-          }`}
-        />
+    <>
+      {text.slice(0, index)}
+      <span className="text-accent">{accent}</span>
+      {text.slice(index + accent.length)}
+    </>
+  );
+}
+
+/**
+ * Section heading from the references: a dotted uppercase eyebrow above a
+ * bold headline. Sections that only have a title use it as the headline.
+ */
+export function SectionHeader({ title, subtitle, accent, aside, align = 'left' }: SectionHeaderProps) {
+  const centered = align === 'center';
+
+  return (
+    <ScrollReveal className="mb-12 md:mb-16">
+      <div
+        className={`flex flex-col gap-6 ${
+          centered ? 'items-center text-center' : 'md:flex-row md:items-end md:justify-between'
+        }`}
+      >
+        <div className="max-w-2xl">
+          {subtitle ? (
+            <>
+              <h2 className="eyebrow">{title}</h2>
+              <p className="mt-5 text-headline font-bold text-ink text-balance">{withAccent(subtitle, accent)}</p>
+            </>
+          ) : (
+            <h2 className="text-headline font-bold text-ink text-balance">{withAccent(title, accent)}</h2>
+          )}
+        </div>
+        {aside && <div className="shrink-0">{aside}</div>}
       </div>
-      {subtitle && (
-        <p
-          className={`text-xl md:text-2xl lg:text-[1.7rem] font-semibold max-w-2xl leading-snug ${
-            align === 'center' ? 'mx-auto' : ''
-          } ${dark ? 'text-gray-200' : 'text-gray-800 dark:text-[#ededeb]'}`}
-        >
-          {subtitle}
-        </p>
-      )}
     </ScrollReveal>
   );
 }

@@ -15,17 +15,50 @@ export const education: EducationItem[] = [
   },
 ];
 
+/**
+ * Verified credentials. Every field is taken from the certificate itself
+ * (see the PDFs in public/certificates/), except where noted.
+ *
+ * To add another certificate:
+ *   1. Save the original PDF in public/certificates/.
+ *   2. Render its first page to public/images/credentials/ (the existing
+ *      previews are 2400 px on the long edge, JPEG quality 92).
+ *   3. Add an entry below with the title, issuer and details printed on it.
+ */
 export const credentials: Credential[] = [
   {
-    issuer: 'Google',
-    title: 'Foundations of Cybersecurity',
-    score: '94.52%',
-    type: 'Google Career Certificate',
+    issuer: 'HackerRank',
+    title: 'Frontend Developer (React)',
+    type: 'Certificate of Accomplishment · Role certification',
+    status: 'Passed',
+    date: 'November 10, 2026',
+    dateISO: '2026-11-10',
+    credentialId: 'DF8E62446F77',
+    image: {
+      src: '/images/credentials/hackerrank-frontend-developer-react.jpg',
+      alt: 'HackerRank Certificate of Accomplishment for Frontend Developer (React), presented to Joshua Winyelsum, earned on 10 November 2026, ID DF8E62446F77',
+      width: 2400,
+      height: 1829,
+    },
+    pdfUrl: '/certificates/hackerrank-frontend-developer-react.pdf',
   },
   {
-    issuer: 'TechXtraMile',
-    title: 'Google Career Certificate Scholarship Program',
-    type: 'Scholarship',
-    year: '2026',
+    issuer: 'Google · Coursera',
+    title: 'Foundations of Cybersecurity',
+    type: 'Course certificate',
+    // The grade is as previously recorded on this site; it is not printed on the certificate.
+    score: '94.52%',
+    date: 'July 13, 2026',
+    dateISO: '2026-07-13',
+    credentialId: '4NTZQE5A3OLS',
+    verifyUrl: 'https://coursera.org/verify/4NTZQE5A3OLS',
+    program: 'TechXtraMile · Google Career Certificate Scholarship Program',
+    image: {
+      src: '/images/credentials/coursera-foundations-of-cybersecurity.jpg',
+      alt: 'Coursera course certificate: Joshua Akum has successfully completed Foundations of Cybersecurity, an online course authorized by Google, dated 13 July 2026',
+      width: 2400,
+      height: 1855,
+    },
+    pdfUrl: '/certificates/coursera-foundations-of-cybersecurity.pdf',
   },
 ];

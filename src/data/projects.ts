@@ -8,6 +8,7 @@ export const projects: Project[] = [
     subtitle: 'Production Platform & Operations Infrastructure',
     category: 'FULL-STACK / PLATFORM ENGINEERING',
     description: 'A full-stack production platform engineered for an international youth leadership and mentorship organization, featuring role-based administration, automated SMS notifications, and secure payment processing.',
+    summary: 'Production platform for a youth leadership organization: admin roles, SMS alerts and verified payments.',
     problem: 'The organization needed a reliable digital platform to manage member applications, voluntary donations, event discovery, and multi-channel SMS communications while strictly isolating sensitive applicant documentation.',
     system: 'Engineered a modern Next.js App Router architecture backed by PostgreSQL and Prisma ORM, integrating NextAuth role-based authentication, dual-tier Vercel Blob storage for applicant confidentiality, Paystack payment webhooks, and Arkesel SMS gateway automation.',
     technologies: ['Next.js', 'TypeScript', 'PostgreSQL', 'Prisma', 'NextAuth.js', 'Paystack', 'Arkesel SMS', 'Tailwind CSS', 'Vercel Blob'],
@@ -36,6 +37,7 @@ export const projects: Project[] = [
     subtitle: 'Offline-First Field Data Collection & GIS Platform',
     category: 'SYSTEMS & OFFLINE-FIRST ENGINEERING',
     description: 'An institutional field-survey platform designed for university field operations, combining offline-first local persistence, geospatial validation, and centralized administration.',
+    summary: 'Offline-first field-survey platform with local persistence, GIS validation and role-isolated access.',
     problem: 'University student field operations require collecting structured survey and geospatial data in rural and semi-urban communities with intermittent or zero internet connectivity, while enforcing coordinator oversight and data consistency.',
     system: 'Built with a FastAPI backend and a Next.js offline-first frontend. Features Dexie (IndexedDB) local queueing and sync, Leaflet GIS mapping with GPS accuracy boundaries, role-isolated student/coordinator/admin portals, and automated PDF reporting.',
     technologies: ['Next.js', 'FastAPI', 'PostgreSQL', 'TypeScript', 'Python', 'Dexie / IndexedDB', 'Leaflet GIS', 'Celery', 'Docker'],
@@ -62,6 +64,7 @@ export const projects: Project[] = [
     subtitle: 'Active Recall & Spaced Repetition Learning Engine',
     category: 'APPLICATION ARCHITECTURE & DATA SYSTEMS',
     description: 'A personal learning system engineered around active retrieval, dependency bottleneck detection, and deterministic SM-2 spaced repetition scheduling.',
+    summary: 'A learning engine built on active recall, prerequisite graphs and deterministic SM-2 spaced repetition.',
     problem: 'Traditional learning tools treat studying as passive note-taking or unstructured flashcard flipping, failing to diagnose conceptual prerequisite gaps, enforce genuine recall effort, or optimize long-term retention intervals.',
     system: 'Engineered with Next.js 15, React 19, TypeScript, and Prisma ORM on PostgreSQL. Implements an SM-2 spaced repetition algorithm, DAG prerequisite cycle detection using Depth-First Search, an active recall review session engine, and diagnostic failure tracking.',
     technologies: ['Next.js', 'TypeScript', 'PostgreSQL', 'Prisma', 'Vitest', 'React Flow', 'Tailwind CSS', 'Zod'],
@@ -88,6 +91,7 @@ export const projects: Project[] = [
     subtitle: 'Ghana Cocoa Agricultural-Chemical Data Pipeline',
     category: 'DATA ENGINEERING & RESEARCH',
     description: 'An evidence-backed data research pipeline investigating pesticide residues and regulatory data in Ghana\'s cocoa sector, with machine-verified quotes, OCR parsing, and canonical schema harmonization.',
+    summary: 'A reproducible data pipeline for pesticide-residue records in Ghana\'s cocoa sector, with verified evidence.',
     problem: 'Pesticide residue data and chemical usage records in Ghana\'s agricultural sector are fragmented across legacy PDFs, regulatory registries, and academic theses, characterized by OCR anomalies, inconsistent reporting formats, and undefined notation.',
     system: 'A reproducible Python pipeline with SHA-256 checksum-locked sources, coordinate-based table parsers, Tesseract OCR fallback, and an automated Pytest test suite that verifies 346 verbatim quote evidence items against source pages.',
     technologies: ['Python', 'Pandas', 'Pytest', 'PDF Table Parser', 'OCR (Tesseract)', 'Schema Analysis', 'Data Quality'],
@@ -105,5 +109,30 @@ export const projects: Project[] = [
     ctaLink: '/case-study/agrichem',
     status: 'RESEARCH',
     featured: true,
+  },
+];
+
+/**
+ * Team work shown in the Selected Work gallery. It has an evidence page
+ * (see projectEvidence.ts) rather than the long-form case study, and is kept
+ * apart from `projects` so the terminal, which assumes a full write-up, is
+ * unaffected.
+ */
+export const deployedWork: Project[] = [
+  {
+    id: 'mabia-ai',
+    number: '05',
+    title: 'MABIA AI',
+    subtitle: 'CHPS Emergency Response, Voice Outreach and Nutrition Coordination Platform',
+    category: 'UNICEF STARTUP LAB · AI FOR NURTURING CARE HACKATHON 2026',
+    description: 'An offline-first voice outreach, maternal healthcare emergency response and nutrition coordination platform designed for community healthcare in Northern Ghana.',
+    summary: 'Offline-first voice outreach, maternal emergency response and nutrition coordination for community healthcare in Northern Ghana.',
+    technologies: ['React', 'Vite', 'PWA', 'IndexedDB', 'Python', 'FastAPI', 'SQLAlchemy', 'PostgreSQL'],
+    cta: 'View Project Evidence',
+    ctaLink: '/case-study/mabia-ai',
+    status: 'LIVE',
+    featured: true,
+    liveUrl: 'https://mabia-ai.vercel.app/login',
+    repoUrl: 'https://github.com/NasamuAlhassan/Mabia-AI',
   },
 ];

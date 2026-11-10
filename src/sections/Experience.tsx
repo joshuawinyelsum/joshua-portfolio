@@ -4,14 +4,14 @@ import { experience } from '../data/experience';
 
 export function Experience() {
   return (
-    <section id="experience" className="py-24 md:py-32 section-padding">
-      <div className="max-w-4xl">
+    <section id="experience" className="section">
+      <div className="container-content">
         <SectionHeader title="Experience" />
-        <div>
+        <ul className="rows -mt-8">
           {experience.map((item, index) => (
             <ExperienceCard key={item.company} item={item} index={index} />
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );

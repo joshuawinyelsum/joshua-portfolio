@@ -13,7 +13,8 @@
           var saved = localStorage.getItem('theme');
           var pref = localStorage.getItem('theme-preference');
           var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-          if (saved === 'dark' || (pref === 'dark') || ((!saved || pref === 'system' || saved === 'system') && prefersDark)) {
+          // Light by default; dark only when the visitor has chosen it (or chosen to follow the system).
+          if (pref === 'dark' || (!pref && saved === 'dark') || (pref === 'system' && prefersDark)) {
             document.documentElement.classList.add('dark');
           } else {
             document.documentElement.classList.remove('dark');
@@ -67,7 +68,7 @@
     }
     </script>
   </head>
-  <body class="transition-colors duration-200">
+  <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
