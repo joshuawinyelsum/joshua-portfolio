@@ -173,7 +173,16 @@ async function runAudit() {
       const fullUrl = `http://127.0.0.1:${PORT}${route.path}`;
       await cdp.send('Page.navigate', { url: fullUrl });
 
-      // Wait for rendering
+      // Wait until the app has actually mounted (a slow font or network
+      // request must not let the audit measure an empty page), then let
+      // layout settle.
+      for (let attempt = 0; attempt < 100; attempt++) {
+        const mounted = await cdp.eval(
+          `location.pathname === ${JSON.stringify(route.path)} && (document.getElementById('root')?.childElementCount ?? 0) > 0`
+        );
+        if (mounted) break;
+        await new Promise((r) => setTimeout(r, 100));
+      }
       await new Promise((r) => setTimeout(r, 400));
 
       const overflowData = await cdp.eval(`(() => {

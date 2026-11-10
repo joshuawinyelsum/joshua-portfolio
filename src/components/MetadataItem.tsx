@@ -1,20 +1,17 @@
-import { ScrollReveal } from './ScrollReveal';
-
 interface MetadataItemProps {
   label: string;
   value: string;
-  delay?: number;
+  /** Use inside an onyx surface. */
+  onInverse?: boolean;
 }
 
-export function MetadataItem({ label, value, delay = 0 }: MetadataItemProps) {
+export function MetadataItem({ label, value, onInverse = false }: MetadataItemProps) {
   return (
-    <ScrollReveal delay={delay}>
-      <div className="py-4 border-b border-gray-200 dark:border-[#282a32]">
-        <p className="text-[10px] font-bold tracking-[0.25em] uppercase text-gray-400 dark:text-neutral-500 mb-1.5">
-          {label}
-        </p>
-        <p className="text-sm font-medium text-gray-900 dark:text-[#ededeb]">{value}</p>
-      </div>
-    </ScrollReveal>
+    <div>
+      <dt className={`text-eyebrow font-semibold uppercase ${onInverse ? 'text-on-inverse-muted' : 'text-ink-muted'}`}>
+        {label}
+      </dt>
+      <dd className={`mt-1.5 text-body font-medium ${onInverse ? 'text-on-inverse' : 'text-ink'}`}>{value}</dd>
+    </div>
   );
 }

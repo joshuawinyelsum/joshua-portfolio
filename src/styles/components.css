@@ -1,0 +1,1347 @@
+/*
+ * Component layer. Every rule reads from tokens.css.
+ *
+ * These are plain rules rather than a Tailwind @layer on purpose: several
+ * modifier classes are composed at runtime (btn--${variant}) and a purged
+ * layer would drop them. Utilities still load later and win on conflicts.
+ *
+ * One motion grammar is shared by everything layered (buttons, surfaces,
+ * previews): at rest the backing sheets sit behind the face; on hover the
+ * face lifts and the sheets separate; on press everything settles together.
+ */
+
+/* ======================================================================
+   Layout
+   ====================================================================== */
+.section-padding {
+  padding-left: var(--space-gutter);
+  padding-right: var(--space-gutter);
+}
+
+.section {
+  padding: var(--space-section) var(--space-gutter);
+}
+
+.container-content {
+  width: 100%;
+  max-width: var(--width-content);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.separator {
+  width: 100%;
+  height: 1px;
+  background: rgb(var(--rgb-line) / 0.08);
+}
+
+/* ======================================================================
+   Eyebrow
+   ====================================================================== */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: var(--text-eyebrow);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-eyebrow);
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: rgb(var(--rgb-accent));
+}
+
+.eyebrow::before {
+  content: '';
+  flex: none;
+  width: 0.4375rem;
+  height: 0.4375rem;
+  border-radius: 50%;
+  background: var(--brand-lavender);
+}
+
+.eyebrow--on-inverse {
+  color: var(--brand-lavender);
+}
+
+.eyebrow--on-inverse::before {
+  background: var(--brand-cream);
+}
+
+/* ======================================================================
+   Button: the one canonical button.
+   Structure: .btn > .btn__layer--lavender + .btn__layer--cream + .btn__face
+   The two layers are real elements that sit behind the face.
+   ====================================================================== */
+.btn {
+  --btn-height: var(--button-height-md);
+  --btn-pad: var(--button-pad-md);
+  --btn-text: var(--button-text-md);
+  --btn-radius: var(--radius-button-md);
+  --btn-rise: var(--layer-rise-button-md);
+  --btn-face-bg: rgb(var(--rgb-inverse));
+  --btn-face-fg: rgb(var(--rgb-on-inverse));
+  --btn-shadow: var(--shadow-button);
+  --btn-shadow-hover: var(--shadow-button-hover);
+  --btn-shadow-pressed: var(--shadow-button-pressed);
+
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  vertical-align: middle;
+  border-radius: var(--btn-radius);
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn--sm {
+  --btn-height: var(--button-height-sm);
+  --btn-pad: var(--button-pad-sm);
+  --btn-text: var(--button-text-sm);
+  --btn-radius: var(--radius-button-sm);
+  --btn-rise: var(--layer-rise-button-sm);
+}
+
+.btn--lg {
+  --btn-height: var(--button-height-lg);
+  --btn-pad: var(--button-pad-lg);
+  --btn-text: var(--button-text-lg);
+  --btn-radius: var(--radius-button-lg);
+  --btn-rise: var(--layer-rise-button-lg);
+}
+
+.btn--block {
+  display: flex;
+  width: 100%;
+}
+
+.btn--secondary {
+  --btn-face-bg: rgb(var(--rgb-surface));
+  --btn-face-fg: rgb(var(--rgb-ink));
+  --btn-shadow: var(--shadow-face);
+  --btn-shadow-hover: var(--shadow-face-hover);
+  --btn-shadow-pressed: var(--shadow-face);
+}
+
+.btn__face {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.875rem;
+  width: 100%;
+  min-height: var(--btn-height);
+  padding: 0 var(--btn-pad);
+  border-radius: inherit;
+  background: var(--btn-face-bg);
+  color: var(--btn-face-fg);
+  font-size: var(--btn-text);
+  font-weight: var(--weight-medium);
+  letter-spacing: -0.005em;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow: var(--btn-shadow);
+  transition:
+    transform var(--duration-spring) var(--ease-spring),
+    box-shadow var(--duration-base) var(--ease-out);
+}
+
+.btn--spread .btn__face {
+  justify-content: space-between;
+}
+
+.btn__layer {
+  position: absolute;
+  z-index: 0;
+  top: calc(var(--btn-rise) * -1);
+  height: calc(var(--btn-rise) + var(--btn-radius) + 6px);
+  pointer-events: none;
+  transition: transform var(--duration-spring) var(--ease-spring);
+}
+
+/* Lavender: anchored top-left, top edge slopes down toward the centre. */
+.btn__layer--lavender {
+  left: 0;
+  width: var(--layer-span-major);
+  background: var(--brand-lavender);
+  border-radius: var(--btn-radius) 0 0 0;
+  clip-path: polygon(0 0, 100% var(--btn-rise), 100% 100%, 0 100%);
+  transform-origin: 100% 100%;
+}
+
+/* Cream: mirrored on the top-right, overhanging the edge slightly. */
+.btn__layer--cream {
+  right: calc(var(--layer-overhang) * -1);
+  width: 52%;
+  background: var(--brand-cream);
+  border-radius: 0 var(--btn-radius) 8px 0;
+  clip-path: polygon(0 var(--btn-rise), 100% 0, 100% 100%, 0 100%);
+  transform-origin: 0 100%;
+}
+
+.btn__icon {
+  flex: none;
+  width: 1.125em;
+  height: 1.125em;
+  transition: transform var(--duration-base) var(--ease-out);
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .btn:hover .btn__face {
+    transform: translateY(-2px);
+    box-shadow: var(--btn-shadow-hover);
+  }
+
+  .btn:hover .btn__layer--lavender {
+    transform: translate(-2px, calc(var(--layer-lift) * -1 - 1px)) rotate(calc(var(--layer-tilt-hover) * -1));
+  }
+
+  .btn:hover .btn__layer--cream {
+    transform: translate(2px, calc(var(--layer-lift) * -1 - 1px)) rotate(var(--layer-tilt-hover));
+  }
+
+  .btn:hover .btn__icon--arrow {
+    transform: translateX(3px);
+  }
+
+  .btn:hover .btn__icon--diagonal {
+    transform: translate(2px, -2px);
+  }
+}
+
+.btn:focus-visible {
+  outline: 2px solid rgb(var(--rgb-accent));
+  outline-offset: 4px;
+}
+
+.btn:active .btn__face {
+  transform: translateY(1px);
+  box-shadow: var(--btn-shadow-pressed);
+  transition-duration: var(--duration-instant);
+  transition-timing-function: var(--ease-press);
+}
+
+.btn:active .btn__layer {
+  transform: translateY(3px);
+  transition-duration: var(--duration-instant);
+  transition-timing-function: var(--ease-press);
+}
+
+.btn[aria-disabled='true'],
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/* Icon-only variant for utility controls (theme, menu, close). Same face,
+   radius and press behaviour; no backing layers at this size. */
+.btn--icon {
+  --btn-face-bg: rgb(var(--rgb-surface));
+  --btn-face-fg: rgb(var(--rgb-ink));
+  --btn-shadow: var(--shadow-face);
+  --btn-shadow-hover: var(--shadow-face-hover);
+  --btn-shadow-pressed: var(--shadow-face);
+  --btn-radius: var(--radius-control);
+}
+
+.btn--icon .btn__face {
+  width: var(--btn-height);
+  min-width: var(--btn-height);
+  padding: 0;
+}
+
+/* ======================================================================
+   LayeredSurface: the canonical layered information box.
+   Structure: .surface > .surface__layer (x1-2) + .surface__face
+   ====================================================================== */
+.surface {
+  --sf-radius: var(--radius-card);
+  --sf-rise: var(--layer-rise-card);
+  --sf-rise-minor: var(--layer-rise-card-minor);
+  --sf-offset: var(--layer-offset);
+  --sf-accent: var(--brand-lavender);
+  --sf-bg: rgb(var(--rgb-surface));
+  --sf-fg: rgb(var(--rgb-ink));
+
+  position: relative;
+  isolation: isolate;
+  display: block;
+  border-radius: var(--sf-radius);
+  color: var(--sf-fg);
+}
+
+.surface__face {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--sf-bg);
+  color: var(--sf-fg);
+  box-shadow: var(--shadow-face);
+  transition:
+    transform var(--duration-slow) var(--ease-out),
+    box-shadow var(--duration-slow) var(--ease-out);
+}
+
+.surface--inverse {
+  --sf-bg: rgb(var(--rgb-inverse));
+  --sf-fg: rgb(var(--rgb-on-inverse));
+}
+
+.surface--sunken {
+  --sf-bg: rgb(var(--rgb-sunken));
+}
+
+.surface--sunken > .surface__face {
+  box-shadow: none;
+}
+
+.surface--accent-cream {
+  --sf-accent: var(--brand-cream);
+}
+
+.surface__layer {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+/* Crown: lavender top-left and cream top-right rising above the face. */
+.surface--crown > .surface__layer--a {
+  top: calc(var(--sf-rise) * -1);
+  left: 0;
+  width: var(--layer-span-major);
+  height: calc(var(--sf-rise) + var(--sf-radius) + 8px);
+  background: var(--brand-lavender);
+  border-radius: var(--sf-radius) 0 0 0;
+  clip-path: polygon(0 0, 100% var(--sf-rise), 100% 100%, 0 100%);
+  transform-origin: 100% 100%;
+}
+
+.surface--crown > .surface__layer--b {
+  top: calc(var(--sf-rise-minor) * -1);
+  right: calc(var(--layer-overhang) * -1);
+  width: var(--layer-span-minor);
+  height: calc(var(--sf-rise-minor) + var(--sf-radius) + 8px);
+  background: var(--brand-cream);
+  border-radius: 0 var(--sf-radius) 10px 0;
+  clip-path: polygon(0 var(--sf-rise-minor), 100% 0, 100% 100%, 0 100%);
+  transform-origin: 0 100%;
+}
+
+/* Offset: one sheet the size of the face, shifted down and right. */
+.surface--offset > .surface__layer--a {
+  inset: 0;
+  border-radius: inherit;
+  background: var(--sf-accent);
+  transform: translate(var(--sf-offset), var(--sf-offset)) rotate(var(--layer-tilt));
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .surface--interactive:hover > .surface__face {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-face-hover);
+  }
+
+  .surface--interactive.surface--crown:hover > .surface__layer--a {
+    transform: translate(-2px, calc(var(--layer-lift) * -1 - 2px)) rotate(calc(var(--layer-tilt-hover) * -1));
+  }
+
+  .surface--interactive.surface--crown:hover > .surface__layer--b {
+    transform: translate(2px, calc(var(--layer-lift) * -1 - 2px)) rotate(var(--layer-tilt-hover));
+  }
+
+  .surface--interactive.surface--offset:hover > .surface__layer--a {
+    transform: translate(calc(var(--sf-offset) + var(--layer-lift)), calc(var(--sf-offset) + var(--layer-lift)))
+      rotate(var(--layer-tilt-hover));
+  }
+}
+
+a.surface:focus-visible,
+button.surface:focus-visible {
+  outline: 2px solid rgb(var(--rgb-accent));
+  outline-offset: 5px;
+}
+
+/* ======================================================================
+   Browser window: a flat macOS-style window for project screenshots.
+   A minimal top bar with the three traffic-light controls and the real
+   screenshot beneath it. No hardware, no perspective, nothing behind it.
+   ====================================================================== */
+.window {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-window);
+  background: rgb(var(--rgb-surface));
+  box-shadow: var(--shadow-window);
+  transition:
+    transform var(--duration-slow) var(--ease-out),
+    box-shadow var(--duration-slow) var(--ease-out);
+}
+
+.window__bar {
+  display: flex;
+  align-items: center;
+  height: var(--window-bar-height);
+  padding: 0 0.75rem;
+  border-bottom: 1px solid rgb(var(--rgb-line) / 0.08);
+  background: rgb(var(--rgb-surface));
+}
+
+.window__controls {
+  display: flex;
+  flex: none;
+  gap: 0.375rem;
+  width: 3rem;
+}
+
+/* The controls are static: they identify the window, they are not buttons. */
+.window__control {
+  width: var(--window-control-size);
+  height: var(--window-control-size);
+  border-radius: 50%;
+}
+
+.window__control--close {
+  background: var(--window-close);
+}
+
+.window__control--minimize {
+  background: var(--window-minimize);
+}
+
+.window__control--zoom {
+  background: var(--window-zoom);
+}
+
+/* The address sits in a shallow notch cut into the bar: part of the chrome,
+   not a button floating on it. */
+.window__centre {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  min-width: 0;
+  /* Matches the controls' width so the address sits in the true centre. */
+  padding-right: 3rem;
+}
+
+.window__address {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  min-width: 0;
+  max-width: 100%;
+  height: var(--window-address-height);
+  padding: 0 0.625rem;
+  border-radius: 5px;
+  background: rgb(var(--rgb-sunken));
+  color: rgb(var(--rgb-ink-muted));
+  font-size: 0.6875rem;
+  line-height: 1;
+  text-decoration: none;
+  transition:
+    color var(--duration-fast) var(--ease-out),
+    background-color var(--duration-fast) var(--ease-out);
+}
+
+.window__address > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.window__address > svg {
+  flex: none;
+  width: 0.625rem;
+  height: 0.625rem;
+  opacity: 0.65;
+  transition:
+    opacity var(--duration-fast) var(--ease-out),
+    transform var(--duration-base) var(--ease-out);
+}
+
+a.window__address:hover {
+  background: rgb(var(--rgb-ink) / 0.07);
+  color: rgb(var(--rgb-ink));
+}
+
+a.window__address:hover > svg {
+  opacity: 1;
+}
+
+a.window__address:focus-visible {
+  outline: 2px solid rgb(var(--rgb-accent));
+  outline-offset: 1px;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  a.window__address:hover > svg {
+    transform: translate(1px, -1px);
+  }
+}
+
+/* The screen takes each screenshot's own aspect ratio, so nothing is ever
+   stretched or cropped out of proportion. */
+.window__screen {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: var(--window-ratio, 16 / 10);
+  background: rgb(var(--rgb-sunken));
+}
+
+.window__screen > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top left;
+}
+
+/* Entry: the screenshot eases in slightly after its window. */
+.window__screen > img,
+.window__screen > .live {
+  transition:
+    opacity 700ms var(--ease-out) 120ms,
+    transform 900ms var(--ease-out) 120ms;
+}
+
+.reveal:not(.is-visible) .window__screen > img,
+.reveal:not(.is-visible) .window__screen > .live {
+  opacity: 0;
+  transform: scale(1.03);
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .group:hover .window {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-window-hover);
+  }
+}
+
+/* ---- Live embedded preview inside a window screen ---------------------- */
+.live {
+  position: absolute;
+  inset: 0;
+}
+
+.live__poster,
+.live__frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.live__poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top left;
+}
+
+/* Hidden until the embedded site has finished loading, so a half-painted
+   page never shows over the screenshot; then it fades in on top of it. */
+.live__frame {
+  border: 0;
+  transform-origin: 0 0;
+  background: #ffffff;
+  opacity: 0;
+  transition: opacity var(--duration-slow) var(--ease-out);
+}
+
+.live__frame.is-loaded {
+  opacity: 1;
+}
+
+/* Sits over the page until the visitor chooses to interact, so scrolling the
+   portfolio is never captured by the embedded site. */
+.live__shield {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 5%;
+  cursor: pointer;
+}
+
+.live__hint {
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--radius-chip);
+  background: rgb(var(--rgb-onyx) / 0.86);
+  color: #ffffff;
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    opacity var(--duration-base) var(--ease-out),
+    transform var(--duration-base) var(--ease-out);
+}
+
+.live__shield:hover .live__hint,
+.live__shield:focus-visible .live__hint {
+  opacity: 1;
+  transform: none;
+}
+
+.live__shield:focus-visible {
+  outline: 2px solid var(--brand-lavender);
+  outline-offset: -3px;
+}
+
+/* Caption under a screen: says honestly whether the view is live or a capture. */
+.preview-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--text-caption);
+  color: rgb(var(--rgb-ink-muted));
+}
+
+.preview-note__dot {
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 50%;
+  background: rgb(var(--rgb-ink-muted));
+}
+
+.preview-note--live .preview-note__dot {
+  background: rgb(var(--rgb-positive));
+}
+
+/* Two sheets behind the hero terminal: lavender up-left, cream down-right.
+   Not used for project screens. */
+.stack {
+  position: relative;
+  isolation: isolate;
+  margin: var(--layer-offset-lg);
+}
+
+.stack > :not(.stack__layer) {
+  position: relative;
+  z-index: 1;
+}
+
+.stack__layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: calc(var(--radius-frame) + 6px);
+  pointer-events: none;
+  transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.stack__layer--lavender {
+  background: var(--brand-lavender);
+  transform: translate(calc(var(--layer-offset-lg) * -1), calc(var(--layer-offset-lg) * -1))
+    rotate(calc(var(--layer-tilt) * -2));
+}
+
+.stack__layer--cream {
+  background: var(--brand-cream);
+  transform: translate(var(--layer-offset-lg), var(--layer-offset-lg)) rotate(var(--layer-tilt));
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .stack--interactive:hover .stack__layer--lavender {
+    transform: translate(
+        calc(var(--layer-offset-lg) * -1 - var(--layer-lift)),
+        calc(var(--layer-offset-lg) * -1 - var(--layer-lift))
+      )
+      rotate(calc(var(--layer-tilt) * -3));
+  }
+
+  .stack--interactive:hover .stack__layer--cream {
+    transform: translate(
+        calc(var(--layer-offset-lg) + var(--layer-lift)),
+        calc(var(--layer-offset-lg) + var(--layer-lift))
+      )
+      rotate(calc(var(--layer-tilt) * 2));
+  }
+}
+
+/* Secondary screenshots and certificate previews. */
+.shot {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-control);
+  box-shadow: var(--shadow-window);
+}
+
+/* ======================================================================
+   Story timeline: one rail that fills as the reader scrolls. Milestones
+   settle in as the progress reaches them; nothing ever hides again.
+   ====================================================================== */
+.story {
+  --story-date: 0px;
+  --story-rail: 2.25rem;
+  --story-marker: 0.5625rem;
+  --story-marker-major: 0.8125rem;
+
+  position: relative;
+}
+
+.story__rail,
+.story__progress {
+  position: absolute;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  left: calc(var(--story-date) + var(--story-marker-major) / 2);
+  width: 2px;
+  margin-left: -1px;
+  border-radius: 1px;
+}
+
+.story__rail {
+  background: rgb(var(--rgb-line) / 0.1);
+}
+
+.story__progress {
+  background: var(--brand-lavender);
+  transform: scaleY(var(--story-ratio, 0));
+  transform-origin: 0 0;
+  transition: transform 180ms linear;
+}
+
+.story__item {
+  position: relative;
+  padding-left: var(--story-rail);
+}
+
+.story__item + .story__item {
+  margin-top: 3.25rem;
+}
+
+.story__item--major + .story__item,
+.story__item + .story__item--major {
+  margin-top: 4rem;
+}
+
+.story__marker {
+  position: absolute;
+  top: 0.3125rem;
+  left: calc((var(--story-marker-major) - var(--story-marker)) / 2);
+  width: var(--story-marker);
+  height: var(--story-marker);
+  border-radius: 50%;
+  background: rgb(var(--rgb-canvas));
+  box-shadow:
+    inset 0 0 0 2px rgb(var(--rgb-ink) / 0.28),
+    0 0 0 5px rgb(var(--rgb-canvas));
+  transition:
+    background-color var(--duration-slow) var(--ease-out),
+    box-shadow var(--duration-slow) var(--ease-out),
+    transform var(--duration-slow) var(--ease-out);
+}
+
+.story__item--major .story__marker {
+  top: 0.1875rem;
+  left: 0;
+  width: var(--story-marker-major);
+  height: var(--story-marker-major);
+}
+
+.story__item.is-active .story__marker {
+  background: var(--brand-lavender);
+  box-shadow:
+    inset 0 0 0 2px var(--brand-lavender),
+    0 0 0 5px rgb(var(--rgb-canvas));
+}
+
+.story__item--major.is-active .story__marker {
+  box-shadow:
+    inset 0 0 0 2px var(--brand-lavender),
+    0 0 0 5px rgb(var(--rgb-canvas)),
+    0 0 0 6px rgb(var(--rgb-lavender) / 0.35);
+}
+
+.story__date {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.375rem;
+  font-size: var(--text-eyebrow);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: rgb(var(--rgb-ink-muted));
+  transition: color var(--duration-slow) var(--ease-out);
+}
+
+.story__item.is-active .story__date {
+  color: rgb(var(--rgb-ink));
+}
+
+.story__item--current .story__date {
+  padding: 0 0.5rem;
+  border-radius: var(--radius-chip);
+  background: var(--brand-cream);
+  color: var(--brand-onyx);
+}
+
+.story__item--current.is-active .story__date {
+  color: var(--brand-onyx);
+}
+
+@media (min-width: 768px) {
+  .story {
+    --story-date: 8.5rem;
+    --story-rail: 3rem;
+  }
+
+  .story__item {
+    padding-left: calc(var(--story-date) + var(--story-marker-major) + var(--story-rail));
+  }
+
+  .story__marker {
+    left: calc(var(--story-date) + (var(--story-marker-major) - var(--story-marker)) / 2);
+  }
+
+  .story__marker {
+    top: 0.4375rem;
+  }
+
+  .story__item--major .story__marker {
+    top: 0.6875rem;
+    left: var(--story-date);
+  }
+
+  .story__item--major .story__date-cell {
+    top: 0.4375rem;
+  }
+
+  /* Dates sit in their own column, right-aligned against the rail. */
+  .story__date-cell {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: flex-end;
+    width: calc(var(--story-date) - 1.75rem);
+  }
+}
+
+/* ======================================================================
+   Credential gallery: the real certificates, shown as they were issued.
+   ====================================================================== */
+.certificate {
+  position: relative;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-control);
+  background: rgb(var(--rgb-surface));
+  box-shadow: var(--shadow-window);
+  cursor: zoom-in;
+  transition:
+    transform var(--duration-slow) var(--ease-out),
+    box-shadow var(--duration-slow) var(--ease-out);
+}
+
+/* The image keeps its own proportions: never cropped, never stretched. */
+.certificate > img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.certificate__hint {
+  position: absolute;
+  right: 0.625rem;
+  bottom: 0.625rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.3125rem 0.5rem;
+  border-radius: var(--radius-chip);
+  background: rgb(var(--rgb-onyx) / 0.82);
+  color: #ffffff;
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
+  opacity: 0;
+  transition: opacity var(--duration-base) var(--ease-out);
+}
+
+.certificate:hover .certificate__hint,
+.certificate:focus-visible .certificate__hint {
+  opacity: 1;
+}
+
+.certificate:focus-visible {
+  outline: 2px solid rgb(var(--rgb-accent));
+  outline-offset: 3px;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .certificate:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-window-hover);
+  }
+}
+
+/* Lightbox: a native dialog, so focus is trapped and Escape closes it. */
+.lightbox {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  padding: clamp(0.75rem, 3vw, 2.5rem);
+  border: 0;
+  background: transparent;
+  color: #ffffff;
+}
+
+.lightbox::backdrop {
+  background: rgb(var(--rgb-onyx) / 0.94);
+}
+
+.lightbox[open] {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  animation: lightbox-in var(--duration-base) var(--ease-out) both;
+}
+
+.lightbox__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  max-width: 78rem;
+}
+
+/* The stage scrolls, so a zoomed certificate can be read edge to edge. */
+.lightbox__stage {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 0;
+  overflow: auto;
+}
+
+.lightbox__image {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  border-radius: var(--radius-control);
+  background: #ffffff;
+  cursor: zoom-in;
+}
+
+.lightbox--zoomed .lightbox__stage {
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.lightbox--zoomed .lightbox__image {
+  max-width: none;
+  max-height: none;
+  cursor: zoom-out;
+}
+
+.lightbox__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem 1rem;
+}
+
+/* ======================================================================
+   Structured rows: quiet lists separated by a single hairline.
+   ====================================================================== */
+.rows > * + * {
+  border-top: 1px solid rgb(var(--rgb-line) / 0.1);
+}
+
+/* ======================================================================
+   Social icon link: one glyph, no frame, shared size and weight.
+   ====================================================================== */
+.social-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--icon-hit);
+  height: var(--icon-hit);
+  border-radius: var(--radius-control);
+  color: rgb(var(--rgb-ink-soft));
+  transition:
+    color var(--duration-fast) var(--ease-out),
+    background-color var(--duration-fast) var(--ease-out),
+    transform var(--duration-base) var(--ease-out);
+}
+
+.social-icon > svg {
+  width: var(--icon-size);
+  height: var(--icon-size);
+}
+
+@media (hover: hover) {
+  .social-icon:hover {
+    color: rgb(var(--rgb-accent));
+    background: rgb(var(--rgb-accent-soft));
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .social-icon:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.social-icon:focus-visible {
+  outline: 2px solid rgb(var(--rgb-accent));
+  outline-offset: 2px;
+}
+
+/* ======================================================================
+   Tag
+   ====================================================================== */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4375rem;
+  min-height: 1.625rem;
+  padding: 0.1875rem 0.625rem;
+  border-radius: var(--radius-chip);
+  background: rgb(var(--rgb-sunken));
+  color: rgb(var(--rgb-ink-soft));
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
+  line-height: 1.3;
+}
+
+.tag--lavender {
+  background: rgb(var(--rgb-accent-soft));
+  color: rgb(var(--rgb-accent));
+}
+
+.tag--cream {
+  background: rgb(var(--rgb-cream-soft));
+  color: rgb(var(--rgb-ink));
+}
+
+.tag--on-inverse {
+  background: rgb(var(--rgb-on-inverse) / 0.1);
+  color: rgb(var(--rgb-on-inverse));
+}
+
+.tag--surface {
+  background: rgb(var(--rgb-surface));
+}
+
+.tag--lg {
+  min-height: 2.125rem;
+  padding: 0.375rem 0.75rem;
+  font-size: var(--text-small);
+}
+
+.tag--status {
+  font-size: 0.6875rem;
+  font-weight: var(--weight-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.tag__dot {
+  flex: none;
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+button.tag {
+  cursor: pointer;
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out),
+    opacity var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+button.tag:focus-visible {
+  outline: 2px solid rgb(var(--rgb-accent));
+  outline-offset: 2px;
+}
+
+.tag--active {
+  background: rgb(var(--rgb-inverse));
+  color: rgb(var(--rgb-on-inverse));
+}
+
+.tag--subdued {
+  opacity: 0.45;
+}
+
+/* ======================================================================
+   Arrow link: the text action used on cards
+   ====================================================================== */
+.arrow-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: var(--text-small);
+  font-weight: var(--weight-semibold);
+  color: rgb(var(--rgb-accent));
+  text-decoration: none;
+}
+
+.arrow-link > svg {
+  flex: none;
+  width: 1.125rem;
+  height: 1.125rem;
+  transition: transform var(--duration-base) var(--ease-out);
+}
+
+.arrow-link--on-inverse {
+  color: var(--brand-lavender);
+}
+
+.arrow-link--back > svg {
+  transform: rotate(180deg);
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .arrow-link:hover > svg,
+  .group:hover .arrow-link > svg {
+    transform: translateX(4px);
+  }
+
+  .arrow-link--back:hover > svg {
+    transform: rotate(180deg) translateX(4px);
+  }
+}
+
+a.arrow-link:focus-visible,
+button.arrow-link:focus-visible {
+  outline: 2px solid rgb(var(--rgb-accent));
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* ======================================================================
+   Form fields
+   ====================================================================== */
+.field__label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: var(--text-small);
+  font-weight: var(--weight-semibold);
+  color: rgb(var(--rgb-ink));
+}
+
+.field__control {
+  display: block;
+  width: 100%;
+  min-height: 3rem;
+  padding: 0 1rem;
+  border: 0;
+  border-radius: var(--radius-control);
+  background: rgb(var(--rgb-canvas));
+  box-shadow: inset 0 0 0 1px rgb(var(--rgb-line) / 0.14);
+  color: rgb(var(--rgb-ink));
+  /* 16px keeps iOS from zooming the page on focus. */
+  font-size: 1rem;
+  line-height: 1.5;
+  transition:
+    box-shadow var(--duration-fast) var(--ease-out),
+    background-color var(--duration-fast) var(--ease-out);
+}
+
+textarea.field__control {
+  min-height: 8.5rem;
+  padding: 0.8125rem 1rem;
+  resize: vertical;
+}
+
+.field__control::placeholder {
+  color: rgb(var(--rgb-ink-muted));
+}
+
+.field__control:hover {
+  box-shadow: inset 0 0 0 1px rgb(var(--rgb-line) / 0.28);
+}
+
+.field__control:focus,
+.field__control:focus-visible {
+  outline: none;
+  background: rgb(var(--rgb-surface));
+  box-shadow: inset 0 0 0 2px var(--brand-lavender);
+}
+
+.field__control[aria-invalid='true'] {
+  box-shadow: inset 0 0 0 2px rgb(var(--rgb-danger));
+}
+
+.field__message {
+  margin-top: 0.375rem;
+  font-size: var(--text-caption);
+  color: rgb(var(--rgb-danger));
+}
+
+/* ======================================================================
+   Navigation link
+   ====================================================================== */
+.nav-link {
+  position: relative;
+  padding: 0.5rem 0.75rem;
+  font-size: var(--text-small);
+  font-weight: var(--weight-medium);
+  color: rgb(var(--rgb-ink-muted));
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: 0.125rem;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--brand-lavender);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  transition: transform var(--duration-base) var(--ease-out);
+}
+
+.nav-link:hover,
+.nav-link[aria-current='true'] {
+  color: rgb(var(--rgb-ink));
+}
+
+.nav-link:hover::after,
+.nav-link[aria-current='true']::after {
+  transform: scaleX(1);
+}
+
+.nav-link:focus-visible {
+  outline: 2px solid rgb(var(--rgb-accent));
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* ======================================================================
+   Section entrance
+   ====================================================================== */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, var(--reveal-distance), 0);
+  transition:
+    opacity var(--duration-reveal) var(--ease-out) var(--reveal-delay, 0ms),
+    transform var(--duration-reveal) var(--ease-out) var(--reveal-delay, 0ms);
+}
+
+.reveal[data-direction='left'] {
+  transform: translate3d(var(--reveal-distance), 0, 0);
+}
+
+.reveal[data-direction='none'] {
+  transform: none;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Form status message */
+.notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  padding: 0.75rem 0.875rem;
+  border-radius: var(--radius-control);
+  background: rgb(var(--rgb-accent-soft));
+  color: rgb(var(--rgb-ink));
+  font-size: var(--text-small);
+  line-height: var(--leading-small);
+  animation: notice-in var(--duration-slow) var(--ease-out) both;
+}
+
+@keyframes lightbox-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes notice-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Used by the terminal preview's staged lines. */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Reduced motion: hover travel is already gated above; drop the remaining
+   transitions and show revealed content immediately. */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .btn .btn__face,
+  .btn .btn__layer,
+  .btn .btn__icon,
+  .surface > .surface__face,
+  .surface > .surface__layer,
+  .stack__layer,
+  .window,
+  .window__screen > img,
+  .window__screen > .live,
+  .live__frame,
+  .story__progress,
+  .story__marker,
+  .story__date,
+  .live__hint,
+  .social-icon,
+  .arrow-link > svg,
+  .nav-link::after,
+  .notice {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .story__progress {
+    transform: none !important;
+  }
+}
+
+@media print {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

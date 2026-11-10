@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
+import { X } from 'lucide-react';
 import { useReducedMotion } from '../hooks/useReducedMotion';
+import { Button } from './ui/Button';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -33,75 +35,62 @@ export function MobileMenu({ isOpen, onClose, navItems, onNavClick }: MobileMenu
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose]);
 
+  const itemTransition = (order: number) =>
+    reducedMotion
+      ? 'none'
+      : `opacity var(--duration-slow) var(--ease-out) ${order * 50 + 80}ms, transform var(--duration-slow) var(--ease-out) ${order * 50 + 80}ms`;
+
   return (
     <div
-      className={`fixed inset-0 z-[60] bg-[#D9DDE2] dark:bg-[#121316] flex flex-col pt-[env(safe-area-inset-top,0px)] pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))] ${
-        reducedMotion ? '' : 'transition-all duration-300 ease-out'
-      } ${
-        isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-      }`}
+      className={`fixed inset-0 z-[60] flex flex-col bg-canvas pt-[env(safe-area-inset-top,0px)] pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))] ${
+        reducedMotion ? '' : 'transition-opacity duration-base ease-out'
+      } ${isOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'}`}
       aria-hidden={!isOpen}
       role="dialog"
       aria-label="Navigation menu"
     >
       {/* Header */}
-      <div className="flex items-center justify-between px-6 h-16 border-b border-gray-300/40 dark:border-[#282a32]">
-        <span className="text-sm font-bold text-gray-900 dark:text-[#ededeb] tracking-tight">
-          Joshua Winyelsum
-        </span>
-        <button
-          onClick={onClose}
-          className="min-w-[44px] min-h-[44px] p-2.5 -mr-2 flex items-center justify-center text-gray-900 dark:text-[#ededeb] rounded-lg hover:bg-gray-900/5 dark:hover:bg-white/5 transition-colors"
-          aria-label="Close menu"
-        >
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
+      <div className="flex h-[4.5rem] items-center justify-between section-padding">
+        <span className="text-base font-bold tracking-tight text-ink">Joshua Winyelsum</span>
+        <Button variant="icon" size="sm" onClick={onClose} aria-label="Close menu">
+          <X className="h-5 w-5" strokeWidth={1.75} aria-hidden="true" />
+        </Button>
       </div>
 
       {/* Nav items */}
-      <div className="flex-1 flex flex-col justify-center px-8 gap-2">
+      <div className="flex flex-1 flex-col justify-center gap-1 section-padding">
         {navItems.map((item, i) => (
           <button
             key={item.id}
             onClick={() => onNavClick(item.id)}
-            className="text-left py-3 text-3xl font-bold text-gray-900 dark:text-[#ededeb] tracking-tight hover:text-gray-600 dark:hover:text-neutral-400 transition-colors active:text-gray-500"
+            className="py-3 text-left text-3xl font-bold tracking-tight text-ink transition-colors duration-fast hover:text-accent active:text-accent"
             style={{
               opacity: isOpen ? 1 : 0,
               transform: isOpen ? 'none' : 'translateY(12px)',
-              transition: reducedMotion
-                ? 'none'
-                : `opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1) ${i * 50 + 80}ms, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) ${i * 50 + 80}ms`,
+              transition: itemTransition(i),
             }}
           >
             {item.label}
           </button>
         ))}
 
-        <div className="w-12 h-px bg-gray-300 dark:bg-[#282a32] my-3" />
-
-        <button
-          onClick={() => onNavClick('contact')}
-          className="text-left py-3 text-3xl font-bold text-gray-900 dark:text-[#ededeb] tracking-tight hover:text-gray-600 dark:hover:text-neutral-400 transition-colors flex items-center gap-3 active:text-gray-500"
+        <div
+          className="mt-8"
           style={{
             opacity: isOpen ? 1 : 0,
             transform: isOpen ? 'none' : 'translateY(12px)',
-            transition: reducedMotion
-              ? 'none'
-              : `opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1) ${navItems.length * 50 + 80}ms, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) ${navItems.length * 50 + 80}ms`,
+            transition: itemTransition(navItems.length),
           }}
         >
-          Contact
-          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-          </svg>
-        </button>
+          <Button size="lg" icon="arrow" spread block onClick={() => onNavClick('contact')}>
+            Contact
+          </Button>
+        </div>
       </div>
 
       {/* Footer */}
-      <div className="px-8 pb-8">
-        <p className="text-xs text-gray-400 dark:text-neutral-500 tracking-wide">
+      <div className="section-padding pb-6">
+        <p className="text-caption tracking-wide text-ink-muted">
           Software & Systems Engineer · Backend & Data Systems
         </p>
       </div>

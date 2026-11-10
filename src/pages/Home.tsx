@@ -8,6 +8,7 @@ import { Experience } from '../sections/Experience';
 import { CurrentlyBuilding } from '../sections/CurrentlyBuilding';
 import { Philosophy } from '../sections/Philosophy';
 import { Education } from '../sections/Education';
+import { Credentials } from '../sections/Credentials';
 import { CareerDirection } from '../sections/CareerDirection';
 import { Contact } from '../sections/Contact';
 import { Footer } from '../sections/Footer';
@@ -26,6 +27,7 @@ export function Home() {
         <CurrentlyBuilding />
         <Philosophy />
         <Education />
+        <Credentials />
         <CareerDirection />
         <Contact />
       </main>

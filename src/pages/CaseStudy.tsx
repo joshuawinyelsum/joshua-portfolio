@@ -1,11 +1,17 @@
-import { useParams, Link } from 'react-router-dom';
+import type { ReactNode } from 'react';
+import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { projects } from '../data/projects';
-import { ProjectStatus } from '../types';
+import { Lock } from 'lucide-react';
+import { deployedWork, projects } from '../data/projects';
+import { projectEvidence } from '../data/projectEvidence';
+import { projectMedia } from '../data/projectMedia';
 import { ScrollReveal } from '../components/ScrollReveal';
-import { useInView } from '../hooks/useInView';
-import { useReducedMotion } from '../hooks/useReducedMotion';
-import { useTheme } from '../contexts/ThemeContext';
+import { ProjectEvidenceSection } from '../components/projects/ProjectEvidenceSection';
+import { PreviewNote, ProjectScreen, getPreviewKind } from '../components/projects/ProjectScreen';
+import { ArrowLink } from '../components/ui/ArrowLink';
+import { Button } from '../components/ui/Button';
+import { LayeredSurface } from '../components/ui/LayeredSurface';
+import { StatusTag, Tag } from '../components/ui/Tag';
 import { Footer } from '../sections/Footer';
 
 // ==========================================
@@ -193,183 +199,87 @@ const agrichemEvidence = [
   'Source manifest with SHA-256 checksums locking 7 primary documents',
 ];
 
-const statusStyles: Record<ProjectStatus, { bg: string; text: string; border: string; dot?: string }> = {
-  LIVE: {
-    bg: 'bg-emerald-50 dark:bg-emerald-950/40',
-    text: 'text-emerald-700 dark:text-emerald-400',
-    border: 'border-emerald-200 dark:border-emerald-800/60',
-    dot: 'bg-emerald-500 dark:bg-emerald-400',
-  },
-  BUILT: {
-    bg: 'bg-blue-50 dark:bg-blue-950/40',
-    text: 'text-blue-700 dark:text-blue-400',
-    border: 'border-blue-200 dark:border-blue-800/60',
-    dot: 'bg-blue-500 dark:bg-blue-400',
-  },
-  'IN PROGRESS': {
-    bg: 'bg-amber-50 dark:bg-amber-950/40',
-    text: 'text-amber-700 dark:text-amber-400',
-    border: 'border-amber-200 dark:border-amber-800/60',
-    dot: 'bg-amber-500 dark:bg-amber-400',
-  },
-  RESEARCH: {
-    bg: 'bg-purple-50 dark:bg-purple-950/40',
-    text: 'text-purple-700 dark:text-purple-400',
-    border: 'border-purple-200 dark:border-purple-800/60',
-    dot: 'bg-purple-500 dark:bg-purple-400',
-  },
-  PLANNED: {
-    bg: 'bg-gray-50 dark:bg-neutral-900/50',
-    text: 'text-gray-600 dark:text-neutral-400',
-    border: 'border-gray-200 dark:border-neutral-800',
-  },
-};
+// ==========================================
+// Presentation
+// ==========================================
 
 function ArchitectureDiagram({ items }: { items: { layer: string; desc: string }[] }) {
-  const { ref, isInView } = useInView({ threshold: 0.15 });
-  const reducedMotion = useReducedMotion();
-  const { isDark } = useTheme();
-
   return (
-    <div ref={ref} className="my-10">
+    <ol className="rows mt-6">
       {items.map((item, i) => (
-        <div key={item.layer} className="flex items-start gap-5 mb-0.5">
-          <div className="flex flex-col items-center">
-            {/* Node */}
-            <div
-              className="w-10 h-10 rounded-lg border-2 flex items-center justify-center text-sm"
-              style={{
-                borderColor: isInView ? (isDark ? '#ededeb' : '#111111') : isDark ? '#282a32' : '#D1D5DB',
-                backgroundColor: isInView ? (isDark ? '#1c1e24' : '#F9FAFB') : 'transparent',
-                transform: isInView ? 'scale(1)' : 'scale(0.8)',
-                transition: reducedMotion
-                  ? 'none'
-                  : `all 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${i * 100}ms`,
-              }}
-            >
-              <span
-                className="font-mono text-[11px] font-bold"
-                style={{
-                  opacity: isInView ? 1 : 0,
-                  transition: reducedMotion ? 'none' : `opacity 0.4s ease ${i * 100 + 150}ms`,
-                }}
-              >
-                {String(i + 1).padStart(2, '0')}
-              </span>
+        <li key={item.layer}>
+          <ScrollReveal delay={i * 60} className="flex items-baseline gap-5 py-4">
+            <span className="text-small font-semibold tabular-nums text-accent">{String(i + 1).padStart(2, '0')}</span>
+            <div className="min-w-0">
+              <p className="text-body font-bold text-ink">{item.layer}</p>
+              <p className="mt-0.5 text-small text-ink-soft">{item.desc}</p>
             </div>
-            {/* Connector */}
-            {i < items.length - 1 && (
-              <div
-                className="w-px h-6 origin-top"
-                style={{
-                  backgroundColor: isInView ? (isDark ? '#ededeb' : '#111111') : isDark ? '#282a32' : '#D1D5DB',
-                  transform: isInView ? 'scaleY(1)' : 'scaleY(0)',
-                  transition: reducedMotion
-                    ? 'none'
-                    : `transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${i * 100 + 60}ms, background-color 0.4s ease ${i * 100}ms`,
-                }}
-              />
-            )}
-          </div>
-          {/* Label */}
-          <div
-            className="pb-4 pt-1.5"
-            style={{
-              opacity: isInView ? 1 : 0,
-              transform: isInView ? 'none' : 'translateX(12px)',
-              transition: reducedMotion
-                ? 'none'
-                : `opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${i * 100}ms, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) ${i * 100}ms`,
-            }}
-          >
-            <p className="text-[15px] font-bold text-gray-900 dark:text-[#ededeb]">{item.layer}</p>
-            <p className="text-sm text-gray-500 dark:text-neutral-400">{item.desc}</p>
-          </div>
-        </div>
+          </ScrollReveal>
+        </li>
       ))}
-    </div>
+    </ol>
   );
 }
 
-function BrowserPreview({ src, alt, liveUrl }: { src: string; alt: string; liveUrl?: string }) {
-  const { ref, isInView } = useInView({ threshold: 0.1 });
-  const reducedMotion = useReducedMotion();
-
+function CaseSection({ number, title, children }: { number: string; title: string; children: ReactNode }) {
   return (
-    <div
-      ref={ref}
-      className="my-10 rounded-xl overflow-hidden border border-gray-200/90 dark:border-[#282a32] shadow-xl bg-[#0a120e] transition-all duration-700"
-      style={{
-        opacity: isInView ? 1 : 0,
-        transform: isInView ? 'none' : 'translateY(16px)',
-        transition: reducedMotion ? 'none' : 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
-      }}
-    >
-      <div className="flex items-center justify-between px-4 py-2.5 bg-[#0f1d16] border-b border-gray-800 dark:border-[#282a32]">
-        <div className="flex items-center gap-2">
-          <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f56]" />
-          <div className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]" />
-          <div className="w-2.5 h-2.5 rounded-full bg-[#27c93f]" />
-        </div>
-        {liveUrl && (
-          <div className="flex items-center gap-1.5 px-3 py-1 rounded bg-[#0a120e] border border-gray-700/60 text-[11px] font-mono text-gray-300 max-w-[130px] sm:max-w-sm truncate">
-            <svg className="w-3 h-3 text-[#c7f25d] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-            </svg>
-            <span className="truncate">{liveUrl.replace('https://', '')}</span>
-          </div>
-        )}
-        <div className="text-right">
-          {liveUrl && (
-            <a
-              href={liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-[11px] font-mono text-[#c7f25d] hover:underline"
-            >
-              <span>Open</span>
-              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-              </svg>
-            </a>
-          )}
-        </div>
-      </div>
-      <div className="bg-[#0a120e] relative aspect-[16/10] overflow-hidden">
-        <img
-          src={src}
-          alt={alt}
-          className="w-full h-full object-cover object-top"
-          loading="lazy"
-        />
-      </div>
-      <div className="px-5 py-3 bg-[#0f1d16] border-t border-gray-800/80 dark:border-[#282a32] flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[12px] text-gray-400 font-mono">
-        <span>Verified Public Interface: coachprospersworld.org</span>
-        <span className="text-[#c7f25d]">Active in Production</span>
-      </div>
-    </div>
+    <section>
+      <ScrollReveal>
+        <h2 className="eyebrow">
+          {number} — {title}
+        </h2>
+      </ScrollReveal>
+      <div className="mt-6">{children}</div>
+    </section>
+  );
+}
+
+function DotList({ items, tone = 'accent', columns = false }: { items: string[]; tone?: 'accent' | 'positive'; columns?: boolean }) {
+  return (
+    <ul className={columns ? 'grid gap-x-8 gap-y-3 md:grid-cols-2' : 'space-y-3'}>
+      {items.map((item) => (
+        <li key={item} className="flex items-start gap-3 text-body text-ink-soft">
+          <span
+            className={`mt-[0.6rem] h-1.5 w-1.5 shrink-0 rounded-full ${tone === 'positive' ? 'bg-positive' : 'bg-lavender'}`}
+            aria-hidden="true"
+          />
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
   );
 }
 
 export function CaseStudy() {
   const { id } = useParams<{ id: string }>();
-  const project = projects.find((p) => p.id === id);
+  const project = projects.find((p) => p.id === id && p.hasCaseStudy !== false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [id]);
 
+  // Team projects are presented through their evidence page.
+  const evidenceProject = deployedWork.find((p) => p.id === id);
+  const evidence = id ? projectEvidence[id] : undefined;
+  if (evidenceProject && evidence) {
+    return (
+      <>
+        <main className="section-padding pb-section pt-28">
+          <ProjectEvidenceSection project={evidenceProject} evidence={evidence} />
+        </main>
+        <Footer />
+      </>
+    );
+  }
+
   if (!project) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-6">
+      <div className="flex min-h-screen items-center justify-center section-padding">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-[#ededeb] mb-4">Project not found</h1>
-          <Link to="/" className="inline-flex items-center gap-1.5 text-sm font-medium text-blue-600 dark:text-blue-400 hover:underline">
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-            </svg>
-            <span>Back to home</span>
-          </Link>
+          <h1 className="mb-6 text-headline font-bold text-ink">Project not found</h1>
+          <ArrowLink to="/" back>
+            Back to home
+          </ArrowLink>
         </div>
       </div>
     );
@@ -379,8 +289,6 @@ export function CaseStudy() {
   const isCPW = project.id === 'coach-prospers-world';
   const isMastery = project.id === 'mastery-os';
   const isAgriChem = project.id === 'agrichem';
-
-  const badge = statusStyles[project.status] || statusStyles.BUILT;
 
   let architectureItems = cpwArchitecture;
   let decisionsItems = cpwDecisions;
@@ -404,277 +312,194 @@ export function CaseStudy() {
     evidenceItems = agrichemEvidence;
   }
 
+  const media = projectMedia[project.id] ?? [];
+  const moreMedia = media.slice(1);
+  const hasPreview = getPreviewKind(project) !== 'none';
+
   let sectionNum = 0;
   const nextSection = () => String(++sectionNum).padStart(2, '0');
 
   return (
     <>
-      <main className="pt-28 pb-20">
-        <article>
+      <main className="section-padding pb-section pt-28">
+        <article className="container-content">
           {/* Header */}
-          <section className="section-padding mb-16">
-            <Link
-              to="/"
-              className="group inline-flex items-center gap-2 text-sm text-gray-500 dark:text-neutral-400 hover:text-gray-900 dark:hover:text-[#ededeb] transition-colors mb-10"
-            >
-              <svg
-                aria-hidden="true"
-                className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-0.5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
-              </svg>
+          <header>
+            <ArrowLink to="/" back className="!text-ink-muted">
               Back to home
-            </Link>
+            </ArrowLink>
 
-            <ScrollReveal>
-              <div className="flex items-center gap-3 mb-4">
-                <span className="text-[10px] font-bold tracking-[0.25em] uppercase text-gray-400 dark:text-neutral-500">
-                  {project.category}
-                </span>
-                <span className="text-gray-300 dark:text-neutral-700">·</span>
-                <span
-                  className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold tracking-[0.1em] uppercase border ${badge.bg} ${badge.text} ${badge.border}`}
-                >
-                  {badge.dot && (
-                    <span
-                      className={`w-1.5 h-1.5 rounded-full ${badge.dot} ${
-                        project.status === 'LIVE' ? 'animate-pulse' : ''
-                      }`}
-                    />
-                  )}
-                  {project.status}
-                </span>
+            <ScrollReveal className="mt-10">
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
+                <p className="eyebrow">{project.category}</p>
+                <StatusTag status={project.status} />
               </div>
 
-              <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 dark:text-[#ededeb] tracking-tighter break-words mb-3">
+              <h1 className="mt-5 max-w-4xl break-words text-display font-extrabold text-ink text-balance">
                 {project.title}
               </h1>
-              <p className="text-lg md:text-xl font-medium text-gray-500 dark:text-neutral-400 mb-8">
-                {project.subtitle}
-              </p>
+              <p className="mt-4 max-w-2xl text-lead font-medium text-ink-muted md:text-xl">{project.subtitle}</p>
 
-              {/* Action Links & Metadata Bar */}
-              <div className="flex flex-wrap items-center gap-3 pt-2">
+              {/* Actions and context */}
+              <div className="mt-9 flex flex-wrap items-center gap-x-4 gap-y-4">
                 {project.liveUrl && (
-                  <a
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold tracking-wider uppercase text-white dark:text-[#121316] bg-gray-900 dark:bg-[#ededeb] hover:bg-black dark:hover:bg-white rounded-lg transition-colors shadow-sm"
-                  >
+                  <Button href={project.liveUrl} external icon="diagonal" className="mr-2">
                     Visit Live Website
-                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                    </svg>
-                  </a>
+                  </Button>
                 )}
-                {isCPW && (
-                  <span className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-gray-700 dark:text-neutral-200 bg-gray-100 dark:bg-[#1c1e24] rounded-lg border border-gray-200 dark:border-[#282a32]">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                    Role: Software & Technology Lead
-                  </span>
-                )}
-                {isCFSS && (
-                  <span className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 rounded-lg border border-blue-200 dark:border-blue-800/60">
-                    Stage: Pre-Production Staging & Test Suite
-                  </span>
-                )}
-                {isMastery && (
-                  <span className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 rounded-lg border border-blue-200 dark:border-blue-800/60">
-                    Stage: Built Implementation & Unit Test Suite
-                  </span>
-                )}
-                {isAgriChem && (
-                  <span className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-purple-700 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/40 rounded-lg border border-purple-200 dark:border-purple-800/60">
-                    Stage: Evidence Register & Canonical Datasets
-                  </span>
-                )}
+                {isCPW && <Tag tone="lavender" className="px-3 py-1.5">Role: Software & Technology Lead</Tag>}
+                {isCFSS && <Tag tone="lavender" className="px-3 py-1.5">Stage: Pre-Production Staging & Test Suite</Tag>}
+                {isMastery && <Tag tone="lavender" className="px-3 py-1.5">Stage: Built Implementation & Unit Test Suite</Tag>}
+                {isAgriChem && <Tag tone="lavender" className="px-3 py-1.5">Stage: Evidence Register & Canonical Datasets</Tag>}
                 {project.isPrivateRepo && (
-                  <span className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-gray-500 dark:text-neutral-400 bg-gray-50 dark:bg-[#1c1e24] rounded-lg border border-gray-200 dark:border-[#282a32]">
-                    <svg className="w-3.5 h-3.5 text-gray-400 dark:text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                    </svg>
+                  <Tag className="px-3 py-1.5">
+                    <Lock className="h-3.5 w-3.5" strokeWidth={1.75} aria-hidden="true" />
                     Source Code Private
-                  </span>
+                  </Tag>
                 )}
               </div>
             </ScrollReveal>
-          </section>
+          </header>
 
-          {/* Genuine Browser Frame Visual Preview (Coach Prosper's World) */}
-          {isCPW && (
-            <section className="section-padding mb-20 max-w-4xl">
-              <ScrollReveal>
-                <BrowserPreview
-                  src="/images/projects/coach-prospers-world.png"
-                  alt="Coach Prosper's World official production website interface"
-                  liveUrl={project.liveUrl}
-                />
-              </ScrollReveal>
-            </section>
-          )}
-
-          {/* Technologies */}
-          <section className="section-padding mb-20">
-            <ScrollReveal>
-              <div className="flex flex-wrap gap-2">
-                {project.technologies.map((tech) => (
-                  <span
-                    key={tech}
-                    className="px-3 py-1.5 text-[11px] font-semibold tracking-wide text-gray-600 dark:text-neutral-300 bg-white dark:bg-[#1c1e24] border border-gray-200 dark:border-[#282a32] rounded"
-                  >
-                    {tech}
+          {/* Genuine screenshots, where they exist */}
+          {hasPreview && (
+            <ScrollReveal className="mt-14 max-w-4xl">
+              <figure>
+                <ProjectScreen project={project} eager />
+                <figcaption className="mt-4 flex flex-col gap-1 text-small text-ink-muted sm:flex-row sm:items-center sm:justify-between">
+                  <PreviewNote project={project} />
+                  <span>
+                    {isCPW ? (
+                      <>
+                        Verified Public Interface: coachprospersworld.org ·{' '}
+                        <span className="font-medium text-positive">Active in Production</span>
+                      </>
+                    ) : (
+                      media[0]?.caption
+                    )}
                   </span>
-                ))}
-              </div>
+                </figcaption>
+              </figure>
             </ScrollReveal>
-          </section>
-
-          {/* Overview */}
-          <section className="section-padding mb-20 max-w-3xl">
-            <ScrollReveal>
-              <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 dark:text-neutral-500 mb-5">
-                {nextSection()} — Overview
-              </h2>
-              <p className="text-lg text-gray-700 dark:text-neutral-200 leading-relaxed">{project.description}</p>
-            </ScrollReveal>
-          </section>
-
-          {/* Problem */}
-          {project.problem && (
-            <section className="section-padding mb-20 max-w-3xl">
-              <ScrollReveal>
-                <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 dark:text-neutral-500 mb-5">
-                  {nextSection()} — Problem Statement
-                </h2>
-                <p className="text-[15px] text-gray-600 dark:text-neutral-300 leading-[1.75]">{project.problem}</p>
-              </ScrollReveal>
-            </section>
           )}
 
-          {/* System */}
-          {project.system && (
-            <section className="section-padding mb-20 max-w-3xl">
-              <ScrollReveal>
-                <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 dark:text-neutral-500 mb-5">
-                  {nextSection()} — System Architecture
-                </h2>
-                <p className="text-[15px] text-gray-600 dark:text-neutral-300 leading-[1.75] mb-6">{project.system}</p>
-              </ScrollReveal>
-              <ArchitectureDiagram items={architectureItems} />
-            </section>
+          {moreMedia.length > 0 && (
+            <div className="mt-10 grid max-w-4xl gap-grid sm:grid-cols-2">
+              {moreMedia.map((item) => (
+                <ScrollReveal key={item.src}>
+                  <figure>
+                    <img
+                      className="shot"
+                      src={item.src}
+                      alt={item.alt}
+                      width={item.width}
+                      height={item.height}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    {item.caption && <figcaption className="mt-3 text-small text-ink-muted">{item.caption}</figcaption>}
+                  </figure>
+                </ScrollReveal>
+              ))}
+            </div>
           )}
 
-          {/* Key Capabilities */}
-          {project.capabilities && (
-            <section className="section-padding mb-20 max-w-3xl">
+          <div className="mt-16 grid items-start gap-x-16 gap-y-12 lg:grid-cols-[minmax(0,1fr)_17rem]">
+            {/* Technologies */}
+            <aside className="lg:sticky lg:top-28 lg:order-last">
               <ScrollReveal>
-                <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 dark:text-neutral-500 mb-5">
-                  {nextSection()} — Key Capabilities & Features
-                </h2>
-                <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  {project.capabilities.map((cap) => (
-                    <li key={cap} className="flex items-start gap-2.5 text-[15px] text-gray-600 dark:text-neutral-300">
-                      <span className="w-1.5 h-1.5 rounded-full bg-gray-400 dark:bg-neutral-600 mt-2 shrink-0" />
-                      {cap}
-                    </li>
+                <LayeredSurface stack="none" tone="sunken" faceClassName="p-6">
+                  <h2 className="text-small font-semibold text-ink">Technologies</h2>
+                  <ul className="mt-4 flex flex-wrap gap-1.5">
+                    {project.technologies.map((tech) => (
+                      <li key={tech}>
+                        <Tag tone="surface">{tech}</Tag>
+                      </li>
+                    ))}
+                  </ul>
+                </LayeredSurface>
+              </ScrollReveal>
+            </aside>
+
+            <div className="max-w-3xl space-y-16">
+              {/* Overview */}
+              <CaseSection number={nextSection()} title="Overview">
+                <ScrollReveal>
+                  <p className="text-title font-medium text-ink md:text-xl md:leading-relaxed">{project.description}</p>
+                </ScrollReveal>
+              </CaseSection>
+
+              {/* Problem */}
+              {project.problem && (
+                <CaseSection number={nextSection()} title="Problem Statement">
+                  <ScrollReveal>
+                    <p className="text-body text-ink-soft">{project.problem}</p>
+                  </ScrollReveal>
+                </CaseSection>
+              )}
+
+              {/* System */}
+              {project.system && (
+                <CaseSection number={nextSection()} title="System Architecture">
+                  <ScrollReveal>
+                    <p className="text-body text-ink-soft">{project.system}</p>
+                  </ScrollReveal>
+                  <ArchitectureDiagram items={architectureItems} />
+                </CaseSection>
+              )}
+
+              {/* Key Capabilities */}
+              {project.capabilities && (
+                <CaseSection number={nextSection()} title="Key Capabilities & Features">
+                  <ScrollReveal>
+                    <DotList items={project.capabilities} columns />
+                  </ScrollReveal>
+                </CaseSection>
+              )}
+
+              {/* Engineering Decisions & Constraints */}
+              <CaseSection number={nextSection()} title="Engineering Decisions & Reliability">
+                <div className="grid gap-x-10 gap-y-8 sm:grid-cols-2">
+                  {decisionsItems.map((decision, idx) => (
+                    <ScrollReveal key={decision.title} delay={idx * 60}>
+                      <h3 className="text-body font-bold text-ink">{decision.title}</h3>
+                      <p className="mt-2 text-small text-ink-soft">{decision.detail}</p>
+                    </ScrollReveal>
                   ))}
-                </ul>
-              </ScrollReveal>
-            </section>
-          )}
-
-          {/* Engineering Decisions & Constraints */}
-          <section className="section-padding mb-20 max-w-3xl">
-            <ScrollReveal>
-              <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 dark:text-neutral-500 mb-5">
-                {nextSection()} — Engineering Decisions & Reliability
-              </h2>
-              <div className="space-y-6">
-                {decisionsItems.map((decision, idx) => (
-                  <div key={idx} className="border-l-2 border-gray-900 dark:border-[#ededeb] pl-5 py-1">
-                    <h3 className="text-sm font-bold uppercase tracking-wider text-gray-900 dark:text-[#ededeb] mb-1.5">
-                      {decision.title}
-                    </h3>
-                    <p className="text-[15px] text-gray-600 dark:text-neutral-300 leading-relaxed">
-                      {decision.detail}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </ScrollReveal>
-          </section>
-
-          {/* My Role & Engineering Contribution */}
-          <section className="section-padding mb-20 max-w-3xl">
-            <ScrollReveal>
-              <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 dark:text-neutral-500 mb-5">
-                {nextSection()} — My Engineering Contribution
-              </h2>
-              <ul className="space-y-3">
-                {contributionsItems.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5 text-[15px] text-gray-600 dark:text-neutral-300">
-                    <span className="w-1.5 h-1.5 rounded-full bg-gray-900 dark:bg-[#ededeb] mt-2 shrink-0" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </ScrollReveal>
-          </section>
-
-          {/* Verified Evidence & Test Coverage */}
-          <section className="section-padding mb-20 max-w-3xl">
-            <ScrollReveal>
-              <h2 className="text-[11px] font-bold tracking-[0.25em] uppercase text-gray-400 dark:text-neutral-500 mb-5">
-                {nextSection()} — Verified Evidence & Testing
-              </h2>
-              <ul className="space-y-3">
-                {evidenceItems.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5 text-[15px] text-gray-600 dark:text-neutral-300">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 dark:bg-emerald-500 mt-2 shrink-0" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </ScrollReveal>
-          </section>
-
-          {/* Scale statement */}
-          {project.scaleStatement && (
-            <section className="section-padding mb-20 max-w-3xl">
-              <ScrollReveal>
-                <div className="border-l-2 border-gray-900 dark:border-[#ededeb] pl-6 py-2">
-                  <p className="text-lg font-semibold text-gray-800 dark:text-neutral-200 italic leading-relaxed">
-                    {project.scaleStatement}
-                  </p>
                 </div>
-              </ScrollReveal>
-            </section>
-          )}
+              </CaseSection>
 
-          {/* Back link */}
-          <section className="section-padding mb-16">
-            <Link
-              to="/"
-              className="group inline-flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-[#ededeb] hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-            >
-              <svg
-                aria-hidden="true"
-                className="w-4 h-4 transition-transform duration-300 group-hover:-translate-x-0.5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
-              </svg>
-              Back to all work
-            </Link>
-          </section>
+              {/* My Role & Engineering Contribution */}
+              <CaseSection number={nextSection()} title="My Engineering Contribution">
+                <ScrollReveal>
+                  <DotList items={contributionsItems} />
+                </ScrollReveal>
+              </CaseSection>
+
+              {/* Verified Evidence & Test Coverage */}
+              <CaseSection number={nextSection()} title="Verified Evidence & Testing">
+                <ScrollReveal>
+                  <DotList items={evidenceItems} tone="positive" />
+                </ScrollReveal>
+              </CaseSection>
+
+              {/* Scale statement */}
+              {project.scaleStatement && (
+                <ScrollReveal className="pt-4">
+                  <LayeredSurface tone="inverse" faceClassName="p-card lg:p-9">
+                    <p className="text-title font-semibold leading-relaxed md:text-xl md:leading-relaxed">
+                      {project.scaleStatement}
+                    </p>
+                  </LayeredSurface>
+                </ScrollReveal>
+              )}
+
+              {/* Back link */}
+              <ArrowLink to="/" back>
+                Back to all work
+              </ArrowLink>
+            </div>
+          </div>
         </article>
       </main>
       <Footer />

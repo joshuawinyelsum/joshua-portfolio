@@ -15,8 +15,10 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  // The brand is light. Dark (or following the system) applies only once a
+  // visitor has chosen it with the toggle or the terminal `theme` command.
   const [preference, setPreference] = useState<ThemePreference>(() => {
-    if (typeof window === 'undefined') return 'system';
+    if (typeof window === 'undefined') return 'light';
     try {
       const storedPref = localStorage.getItem('theme-preference') as ThemePreference | null;
       if (storedPref === 'light' || storedPref === 'dark' || storedPref === 'system') {
@@ -26,9 +28,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       if (storedTheme === 'light' || storedTheme === 'dark') {
         return storedTheme;
       }
-      return 'system';
+      return 'light';
     } catch {
-      return 'system';
+      return 'light';
     }
   });
 
