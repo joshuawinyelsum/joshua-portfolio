@@ -6,7 +6,7 @@ import { contactInfo } from '../data/social';
 
 export function Contact() {
   return (
-    <section id="contact" className="section">
+    <section id="contact" className="section pb-24 sm:pb-28">
       <div className="container-content grid items-start gap-x-16 gap-y-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
         {/* Invitation and direct contact */}
         <div>

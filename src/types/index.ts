@@ -105,6 +105,8 @@ export interface EducationItem {
   degree: string;
   location: string;
   status: string;
+  currentLevel?: string;
+  gpa?: string;
   coursework?: string[];
 }
 

@@ -6,7 +6,7 @@ import { currentlyBuilding, currentlyLearning } from '../data/currentlyBuilding'
 
 export function CurrentlyBuilding() {
   return (
-    <section id="building" className="section">
+    <section id="building" className="section pb-24 sm:pb-28">
       <div className="container-content">
         <SectionHeader
           title="Currently Building"
@@ -14,7 +14,7 @@ export function CurrentlyBuilding() {
           accent="a project ships."
         />
 
-        <ul className="rows">
+        <ul className="grid grid-cols-1 md:grid-cols-2 gap-6 p-0">
           {currentlyBuilding.map((project, index) => (
             <BuildingCard key={project.title} project={project} index={index} />
           ))}

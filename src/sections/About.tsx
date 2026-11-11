@@ -5,7 +5,7 @@ import { LayeredSurface } from '../components/ui/LayeredSurface';
 
 export function About() {
   return (
-    <section id="about" className="section">
+    <section id="about" className="section pb-24 sm:pb-28">
       <div className="container-content">
         <SectionHeader title="About Me" />
 

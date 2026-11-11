@@ -59,7 +59,7 @@ export function Story() {
   }, [reducedMotion]);
 
   return (
-    <section id="story" className="section">
+    <section id="story" className="section pb-24 sm:pb-28">
       <div className="container-content grid items-start gap-x-16 lg:grid-cols-[minmax(0,4fr)_minmax(0,7fr)]">
         <div className="lg:sticky lg:top-28">
           <SectionHeader title="My Story" subtitle="A journey of curiosity, code, and purpose." accent="purpose." />

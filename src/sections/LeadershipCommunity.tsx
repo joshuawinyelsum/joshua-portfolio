@@ -12,7 +12,7 @@ import {
 
 export function LeadershipCommunity() {
   return (
-    <section id="leadership" className="section">
+    <section id="leadership" className="section pb-24 sm:pb-28">
       <div className="container-content space-y-16">
         {/* Section Header */}
         <SectionHeader

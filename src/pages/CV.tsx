@@ -114,7 +114,10 @@ export function CV() {
               <div>
                 <span className="text-[10px] uppercase text-ink-muted block">Degree Path</span>
                 <span className="text-ink font-semibold print:text-black">
-                  BSc Computer Science @ UDS
+                  BSc Computer Science, UDS
+                </span>
+                <span className="text-[11px] font-mono text-ink-soft block mt-0.5 print:text-black">
+                  Level 200 · 4.69 / 5.00 GPA
                 </span>
               </div>
             </div>
@@ -569,7 +572,14 @@ export function CV() {
                   <div key={edu.institution} className="space-y-1">
                     <h3 className="text-sm font-bold text-ink print:text-black">{edu.degree}</h3>
                     <p className="text-ink-soft font-medium">{edu.institution}</p>
-                    <p className="text-[11px] font-mono text-ink-muted">{edu.location} · {edu.status}</p>
+                    <p className="text-[11px] font-mono text-ink-muted">
+                      {edu.location} · {edu.currentLevel ? `${edu.currentLevel} · ` : ''}{edu.status}
+                    </p>
+                    {edu.gpa && (
+                      <p className="text-[11px] font-mono font-semibold text-ink pt-0.5 print:text-black">
+                        {edu.gpa}
+                      </p>
+                    )}
                     {edu.coursework && (
                       <div className="pt-1.5">
                         <span className="text-[10px] font-mono uppercase text-ink-muted block">Verified Coursework</span>
