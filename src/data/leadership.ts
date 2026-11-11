@@ -103,7 +103,7 @@ export const collaborativeEngineering: LeadershipEntryData = {
   },
   role: 'Full-Stack & Design',
   description:
-    'Collaborated within a multidisciplinary engineering team to design and build the CHPS Progressive Web App and user interface for MABIA AI — an offline-first voice outreach, maternal emergency response, and nutrition coordination platform for community health centers in Northern Ghana.',
+    'Collaborated within a multidisciplinary engineering team to design and build the CHPS Progressive Web App and user interface for MABIA AI, an offline-first voice outreach, maternal emergency response, and nutrition coordination platform for community health centers in Northern Ghana.',
   team: [
     {
       name: 'Joshua Akum Winyelsum',

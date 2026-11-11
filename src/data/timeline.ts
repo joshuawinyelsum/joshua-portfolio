@@ -9,7 +9,7 @@ export const timeline: TimelineItem[] = [
   },
   {
     year: 'UNIVERSITY',
-    title: 'Computer Science @ UDS',
+    title: 'Computer Science at UDS',
     description: 'That curiosity developed into formal Computer Science study at the University for Development Studies.',
   },
   {

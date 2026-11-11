@@ -34,10 +34,10 @@ export const themeCommands: Command[] = [
               </div>
               <div className="pt-2 border-t border-[#45453F] text-[#A6A397] space-y-1">
                 <div className="text-[11px] font-semibold text-[#F0EEE7]">Available website theme commands:</div>
-                <div>• <code className="text-[#82AAFF] font-bold">theme dark</code> — Activate dark mode across website</div>
-                <div>• <code className="text-[#82AAFF] font-bold">theme light</code> — Activate light mode across website</div>
-                <div>• <code className="text-[#82AAFF] font-bold">theme system</code> — Follow OS appearance preference</div>
-                <div>• <code className="text-[#82AAFF] font-bold">theme toggle</code> — Toggle between light and dark</div>
+                <div>• <code className="text-[#82AAFF] font-bold">theme dark</code>: Activate dark mode across website</div>
+                <div>• <code className="text-[#82AAFF] font-bold">theme light</code>: Activate light mode across website</div>
+                <div>• <code className="text-[#82AAFF] font-bold">theme system</code>: Follow OS appearance preference</div>
+                <div>• <code className="text-[#82AAFF] font-bold">theme toggle</code>: Toggle between light and dark</div>
               </div>
             </div>
           ),

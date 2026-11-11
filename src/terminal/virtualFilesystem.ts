@@ -30,7 +30,7 @@ export interface VirtualDirectoryEntry {
 export type VirtualEntry = VirtualFileEntry | VirtualDirectoryEntry;
 
 // Content constants for virtual files
-const README_CONTENT = `# Joshua Winyelsum — Engineering Workstation
+const README_CONTENT = `# Joshua Winyelsum: Engineering Workstation
 Computer Science Student & Software Engineer
 Focus: Backend architecture, relational databases, offline-first systems, and data pipelines.
 

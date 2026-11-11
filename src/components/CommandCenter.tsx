@@ -120,7 +120,7 @@ export function CommandCenter({ isOpen, onClose }: { isOpen: boolean; onClose: (
     <div className="space-y-3 pb-3 text-xs font-mono">
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#45453F] pb-2">
         <div className="text-[#F0EEE7] font-bold text-sm">
-          JOSHUA WINYELSUM — DEVELOPER WORKSTATION [v2.5]
+          JOSHUA WINYELSUM | DEVELOPER WORKSTATION [v2.5]
         </div>
         <span className="text-[10px] px-2 py-0.5 rounded bg-[#292A27] text-[#7EC28D] border border-[#7EC28D]/30 font-semibold flex items-center gap-1.5">
           <span className="w-1.5 h-1.5 rounded-full bg-[#7EC28D]" />

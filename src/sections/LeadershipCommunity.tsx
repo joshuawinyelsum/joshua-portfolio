@@ -3,10 +3,10 @@ import { ScrollReveal } from '../components/ScrollReveal';
 import { LeadershipEntry } from '../components/leadership/LeadershipEntry';
 import { CampusAppointment } from '../components/leadership/CampusAppointment';
 import { CreativePracticeItem } from '../components/leadership/CreativePracticeItem';
+import { ArrowLink } from '../components/ui/ArrowLink';
 import {
   communityLeadership,
   campusLeadership,
-  collaborativeEngineering,
   creativePractices,
 } from '../data/leadership';
 
@@ -17,48 +17,55 @@ export function LeadershipCommunity() {
         {/* Section Header */}
         <SectionHeader
           title="Leadership & Community"
-          subtitle="Community building, campus representation, and collaborative innovation."
-          accent="collaborative innovation."
+          subtitle="Community initiative, campus leadership, and creative practice."
+          accent="creative practice."
         />
 
-        {/* Primary Leadership & Collaboration Grid */}
-        <div className="space-y-10">
-          {/* Row 1: Kelnode (Community) & WIWIK 100 (Campus Leadership) */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-stretch">
-            <ScrollReveal delay={50} className="h-full">
-              <LeadershipEntry entry={communityLeadership} />
-            </ScrollReveal>
+        {/* Primary Leadership Editorial Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-12 items-start">
+          <ScrollReveal delay={50} className="h-full">
+            <LeadershipEntry entry={communityLeadership} />
+          </ScrollReveal>
 
-            <ScrollReveal delay={150} className="h-full">
-              <CampusAppointment entry={campusLeadership} />
-            </ScrollReveal>
-          </div>
-
-          {/* Row 2: UNICEF StartUp Lab — MABIA AI (Collaborative Innovation) */}
-          <ScrollReveal delay={250}>
-            <LeadershipEntry entry={collaborativeEngineering} />
+          <ScrollReveal delay={120} className="h-full">
+            <CampusAppointment entry={campusLeadership} />
           </ScrollReveal>
         </div>
 
+        {/* Cross-reference to UNICEF StartUp Lab (Collaborative Engineering) */}
+        <ScrollReveal delay={180}>
+          <div className="rounded-control bg-sunken p-5 text-small text-ink-soft flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div>
+              <span className="font-semibold text-ink">Collaborative Engineering:</span>
+              <span className="ml-1.5">
+                Full-stack and interface engineering for MABIA AI through the UNICEF StartUp Lab hackathon.
+              </span>
+            </div>
+            <ArrowLink to="/case-study/mabia-ai" className="whitespace-nowrap font-semibold">
+              View Project Evidence
+            </ArrowLink>
+          </div>
+        </ScrollReveal>
+
         {/* Distinct Subsection: Beyond Engineering (Creative Practice) */}
-        <div className="pt-8 border-t border-line/15 space-y-10">
+        <div className="pt-10 border-t border-line/10 space-y-8">
           <ScrollReveal delay={100}>
             <div className="max-w-2xl">
               <p className="eyebrow !text-ink-muted">Beyond Engineering</p>
-              <h3 className="mt-3 text-h2 font-extrabold text-ink tracking-tight">
-                Creative practice, music and expression.
+              <h3 className="mt-3 text-title-lg font-bold text-ink">
+                Creative practice, music, and expression.
               </h3>
-              <p className="mt-3 text-body text-ink-soft leading-relaxed">
-                Active musicianship in church worship ensembles. Exploring rhythm, timing, and harmonic cohesion
-                through disciplined live practice and collaboration with fellow musicians.
+              <p className="mt-2 text-body text-ink-soft leading-relaxed">
+                Live musicianship in church worship ensembles. Exploring rhythm, timing, and harmonic cohesion
+                through continuous practice and ensemble collaboration.
               </p>
             </div>
           </ScrollReveal>
 
-          {/* 2-Column Grid for Bass Guitar and Piano/Keyboard */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 items-stretch">
+          {/* 2-Column Editorial Grid for Bass Guitar and Piano/Keyboard */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-10 items-start">
             {creativePractices.map((practice, index) => (
-              <ScrollReveal key={practice.id} delay={180 + index * 100} className="h-full">
+              <ScrollReveal key={practice.id} delay={150 + index * 80} className="h-full">
                 <CreativePracticeItem practice={practice} index={index} />
               </ScrollReveal>
             ))}

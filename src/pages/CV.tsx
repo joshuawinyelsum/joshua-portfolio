@@ -15,7 +15,7 @@ export function CV() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Joshua Winyelsum — Curriculum Vitae | Software & Systems Engineer';
+    document.title = 'Joshua Winyelsum | Curriculum Vitae | Software & Systems Engineer';
   }, []);
 
   const handlePrint = () => {
@@ -219,7 +219,7 @@ export function CV() {
               <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
                 <div>
                   <h3 className="text-base font-bold text-ink print:text-black">
-                    Coach Prosper’s World — Operations Platform & Member Infrastructure
+                    Coach Prosper’s World: Operations Platform & Member Infrastructure
                   </h3>
                   <p className="text-xs font-semibold text-accent print:text-black">
                     Role: Software & Technology Lead | Full-Stack Platform Engineering
@@ -277,7 +277,7 @@ export function CV() {
               <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
                 <div>
                   <h3 className="text-base font-bold text-ink print:text-black">
-                    Community Field Survey System (CFSS) — Offline-First GIS Survey Platform
+                    Community Field Survey System (CFSS): Offline-First GIS Survey Platform
                   </h3>
                   <p className="text-xs font-semibold text-accent print:text-black">
                     Role: Systems & Architecture Lead | Offline-First Engineering
@@ -330,7 +330,7 @@ export function CV() {
               <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
                 <div>
                   <h3 className="text-base font-bold text-ink print:text-black">
-                    MasteryOS — Active Recall & Spaced Repetition Learning Engine
+                    MasteryOS: Active Recall & Spaced Repetition Learning Engine
                   </h3>
                   <p className="text-xs font-semibold text-accent print:text-black">
                     Role: Lead Full-Stack Architect
@@ -383,7 +383,7 @@ export function CV() {
               <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
                 <div>
                   <h3 className="text-base font-bold text-ink print:text-black">
-                    AgriChem Data Research — Ghana Cocoa Regulatory Data Pipeline
+                    AgriChem Data Research: Ghana Cocoa Regulatory Data Pipeline
                   </h3>
                   <p className="text-xs font-semibold text-accent print:text-black">
                     Role: Data Systems & Pipeline Researcher

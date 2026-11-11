@@ -19,9 +19,9 @@ export function Research() {
         />
 
         <div className="grid items-start gap-x-16 gap-y-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
-          {/* Featured research: the one layered box in this section */}
+          {/* Featured research: clean high-contrast surface without decorative stacked sheets */}
           <ScrollReveal>
-            <LayeredSurface tone="inverse" faceClassName="p-card lg:p-9">
+            <LayeredSurface tone="inverse" stack="none" faceClassName="p-card lg:p-9">
               <p className="eyebrow eyebrow--on-inverse">Featured Research</p>
               <h3 className="mt-5 text-title-lg font-bold">Ghana Agricultural-Chemical Data Landscape</h3>
               <p className="mt-4 text-body text-on-inverse-muted">

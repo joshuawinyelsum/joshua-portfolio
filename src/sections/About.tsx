@@ -29,7 +29,7 @@ export function About() {
             </ScrollReveal>
             <ScrollReveal delay={200}>
               <p className="text-body text-ink-soft">
-                Alongside application engineering, I conduct data systems research—investigating fragmented regulatory datasets, extraction pipelines, and canonical schema harmonization, especially within real-world environments like Ghana's agricultural-chemical sector.
+                Alongside application engineering, I conduct data systems research, investigating fragmented regulatory datasets, extraction pipelines, and canonical schema harmonization, especially within real-world environments like Ghana's agricultural-chemical sector.
               </p>
             </ScrollReveal>
             <ScrollReveal delay={260}>
@@ -41,11 +41,11 @@ export function About() {
 
           {/* Metadata */}
           <ScrollReveal delay={120}>
-            <LayeredSurface tone="inverse">
+            <LayeredSurface tone="inverse" stack="none">
               <dl className="space-y-6">
                 <MetadataItem onInverse label="From" value="Bawku, Upper East Region, Ghana" />
                 <MetadataItem onInverse label="Currently" value="Tamale, Ghana" />
-                <MetadataItem onInverse label="Education" value="BSc Computer Science — UDS" />
+                <MetadataItem onInverse label="Education" value="BSc Computer Science, UDS" />
                 <MetadataItem onInverse label="Languages" value="English · Kusaal" />
               </dl>
             </LayeredSurface>
