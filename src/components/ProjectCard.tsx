@@ -24,48 +24,33 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
 
   return (
     <ScrollReveal delay={index * 90} className="h-full min-w-0">
-      <article className="group flex h-full flex-col min-w-0 rounded-2xl border border-brand-charcoal/[0.08] bg-surface p-5 sm:p-6 transition-all duration-300 hover:border-brand-lavender/40 hover:shadow-[0_12px_32px_rgba(0,0,0,0.06)]">
+      <article className="group flex h-full flex-col min-w-0">
         {hasPreview && (
-          <div className="mb-5 min-w-0 overflow-hidden transition-transform duration-500 ease-out group-hover:scale-[1.015]">
+          <div className="mb-6 min-w-0 overflow-hidden">
             <ProjectScreen project={project} />
           </div>
         )}
 
-        <div className="flex items-center justify-between gap-3">
-          <p className="text-[11px] font-mono font-semibold uppercase tracking-wider text-ink-muted truncate">
-            {project.category}
-          </p>
+        {!hasPreview && <p className="mb-3 text-eyebrow font-semibold uppercase text-ink-muted">{project.category}</p>}
+
+        <div className="flex items-start justify-between gap-3">
+          <h3 className="text-title font-bold text-ink">{project.title}</h3>
           <StatusTag status={project.status} />
         </div>
 
-        <h3 className="mt-2 text-title font-bold text-ink tracking-tight group-hover:text-accent transition-colors duration-200">
-          {project.title}
-        </h3>
-
-        <p className="mt-2 line-clamp-2 text-small text-ink-soft leading-relaxed">
-          {project.summary}
-        </p>
+        <p className="mt-2 line-clamp-3 max-w-xl text-small text-ink-soft">{project.summary}</p>
 
         {project.technologies.length > 0 && (
-          <div className="mt-4 pt-3 border-t border-line/10 flex flex-wrap gap-1.5">
-            {project.technologies.slice(0, 4).map((tech) => (
-              <span
-                key={tech}
-                className="inline-flex items-center rounded bg-surface-alt/70 px-2 py-0.5 font-mono text-[11px] font-medium text-ink-muted"
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
+          <p className="mt-3 text-caption text-ink-muted">{project.technologies.slice(0, 4).join(' · ')}</p>
         )}
 
         <div className="mt-auto flex flex-wrap items-center justify-between gap-x-4 gap-y-2 pt-5">
           {hasCaseStudy ? (
-            <ArrowLink to={project.ctaLink} aria-label={`${project.title}: ${project.cta}`} className="font-semibold text-small">
+            <ArrowLink to={project.ctaLink} aria-label={`${project.title}: ${project.cta}`}>
               {projectEvidence[project.id] ? 'Project Evidence' : 'Case Study'}
             </ArrowLink>
           ) : (
-            <ArrowLink href={project.ctaLink} external className="font-semibold text-small">
+            <ArrowLink href={project.ctaLink} external>
               {project.cta}
             </ArrowLink>
           )}

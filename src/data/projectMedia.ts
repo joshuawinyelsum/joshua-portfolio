@@ -43,15 +43,6 @@ export const projectMedia: Record<string, ProjectMedia[]> = {
       caption: 'Sign-in screen of the deployed application',
     },
   ],
-  'mastery-os': [
-    {
-      src: '/images/projects/mastery-os/learning-engine.png',
-      alt: 'MasteryOS active retrieval session and prerequisite dependency graph',
-      width: 1280,
-      height: 800,
-      caption: 'Active retrieval session and DAG prerequisite graph',
-    },
-  ],
 };
 
 export function getProjectCover(projectId: string): ProjectMedia | undefined {

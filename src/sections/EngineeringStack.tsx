@@ -14,7 +14,7 @@ export function EngineeringStack() {
   const linkedProjectIds = activeSkill?.linkedProjects || [];
 
   return (
-    <section id="stack" className="section pb-24 sm:pb-28">
+    <section id="stack" className="section">
       <div className="container-content">
         <SectionHeader title="Engineering Stack" subtitle="Technologies behind the work." accent="the work." />
 

@@ -714,11 +714,10 @@ a.window__address:focus-visible {
 }
 
 .story__progress {
-  background: linear-gradient(180deg, var(--brand-lavender) 0%, var(--brand-cream) 100%);
+  background: var(--brand-lavender);
   transform: scaleY(var(--story-ratio, 0));
   transform-origin: 0 0;
   transition: transform 180ms linear;
-  box-shadow: 0 0 10px rgba(155, 123, 247, 0.4);
 }
 
 .story__item {
@@ -802,8 +801,8 @@ a.window__address:focus-visible {
 
 @media (min-width: 768px) {
   .story {
-    --story-date: 5.5rem;
-    --story-rail: 2rem;
+    --story-date: 8.5rem;
+    --story-rail: 3rem;
   }
 
   .story__item {

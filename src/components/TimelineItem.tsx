@@ -26,41 +26,17 @@ export function TimelineItem({ item, major, current }: TimelineItemProps) {
         <p className="story__date">{item.year}</p>
       </div>
 
-      <ScrollReveal className="w-full">
-        <div className="group rounded-2xl border border-brand-charcoal/[0.08] bg-surface/90 backdrop-blur-xs p-6 sm:p-7 transition-all duration-300 hover:border-brand-lavender/40 hover:bg-surface hover:shadow-[0_8px_24px_rgba(155,123,247,0.06)]">
-          <div className="flex items-center gap-2.5">
-            <span
-              className={`inline-flex items-center gap-1.5 rounded px-2.5 py-0.5 font-mono text-xs font-semibold uppercase tracking-wider ${
-                current
-                  ? 'bg-brand-cream/45 border border-brand-charcoal/10 text-brand-charcoal'
-                  : 'bg-brand-lavender/10 border border-brand-lavender/20 text-brand-lavender'
-              }`}
-            >
-              <span className={`h-1.5 w-1.5 rounded-full ${current ? 'bg-accent' : 'bg-brand-lavender'}`} aria-hidden="true" />
-              {item.year}
-            </span>
-            {current && (
-              <span className="text-[11px] font-mono uppercase tracking-wider text-ink-muted">
-                Active Focus
-              </span>
-            )}
-          </div>
-
-          <h3 className={`mt-3 font-bold text-ink tracking-tight group-hover:text-accent transition-colors duration-200 ${major ? 'text-title-lg' : 'text-title'}`}>
-            {item.title}
-          </h3>
-
-          <p className="mt-2 text-body text-ink-soft leading-relaxed">
-            {item.description}
-          </p>
-
-          {item.detail && (
-            <div className="mt-3.5 border-l-2 border-brand-lavender/40 pl-3.5 py-0.5 text-small text-ink-muted leading-relaxed">
-              {item.detail}
-            </div>
-          )}
-        </div>
+      <ScrollReveal>
+        <h3 className={`mt-2 font-bold text-ink md:mt-0 ${major ? 'text-title-lg' : 'text-title'}`}>{item.title}</h3>
       </ScrollReveal>
+      <ScrollReveal delay={90}>
+        <p className={`mt-2 max-w-xl text-ink-soft ${major ? 'text-lead' : 'text-body'}`}>{item.description}</p>
+      </ScrollReveal>
+      {item.detail && (
+        <ScrollReveal delay={180}>
+          <p className="mt-3 max-w-xl text-small text-ink-muted">{item.detail}</p>
+        </ScrollReveal>
+      )}
     </li>
   );
 }

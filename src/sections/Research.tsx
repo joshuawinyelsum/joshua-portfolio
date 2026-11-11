@@ -10,7 +10,7 @@ const pipeline = ['Data Sources', 'Datasets', 'Schema', 'Canonical Structure', '
 
 export function Research() {
   return (
-    <section id="research" className="section pb-24 sm:pb-28">
+    <section id="research" className="section">
       <div className="container-content">
         <SectionHeader
           title="Research & Data"

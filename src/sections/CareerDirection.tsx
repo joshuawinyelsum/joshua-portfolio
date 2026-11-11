@@ -12,7 +12,7 @@ const stages = [
 
 export function CareerDirection() {
   return (
-    <section className="section pb-24 sm:pb-28">
+    <section className="section">
       <div className="container-content">
         <SectionHeader title="Technical Progression" />
 
