@@ -21,7 +21,7 @@ interface MacBrowserFrameProps {
  */
 export function MacBrowserFrame({ children, address, href, ratio, className = '' }: MacBrowserFrameProps) {
   return (
-    <div className={`window ${className}`}>
+    <div className={`window min-w-0 max-w-full ${className}`}>
       <div className="window__bar">
         <span className="window__controls" aria-hidden="true">
           <span className="window__control window__control--close" />

@@ -156,3 +156,40 @@ export interface ResearchSource {
   name: string;
   abbreviation?: string;
 }
+
+export interface LeadershipEntryType {
+  id: string;
+  area: 'community' | 'campus' | 'collaboration';
+  areaLabel: string;
+  organization: {
+    name: string;
+    badge?: string;
+    badgeTone?: 'lavender' | 'cream' | 'onyx';
+    institution?: string;
+    programme?: string;
+    website?: string;
+  };
+  role: string;
+  appointmentStatus?: string;
+  description: string;
+  focusAreas?: string[];
+  team?: {
+    name: string;
+    role: string;
+    isSelf?: boolean;
+  }[];
+  links?: {
+    label: string;
+    url: string;
+    isExternal?: boolean;
+  }[];
+}
+
+export interface CreativePracticeType {
+  id: string;
+  instrument: string;
+  role: string;
+  description: string;
+  attributes: string[];
+}
+

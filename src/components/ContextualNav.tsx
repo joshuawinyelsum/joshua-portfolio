@@ -37,6 +37,7 @@ export function ContextualNav() {
       case 'PROJECTS': return '/#work';
       case 'RESEARCH': return '/#research';
       case 'EXPERIENCE': return '/#experience';
+      case 'LEADERSHIP': return '/#leadership';
       default: return '/';
     }
   };
