@@ -30,7 +30,7 @@ export interface VirtualDirectoryEntry {
 export type VirtualEntry = VirtualFileEntry | VirtualDirectoryEntry;
 
 // Content constants for virtual files
-const README_CONTENT = `# Joshua Winyelsum — Engineering Workstation
+const README_CONTENT = `# Joshua Winyelsum: Engineering Workstation
 Computer Science Student & Software Engineer
 Focus: Backend architecture, relational databases, offline-first systems, and data pipelines.
 
@@ -58,7 +58,7 @@ My technical interests center on backend systems that operate reliably under rea
 - Data research pipelines with cryptographic source verification and reproducible extraction.
 
 Credentials:
-- BSc in Computer Science, University for Development Studies (2022 – 2026 expected)
+- BSc Computer Science, University for Development Studies (Level 200, 4.69 / 5.00 GPA)
 - Google Cybersecurity Professional Certificate (Coursera, 94.52% overall grade, Oct 2024)
 `;
 

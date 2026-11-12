@@ -472,7 +472,7 @@ export const filesystemCommands: Command[] = [
             </div>
             <div>
               <span className="font-bold text-[#A6A397]">NAME</span>
-              <p className="pl-4">{target} — simulated developer command</p>
+              <p className="pl-4">{target}: simulated developer command</p>
             </div>
             <div>
               <span className="font-bold text-[#A6A397]">SYNOPSIS</span>

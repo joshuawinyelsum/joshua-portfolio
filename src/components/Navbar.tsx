@@ -11,10 +11,11 @@ const navItems = [
   { label: 'Research', id: 'research' },
   { label: 'Building', id: 'building' },
   { label: 'Experience', id: 'experience' },
+  { label: 'Leadership', id: 'leadership' },
   { label: 'CV', id: 'cv' },
 ];
 
-const sectionIds = ['work', 'research', 'building', 'experience', 'contact'];
+const sectionIds = ['work', 'research', 'building', 'experience', 'leadership', 'contact'];
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);

@@ -89,7 +89,7 @@ Tx2: UPDATE accounts SET balance = balance - 70; -- commits -40!`,
     distractorExplanations: {
       A: 'Correct! Row-level locking or atomic WHERE constraints ensure serialized evaluation at the storage engine level.',
       B: 'Redis async flush introduces potential data loss on crash and does not solve concurrent coordination without distributed locks.',
-      C: 'Reading after the write detects the failure too late — the negative balance is already written to the database.',
+      C: 'Reading after the write detects the failure too late, because the negative balance is already written to the database.',
       D: 'Eventual consistency increases concurrency anomalies; financial accounting requires strict serializability or ACID atomic updates.',
     },
   },

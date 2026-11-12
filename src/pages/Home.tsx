@@ -5,6 +5,7 @@ import { EngineeringStack } from '../sections/EngineeringStack';
 import { SelectedWork } from '../sections/SelectedWork';
 import { Research } from '../sections/Research';
 import { Experience } from '../sections/Experience';
+import { LeadershipCommunity } from '../sections/LeadershipCommunity';
 import { CurrentlyBuilding } from '../sections/CurrentlyBuilding';
 import { Philosophy } from '../sections/Philosophy';
 import { Education } from '../sections/Education';
@@ -24,6 +25,7 @@ export function Home() {
         <EngineeringStack />
         <Research />
         <Experience />
+        <LeadershipCommunity />
         <CurrentlyBuilding />
         <Philosophy />
         <Education />

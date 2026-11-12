@@ -23,10 +23,10 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
   const hasCaseStudy = project.hasCaseStudy !== false;
 
   return (
-    <ScrollReveal delay={index * 90} className="h-full">
-      <article className="group flex h-full flex-col">
+    <ScrollReveal delay={index * 90} className="h-full min-w-0">
+      <article className="group flex h-full flex-col min-w-0">
         {hasPreview && (
-          <div className="mb-6">
+          <div className="mb-6 min-w-0 overflow-hidden">
             <ProjectScreen project={project} />
           </div>
         )}

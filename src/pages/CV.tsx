@@ -15,7 +15,7 @@ export function CV() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Joshua Winyelsum — Curriculum Vitae | Software & Systems Engineer';
+    document.title = 'Joshua Winyelsum | Curriculum Vitae | Software & Systems Engineer';
   }, []);
 
   const handlePrint = () => {
@@ -114,7 +114,10 @@ export function CV() {
               <div>
                 <span className="text-[10px] uppercase text-ink-muted block">Degree Path</span>
                 <span className="text-ink font-semibold print:text-black">
-                  BSc Computer Science @ UDS
+                  BSc Computer Science, UDS
+                </span>
+                <span className="text-[11px] font-mono text-ink-soft block mt-0.5 print:text-black">
+                  Level 200 · 4.69 / 5.00 GPA
                 </span>
               </div>
             </div>
@@ -219,7 +222,7 @@ export function CV() {
               <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
                 <div>
                   <h3 className="text-base font-bold text-ink print:text-black">
-                    Coach Prosper’s World — Operations Platform & Member Infrastructure
+                    Coach Prosper’s World: Operations Platform & Member Infrastructure
                   </h3>
                   <p className="text-xs font-semibold text-accent print:text-black">
                     Role: Software & Technology Lead | Full-Stack Platform Engineering
@@ -277,7 +280,7 @@ export function CV() {
               <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
                 <div>
                   <h3 className="text-base font-bold text-ink print:text-black">
-                    Community Field Survey System (CFSS) — Offline-First GIS Survey Platform
+                    Community Field Survey System (CFSS): Offline-First GIS Survey Platform
                   </h3>
                   <p className="text-xs font-semibold text-accent print:text-black">
                     Role: Systems & Architecture Lead | Offline-First Engineering
@@ -330,7 +333,7 @@ export function CV() {
               <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
                 <div>
                   <h3 className="text-base font-bold text-ink print:text-black">
-                    MasteryOS — Active Recall & Spaced Repetition Learning Engine
+                    MasteryOS: Active Recall & Spaced Repetition Learning Engine
                   </h3>
                   <p className="text-xs font-semibold text-accent print:text-black">
                     Role: Lead Full-Stack Architect
@@ -383,7 +386,7 @@ export function CV() {
               <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
                 <div>
                   <h3 className="text-base font-bold text-ink print:text-black">
-                    AgriChem Data Research — Ghana Cocoa Regulatory Data Pipeline
+                    AgriChem Data Research: Ghana Cocoa Regulatory Data Pipeline
                   </h3>
                   <p className="text-xs font-semibold text-accent print:text-black">
                     Role: Data Systems & Pipeline Researcher
@@ -501,11 +504,61 @@ export function CV() {
           </section>
 
           {/* ======================================================== */}
-          {/* 7. EDUCATION & CREDENTIALS                                */}
+          {/* 7. COMMUNITY & CAMPUS LEADERSHIP                          */}
           {/* ======================================================== */}
           <section className="cv-entry space-y-4">
             <div className="flex items-baseline gap-3 border-b border-line/10 pb-1.5 print:border-black">
               <span className="text-[11px] font-mono font-bold tracking-widest text-ink-muted">06 /</span>
+              <h2 className="text-xs font-bold tracking-[0.2em] uppercase text-ink print:text-black">
+                Community & Campus Leadership
+              </h2>
+            </div>
+
+            <div className="space-y-6">
+              {/* Kelnode */}
+              <div className="space-y-1">
+                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+                  <h3 className="text-sm font-bold text-ink print:text-black">
+                    Kelnode · Collaborative Tech Community & Peer Learning
+                  </h3>
+                  <span className="text-xs font-mono font-semibold text-accent print:text-black">
+                    Co-Founder & Mentor
+                  </span>
+                </div>
+                <p className="text-[13px] text-ink-soft leading-relaxed">
+                  Co-founded a collaborative engineering and peer-learning initiative focused on systems engineering education, peer mentorship, and building practical software projects together in a collaborative environment.
+                </p>
+                <div className="text-[11px] font-mono text-ink-muted pt-0.5">
+                  Focus: Community Building · Systems Mentorship · Peer-to-Peer Learning · Collaborative Development
+                </div>
+              </div>
+
+              {/* WIWIK Foundation */}
+              <div className="space-y-1">
+                <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
+                  <h3 className="text-sm font-bold text-ink print:text-black">
+                    WIWIK Foundation · WIWIK 100 Programme
+                  </h3>
+                  <span className="text-xs font-mono font-semibold text-accent print:text-black">
+                    Campus Ambassador (UDS) · Officially Appointed
+                  </span>
+                </div>
+                <p className="text-[13px] text-ink-soft leading-relaxed">
+                  Officially appointed Campus Ambassador representing the WIWIK Foundation and its flagship WIWIK 100 programme at the University for Development Studies (UDS), serving as an institutional ambassador connecting campus talent with leadership development, mentorship, and foundation programs.
+                </p>
+                <div className="text-[11px] font-mono text-ink-muted pt-0.5">
+                  Institution: University for Development Studies (UDS) · Status: Officially Appointed
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* ======================================================== */}
+          {/* 8. EDUCATION & CREDENTIALS                                */}
+          {/* ======================================================== */}
+          <section className="cv-entry space-y-4">
+            <div className="flex items-baseline gap-3 border-b border-line/10 pb-1.5 print:border-black">
+              <span className="text-[11px] font-mono font-bold tracking-widest text-ink-muted">07 /</span>
               <h2 className="text-xs font-bold tracking-[0.2em] uppercase text-ink print:text-black">
                 Education & Credentials
               </h2>
@@ -519,7 +572,14 @@ export function CV() {
                   <div key={edu.institution} className="space-y-1">
                     <h3 className="text-sm font-bold text-ink print:text-black">{edu.degree}</h3>
                     <p className="text-ink-soft font-medium">{edu.institution}</p>
-                    <p className="text-[11px] font-mono text-ink-muted">{edu.location} · {edu.status}</p>
+                    <p className="text-[11px] font-mono text-ink-muted">
+                      {edu.location} · {edu.currentLevel ? `${edu.currentLevel} · ` : ''}{edu.status}
+                    </p>
+                    {edu.gpa && (
+                      <p className="text-[11px] font-mono font-semibold text-ink pt-0.5 print:text-black">
+                        {edu.gpa}
+                      </p>
+                    )}
                     {edu.coursework && (
                       <div className="pt-1.5">
                         <span className="text-[10px] font-mono uppercase text-ink-muted block">Verified Coursework</span>
@@ -565,7 +625,7 @@ export function CV() {
           </section>
 
           {/* ======================================================== */}
-          {/* 8. TECHNICAL INTERESTS & AFFILIATIONS                    */}
+          {/* 9. TECHNICAL INTERESTS & AFFILIATIONS                    */}
           {/* ======================================================== */}
           <section className="cv-entry pt-4 border-t border-line/10 print:border-black text-xs font-mono text-ink-soft space-y-1">
             <span className="text-[10px] uppercase font-bold text-ink-muted block">Engineering Focus & Technical Interests</span>

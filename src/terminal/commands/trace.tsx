@@ -299,7 +299,7 @@ export const traceCommand: Command = {
               ))}
             </div>
             <div className="pt-2 text-[10.5px] text-[#7A786E] border-t border-[#45453F]">
-              [SIMULATED EXECUTION TRACE — ILLUSTRATIVE ARCHITECTURAL WORKFLOW]
+              [SIMULATED EXECUTION TRACE: ILLUSTRATIVE ARCHITECTURAL WORKFLOW]
             </div>
           </div>
         ),

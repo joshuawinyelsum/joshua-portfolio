@@ -18,7 +18,7 @@ function Block({ number, title, children }: { number: string; title: string; chi
     <section>
       <ScrollReveal>
         <h2 className="eyebrow">
-          {number} — {title}
+          {number}. {title}
         </h2>
       </ScrollReveal>
       <div className="mt-6">{children}</div>

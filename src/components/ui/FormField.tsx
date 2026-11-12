@@ -7,6 +7,7 @@ interface FieldBaseProps {
   value: string;
   placeholder?: string;
   required?: boolean;
+  disabled?: boolean;
   error?: string;
 }
 
@@ -24,6 +25,7 @@ export function TextField({
   value,
   placeholder,
   required = false,
+  disabled = false,
   error,
   type = 'text',
   autoComplete,
@@ -43,6 +45,7 @@ export function TextField({
         value={value}
         placeholder={placeholder}
         required={required}
+        disabled={disabled}
         autoComplete={autoComplete}
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? messageId : undefined}
@@ -71,6 +74,7 @@ export function TextAreaField({
   value,
   placeholder,
   required = false,
+  disabled = false,
   error,
   rows = 5,
   onChange,
@@ -89,6 +93,7 @@ export function TextAreaField({
         value={value}
         placeholder={placeholder}
         required={required}
+        disabled={disabled}
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? messageId : undefined}
         onChange={onChange}

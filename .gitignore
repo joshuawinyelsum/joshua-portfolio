@@ -22,4 +22,17 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+*.tsbuildinfo
+.claude
+
+# Local environment variables
+.env
+.env.*
+!.env.example
+
+# Test output & screenshots
+qa-screenshots/
+
+
+
 

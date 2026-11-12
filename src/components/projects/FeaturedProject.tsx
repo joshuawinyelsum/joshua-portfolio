@@ -12,9 +12,9 @@ import { PreviewNote, ProjectScreen } from './ProjectScreen';
  */
 export function FeaturedProject({ project }: { project: Project }) {
   return (
-    <ScrollReveal>
-      <article className="group grid items-center gap-x-14 gap-y-8 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
-        <div>
+    <ScrollReveal className="min-w-0">
+      <article className="group grid items-center gap-x-14 gap-y-8 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] min-w-0">
+        <div className="min-w-0">
           <ProjectScreen project={project} eager />
         </div>
 

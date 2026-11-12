@@ -20,8 +20,13 @@ export function Education() {
                 <h3 className="text-title-lg font-bold text-ink">{edu.institution}</h3>
                 <p className="mt-2 text-body font-medium text-accent">{edu.degree}</p>
                 <p className="mt-1 text-small text-ink-muted">
-                  {edu.location} · {edu.status}
+                  {edu.location} · {edu.currentLevel ? `${edu.currentLevel} · ` : ''}{edu.status}
                 </p>
+                {edu.gpa && (
+                  <p className="mt-3 font-mono text-small font-semibold text-ink">
+                    <span className="text-accent">GPA:</span> {edu.gpa}
+                  </p>
+                )}
               </div>
 
               {edu.coursework && (

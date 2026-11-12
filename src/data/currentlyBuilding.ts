@@ -20,22 +20,10 @@ export const currentlyBuilding: BuildingProject[] = [
     status: 'BUILT',
   },
   {
-    title: 'Kusaal Language Dataset',
-    subtitle: 'Low-Resource African Language Data',
-    description: 'Investigating collection workflows, morphological structures, and validation pipelines for low-resource Gur language (Kusaal) data.',
-    status: 'RESEARCH',
-  },
-  {
     title: 'CropMind AI',
     subtitle: 'Agricultural Computer Vision Exploration',
     description: 'Investigating lightweight computer vision models and dataset curation methods for real-world agricultural plant health assessment.',
     status: 'RESEARCH',
-  },
-  {
-    title: 'FeynmanGraph+',
-    subtitle: 'Conceptual Prerequisite Knowledge Graphs',
-    description: 'Exploring graph-based conceptual structures and prerequisite tree modeling for structured, self-directed technical study.',
-    status: 'PLANNED',
   },
 ];
 
