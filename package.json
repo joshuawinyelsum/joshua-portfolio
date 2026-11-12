@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "test": "tsx tests/terminal-security.test.ts",
-    "test:viewport": "tsx tests/mobile-viewport-audit.ts"
+    "test:viewport": "tsx tests/mobile-viewport-audit.ts",
+    "test:screenshots": "tsx tests/capture-qa-screenshots.ts"
   },
   "dependencies": {
     "lucide-react": "^1.66.0",

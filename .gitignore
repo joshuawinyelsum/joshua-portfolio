@@ -25,3 +25,7 @@ dist-ssr
 *.tsbuildinfo
 .claude
 
+# Test output & screenshots
+qa-screenshots/
+
+
