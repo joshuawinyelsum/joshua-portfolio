@@ -58,7 +58,7 @@ My technical interests center on backend systems that operate reliably under rea
 - Data research pipelines with cryptographic source verification and reproducible extraction.
 
 Credentials:
-- BSc Computer Science, University for Development Studies (Level 200, 4.69 / 5.00 GPA)
+- BSc Computer Science, University for Development Studies (Level 200, 4.50 / 5.00 GPA)
 - Google Cybersecurity Professional Certificate (Coursera, 94.52% overall grade, Oct 2024)
 `;
 

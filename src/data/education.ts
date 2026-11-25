@@ -7,7 +7,7 @@ export const education: EducationItem[] = [
     location: 'Tamale, Ghana',
     status: 'Currently pursuing',
     currentLevel: 'Level 200',
-    gpa: '4.69 / 5.00 GPA',
+    gpa: '4.50 / 5.00 GPA',
     coursework: [
       'Computer Organization',
       'Systems Analysis & Design',

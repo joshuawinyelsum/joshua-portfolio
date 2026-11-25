@@ -1,3 +1,5 @@
+import { Braces } from 'lucide-react';
+
 interface TechTagProps {
   name: string;
   isActive?: boolean;
@@ -20,7 +22,10 @@ export function TechTag({ name, isActive = false, isSubdued = false, onClick, on
         isSubdued ? 'tag--subdued' : ''
       }`}
     >
-      {name}
+      {name === 'Visual Basic .NET (VB.NET)' && (
+        <Braces className="h-3.5 w-3.5 shrink-0" strokeWidth={1.75} aria-hidden="true" />
+      )}
+      <span>{name}</span>
     </button>
   );
 }

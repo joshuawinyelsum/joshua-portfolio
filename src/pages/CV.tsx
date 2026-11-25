@@ -117,7 +117,7 @@ export function CV() {
                   BSc Computer Science, UDS
                 </span>
                 <span className="text-[11px] font-mono text-ink-soft block mt-0.5 print:text-black">
-                  Level 200 · 4.69 / 5.00 GPA
+                  Level 200 · 4.50 / 5.00 GPA
                 </span>
               </div>
             </div>
@@ -155,7 +155,7 @@ export function CV() {
                   Programming Languages
                 </span>
                 <p className="text-ink-soft leading-relaxed">
-                  TypeScript, Python, JavaScript (ESNext), SQL, HTML5 / CSS3
+                  TypeScript, Python, JavaScript (ESNext), SQL, HTML5 / CSS3, Visual Basic .NET (VB.NET)
                 </p>
               </div>
 

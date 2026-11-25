@@ -7,6 +7,7 @@ export const skills: Skill[] = [
   { name: 'JavaScript', category: 'Languages', linkedProjects: ['coach-prospers-world', 'cfss', 'mastery-os'] },
   { name: 'SQL', category: 'Languages', linkedProjects: ['coach-prospers-world', 'cfss', 'mastery-os'] },
   { name: 'HTML / CSS', category: 'Languages', linkedProjects: ['coach-prospers-world', 'cfss', 'mastery-os'] },
+  { name: 'Visual Basic .NET (VB.NET)', category: 'Languages', linkedProjects: [] },
 
   // Backend & Systems
   { name: 'FastAPI', category: 'Backend & Systems', linkedProjects: ['cfss'] },
